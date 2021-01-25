@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 # MySQL scripts for creating/recreating the database
 #
 # Version:		1.0.0

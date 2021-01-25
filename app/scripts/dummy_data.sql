@@ -1,3 +1,5 @@
+# noinspection SqlNoDataSourceInspectionForFile
+
 use malikah;
 
 INSERT INTO coffida_user (user_givenname, user_familyname, user_email, user_password, user_salt) VALUES ("Ashley", "Williams", "ashley.williams@mmu.ac.uk", "this account wont work", "because these values aren't hashed");
