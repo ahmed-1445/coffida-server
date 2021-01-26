@@ -10,8 +10,9 @@ import Register from './components/Register';
 import Login from './components/Login';
 import AuthenticatedUser from './screens/AuthenticatedUser';
 import Logout from './screens/Logout';
-import UserInfo from './screens/UserInfo';
+// import UserInfo from './screens/UserInfo';
 import UpdateUser from './screens/UpdateUser';
+import UserMan from './screens/UserMan';
 
 const Stack = createStackNavigator();
 
@@ -49,7 +50,12 @@ class App extends Component {
           <Stack.Screen
             name="UpdateUser"
             component={UpdateUser}
-            options={{title: 'User Information Portal'}}
+            options={{title: 'Update your Information'}}
+          />
+          <Stack.Screen
+            name="UserMan"
+            component={UserMan}
+            options={{title: 'User Management'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

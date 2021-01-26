@@ -14,18 +14,23 @@ class AuthenticatedUser extends Component {
       <View style={styles.container}>
         <ScrollView>
           <Text style={styles.Label}>Select of the following options:</Text>
-          <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
-            onPress={() => navigation.navigate('UserInfo')}>
-            <Text style={styles.TouchText}>Get User Information</Text>
+            onPress={() => navigation.navigate('UserMan')}>
+            <Text style={styles.TouchText}>User Management</Text>
           </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity
-            style={styles.Touch}
-            onPress={() => navigation.navigate('UpdateUser')}>
-            <Text style={styles.TouchText}>Update your Information</Text>
-          </TouchableOpacity>
+          {/*<View style={styles.space} />*/}
+          {/*<TouchableOpacity*/}
+          {/*  style={styles.Touch}*/}
+          {/*  onPress={() => navigation.navigate('UserInfo')}>*/}
+          {/*  <Text style={styles.TouchText}>Get User Information</Text>*/}
+          {/*</TouchableOpacity>*/}
+          {/*<View style={styles.space} />*/}
+          {/*<TouchableOpacity*/}
+          {/*  style={styles.Touch}*/}
+          {/*  onPress={() => navigation.navigate('UpdateUser')}>*/}
+          {/*  <Text style={styles.TouchText}>Update your Information</Text>*/}
+          {/*</TouchableOpacity>*/}
           <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
@@ -60,8 +65,8 @@ const styles = StyleSheet.create({
   },
   TouchText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
+    // fontWeight: 'bold',
+    color: 'white',
   },
   space: {
     width: 20,
