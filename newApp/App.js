@@ -4,11 +4,14 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
+// Importing all Screens & Components
 import Home from './screens/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import AuthenticatedUser from './screens/AuthenticatedUser';
 import Logout from './screens/Logout';
+import UserInfo from './screens/UserInfo';
+import UpdateUser from './screens/UpdateUser';
 
 const Stack = createStackNavigator();
 
@@ -26,17 +29,27 @@ class App extends Component {
           <Stack.Screen
             name="Login"
             component={Login}
-            options={{title: 'Log into CoffiDa'}}
+            options={{title: 'CoffiDa Sign In'}}
           />
           <Stack.Screen
             name="AuthenticatedUser"
             component={AuthenticatedUser}
-            options={{title: 'Welcome!'}}
+            options={{title: 'Welcome User!'}}
           />
           <Stack.Screen
             name="Logout"
             component={Logout}
             options={{title: 'Goodbye!'}}
+          />
+          {/*<Stack.Screen*/}
+          {/*  name="UserInfo"*/}
+          {/*  component={UserInfo}*/}
+          {/*  options={{title: 'User Information Portal'}}*/}
+          {/*/>*/}
+          <Stack.Screen
+            name="UpdateUser"
+            component={UpdateUser}
+            options={{title: 'User Information Portal'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

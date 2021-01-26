@@ -13,7 +13,19 @@ class AuthenticatedUser extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.label}>Hi ...</Text>
+          <Text style={styles.Label}>Select of the following options:</Text>
+          <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => navigation.navigate('UserInfo')}>
+            <Text style={styles.TouchText}>Get User Information</Text>
+          </TouchableOpacity>
+          <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => navigation.navigate('UpdateUser')}>
+            <Text style={styles.TouchText}>Update your Information</Text>
+          </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
@@ -52,8 +64,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   space: {
-    width: 80,
-    height: 375,
+    width: 20,
+    height: 20,
   },
 });
 
