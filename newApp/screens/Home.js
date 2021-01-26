@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 
 class Home extends Component {
   render() {
@@ -7,12 +7,17 @@ class Home extends Component {
 
     return (
       <View style={styles.container}>
-        <Button
-          title="Register"
-          onPress={() => navigation.navigate('Register')}
-        />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.TouchText}>Register</Text>
+        </TouchableOpacity>
         <View style={styles.space} />
-        <Button title="Sign In" onPress={() => navigation.navigate('Login')} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.TouchText}>Login</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -26,9 +31,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'lightseagreen',
   },
-  text: {
+  TouchText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 20,
+  },
+  Touch: {
+    backgroundColor: 'darkorchid',
+    padding: 3.5,
+    alignItems: 'center',
   },
   space: {
     width: 30,

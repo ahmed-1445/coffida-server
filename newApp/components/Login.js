@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   TouchText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
   },
   space: {
     width: 20,
