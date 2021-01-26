@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import AuthenticatedUser from './screens/AuthenticatedUser';
+import Logout from './screens/Logout';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,11 @@ class App extends Component {
             name="AuthenticatedUser"
             component={AuthenticatedUser}
             options={{title: 'Welcome!'}}
+          />
+          <Stack.Screen
+            name="Logout"
+            component={Logout}
+            options={{title: 'Goodbye!'}}
           />
         </Stack.Navigator>
       </NavigationContainer>
