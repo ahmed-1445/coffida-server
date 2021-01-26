@@ -7,6 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from './screens/Home';
 import Register from './components/Register';
 import Login from './components/Login';
+import AuthenticatedUser from './screens/AuthenticatedUser';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,11 @@ class App extends Component {
             name="Login"
             component={Login}
             options={{title: 'Log into CoffiDa'}}
+          />
+          <Stack.Screen
+            name="AuthenticatedUser"
+            component={AuthenticatedUser}
+            options={{title: 'Welcome!'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

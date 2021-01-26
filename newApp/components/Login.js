@@ -27,6 +27,7 @@ class Login extends Component {
   };
 
   render() {
+    const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
         <Text style={styles.Label}>Email:</Text>
@@ -44,7 +45,9 @@ class Login extends Component {
           value={this.state.password}
         />
         <View style={styles.space} />
-        <TouchableOpacity style={styles.Touch} onPress={() => this.signUp()}>
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('AuthenticatedUser')}>
           <Text style={styles.TouchText}>Sign In</Text>
         </TouchableOpacity>
       </View>
