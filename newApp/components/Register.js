@@ -75,6 +75,7 @@ class Register extends Component {
               value={this.state.firstName}
             />
           </View>
+          <View style={styles.space} />
           <View>
             <TouchableOpacity
               style={styles.Touch}
@@ -90,18 +91,16 @@ class Register extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
   title: {
     color: 'white',
-    // backgroundColor: 'red',
+    // backgroundColor: 'red', - needs further adjusting
     padding: 3,
     fontSize: 14,
   },
-  // Item: {
-  //   padding: '10', // Issue with padding
-  // },
   Label: {
     fontSize: 13,
     color: 'white',
@@ -120,6 +119,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+  },
+  space: {
+    width: 20,
+    height: 20,
   },
 });
 

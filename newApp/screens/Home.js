@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, Button} from 'react-native';
 
 class Home extends Component {
   render() {
@@ -11,6 +11,8 @@ class Home extends Component {
           title="Register"
           onPress={() => navigation.navigate('Register')}
         />
+        <View style={styles.space} />
+        <Button title="Sign In" onPress={() => navigation.navigate('Login')} />
       </View>
     );
   }
@@ -19,13 +21,18 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     justifyContent: 'center',
     backgroundColor: 'lightseagreen',
   },
   text: {
     color: 'white',
     fontSize: 25,
+  },
+  space: {
+    width: 30,
+    height: 30,
   },
 });
 
