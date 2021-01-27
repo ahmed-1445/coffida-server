@@ -15,6 +15,7 @@ import UpdateUser from './screens/UpdateUser';
 import UserMan from './screens/UserMan';
 import ReviewMan from './screens/ReviewMan';
 import AddReview from './screens/AddReview';
+import LocationMan from './screens/LocationMan';
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,11 @@ class App extends Component {
             name="AddReview"
             component={AddReview}
             options={{title: 'New Review'}}
+          />
+          <Stack.Screen
+            name="LocationMan"
+            component={LocationMan}
+            options={{title: 'Location Management'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

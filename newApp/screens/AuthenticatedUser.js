@@ -25,12 +25,12 @@ class AuthenticatedUser extends Component {
             onPress={() => navigation.navigate('ReviewMan')}>
             <Text style={styles.TouchText}>Review Management</Text>
           </TouchableOpacity>
-          {/*<View style={styles.space} />*/}
-          {/*<TouchableOpacity*/}
-          {/*  style={styles.Touch}*/}
-          {/*  onPress={() => navigation.navigate('UpdateUser')}>*/}
-          {/*  <Text style={styles.TouchText}>Update your Information</Text>*/}
-          {/*</TouchableOpacity>*/}
+          <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => navigation.navigate('LocationMan')}>
+            <Text style={styles.TouchText}>Location Management</Text>
+          </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
