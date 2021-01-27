@@ -31,7 +31,7 @@ class App extends Component {
           <Stack.Screen
             name="Login"
             component={Login}
-            options={{title: 'Sign In'}}
+            options={{title: 'CoffiDa Sign In'}}
           />
           <Stack.Screen
             name="AuthenticatedUser"

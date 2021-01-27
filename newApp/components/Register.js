@@ -70,7 +70,7 @@ class Register extends Component {
           <View>
             <Text style={styles.Label}>Confirm Password:</Text>
             <TextInput
-              placeholder="Confirm your password"
+              placeholder="Enter your password"
               style={styles.Input}
               onChangeText={(confirmPass) => this.setState({confirmPass})}
               value={this.state.confirmPass}
