@@ -43,6 +43,7 @@ class Login extends Component {
           style={styles.Input}
           onChangeText={this.handlePasswordInput}
           value={this.state.password}
+          secureTextEntry={true}
         />
         <View style={styles.space} />
         <TouchableOpacity

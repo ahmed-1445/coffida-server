@@ -45,7 +45,7 @@ class Register extends Component {
               placeholder="Enter your last name"
               style={styles.Input}
               onChangeText={(lastName) => this.setState({lastName})}
-              value={this.state.firstName}
+              value={this.state.lastName}
             />
           </View>
           <View>
@@ -54,7 +54,7 @@ class Register extends Component {
               placeholder="Enter your Email Address"
               style={styles.Input}
               onChangeText={(email) => this.setState({email})}
-              value={this.state.firstName}
+              value={this.state.email}
             />
           </View>
           <View>
@@ -63,16 +63,18 @@ class Register extends Component {
               placeholder="Enter your password"
               style={styles.Input}
               onChangeText={(password) => this.setState({password})}
-              value={this.state.firstName}
+              value={this.state.password}
+              secureTextEntry={true}
             />
           </View>
           <View>
             <Text style={styles.Label}>Confirm Password:</Text>
             <TextInput
-              placeholder="Enter your password"
+              placeholder="Confirm your password"
               style={styles.Input}
               onChangeText={(confirmPass) => this.setState({confirmPass})}
-              value={this.state.firstName}
+              value={this.state.confirmPass}
+              secureTextEntry={true}
             />
           </View>
           <View style={styles.space} />

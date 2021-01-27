@@ -77,7 +77,7 @@ class UpdateUser extends Component {
         <View style={styles.space} />
         <View>
           <TouchableOpacity style={styles.Touch} onPress={() => this.test()}>
-            <Text style={styles.TouchText}>Sign Up</Text>
+            <Text style={styles.TouchText}>Submit</Text>
           </TouchableOpacity>
         </View>
       </View>

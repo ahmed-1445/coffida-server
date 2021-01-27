@@ -13,6 +13,7 @@ import Logout from './screens/Logout';
 // import UserInfo from './screens/UserInfo';
 import UpdateUser from './screens/UpdateUser';
 import UserMan from './screens/UserMan';
+import ReviewMan from './screens/ReviewMan';
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,7 @@ class App extends Component {
           <Stack.Screen
             name="Login"
             component={Login}
-            options={{title: 'CoffiDa Sign In'}}
+            options={{title: 'Sign In'}}
           />
           <Stack.Screen
             name="AuthenticatedUser"
@@ -56,6 +57,11 @@ class App extends Component {
             name="UserMan"
             component={UserMan}
             options={{title: 'User Management'}}
+          />
+          <Stack.Screen
+            name="ReviewMan"
+            component={ReviewMan}
+            options={{title: 'Review Management'}}
           />
         </Stack.Navigator>
       </NavigationContainer>
