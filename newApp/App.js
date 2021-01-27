@@ -14,6 +14,7 @@ import Logout from './screens/Logout';
 import UpdateUser from './screens/UpdateUser';
 import UserMan from './screens/UserMan';
 import ReviewMan from './screens/ReviewMan';
+import AddReview from './screens/AddReview';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,11 @@ class App extends Component {
             name="ReviewMan"
             component={ReviewMan}
             options={{title: 'Review Management'}}
+          />
+          <Stack.Screen
+            name="AddReview"
+            component={AddReview}
+            options={{title: 'New Review'}}
           />
         </Stack.Navigator>
       </NavigationContainer>
