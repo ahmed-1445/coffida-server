@@ -10,7 +10,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import AuthenticatedUser from './screens/AuthenticatedUser';
 import Logout from './screens/Logout';
-// import UserInfo from './screens/UserInfo';
+import UserInfo from './screens/UserInfo';
 import UpdateUser from './screens/UpdateUser';
 import UserMan from './screens/UserMan';
 import ReviewMan from './screens/ReviewMan';
@@ -45,11 +45,11 @@ class App extends Component {
             component={Logout}
             options={{title: 'Goodbye!'}}
           />
-          {/*<Stack.Screen*/}
-          {/*  name="UserInfo"*/}
-          {/*  component={UserInfo}*/}
-          {/*  options={{title: 'User Information Portal'}}*/}
-          {/*/>*/}
+          <Stack.Screen
+            name="UserInfo"
+            component={UserInfo}
+            options={{title: 'User Information Portal'}}
+          />
           <Stack.Screen
             name="UpdateUser"
             component={UpdateUser}

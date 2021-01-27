@@ -18,40 +18,35 @@ class UserInfo extends Component {
     };
   }
 
-  handleIdInput = (id) => {
-    this.setState({id: id});
-  };
-
-  handleEmailInput = (email) => {
-    this.setState({email: email});
-  };
-
   test = () => {
     console.log(this.state);
   };
 
   render() {
+    const navigation = this.props.navigation;
     return (
-      <View>
-        style={styles.container}>
+      <View style={styles.container}>
         <ScrollView>
           <Text style={styles.label}>
             Please enter the following details...
           </Text>
           <View style={styles.space} />
           <TextInput
-            placeholder="Enter User ID"
-            style={styles.label}
-            onChangeText={this.handleIdInput}
-            value={this.state.id}
+            placeholder="Enter user ID"
+            style={styles.Input}
+            onChangeText={(userID) => this.setState({userID})}
+            value={this.state.userID}
           />
           <TextInput
             placeholder="Enter email"
-            style={styles.label}
-            onChangeText={this.handleEmailInput}
-            value={this.state.email}
+            style={styles.Input}
+            onChangeText={(userEmail) => this.setState({userEmail})}
+            value={this.state.userEmail}
           />
-          <TouchableOpacity style={styles.Touch} onPress={() => this.test()} />
+          <View style={styles.space} />
+          <TouchableOpacity style={styles.Touch} onPress={() => this.test()}>
+            <Text style={styles.TouchText}>Search</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -66,7 +61,7 @@ const styles = StyleSheet.create({
   },
   Label: {
     fontSize: 13,
-    color: 'white',
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
@@ -80,7 +75,7 @@ const styles = StyleSheet.create({
   },
   TouchText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: 'white',
   },
   space: {

@@ -21,8 +21,8 @@ class LocationMan extends Component {
         <View style={styles.space} />
         <TouchableOpacity
           style={styles.Touch}
-          onPress={() => navigation.navigate('DeleteUser')}>
-          <Text style={styles.TouchText}>Delete a Review</Text>
+          onPress={() => navigation.navigate('GetLocation')}>
+          <Text style={styles.TouchText}>View Locations</Text>
         </TouchableOpacity>
       </View>
     );
