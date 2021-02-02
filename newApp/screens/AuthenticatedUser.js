@@ -5,9 +5,35 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  AsyncStorage,
 } from 'react-native';
 
 class AuthenticatedUser extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: true,
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.checkAuth();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  checkAuth = async () => {
+    const value = await AsyncStorage.getItem('@session_token');
+    if (value == null) {
+      this.props.navigation.navigate('Login');
+    }
+  };
+
   render() {
     const navigation = this.props.navigation;
     return (

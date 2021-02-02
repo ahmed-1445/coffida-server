@@ -6,26 +6,81 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ToastAndroid,
 } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
       email: '',
       password: '',
-      confirmPass: '',
+      token: '',
     };
   }
 
-  signUp = () => {
-    console.log(this.state);
+  // componentDidMount() {
+  //   this._unsubscribe = this.props.navigation.addListener('focus', () => {
+  //     this.register();
+  //   });
+  // }
+  //
+  // componentWillUnmount() {
+  //   this._unsubscribe();
+  // }
+  //
+  // checkAuth = async () => {
+  //   const value = await AsyncStorage.getItem('@session_token');
+  //   if (value !== null) {
+  //     this.setState({token: value});
+  //   } else {
+  //     this.props.navigation.navigate('Login');
+  //   }
+  // };
+  //
+
+  register = () => {
+    // Needs validation
+    let to_send = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      password: this.state.password,
+      email: this.state.email,
+    };
+
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(to_send),
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          return response.json();
+        } else if (response.status === 400) {
+          throw 'Please try again!';
+        } else {
+          throw 'Something went wrong...';
+        }
+      })
+      .then((responseJSON) => {
+        console.log('User created with ID: ', responseJSON);
+        ToastAndroid.show('Account created', ToastAndroid.SHORT);
+        this.props.navigation.navigate('Login');
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
   };
-  // <View style={styles.Item}> - does not with styling (for each element from starting Line 33)
+
   render() {
+    // const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -35,8 +90,8 @@ class Register extends Component {
             <TextInput
               placeholder="Enter your first name"
               style={styles.Input}
-              onChangeText={(firstName) => this.setState({firstName})}
-              value={this.state.firstName}
+              onChangeText={(first_name) => this.setState({first_name})}
+              value={this.state.first_name}
             />
           </View>
           <View>
@@ -44,8 +99,8 @@ class Register extends Component {
             <TextInput
               placeholder="Enter your last name"
               style={styles.Input}
-              onChangeText={(lastName) => this.setState({lastName})}
-              value={this.state.lastName}
+              onChangeText={(last_name) => this.setState({last_name})}
+              value={this.state.last_name}
             />
           </View>
           <View>
@@ -67,21 +122,11 @@ class Register extends Component {
               secureTextEntry={true}
             />
           </View>
-          <View>
-            <Text style={styles.Label}>Confirm Password:</Text>
-            <TextInput
-              placeholder="Enter your password"
-              style={styles.Input}
-              onChangeText={(confirmPass) => this.setState({confirmPass})}
-              value={this.state.confirmPass}
-              secureTextEntry={true}
-            />
-          </View>
           <View style={styles.space} />
           <View>
             <TouchableOpacity
               style={styles.Touch}
-              onPress={() => this.signUp()}>
+              onPress={() => this.register()}>
               <Text style={styles.TouchText}>Sign Up</Text>
             </TouchableOpacity>
           </View>

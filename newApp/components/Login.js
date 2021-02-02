@@ -5,16 +5,20 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  ToastAndroid,
+  // ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
-// Login component
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      // isLoading: true,
       email: '',
       password: '',
+      token: '',
     };
   }
 
@@ -26,8 +30,53 @@ class Login extends Component {
     this.setState({password: pass});
   };
 
+  // componentDidMount() {
+  //   this.login();
+  // }
+
+  login = async () => {
+    // Add some validation i.e. password strength
+    console.log('test');
+    let to_send = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(to_send),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 400) {
+          throw 'Invalid email or password, please try again!';
+        } else {
+          throw 'Error, please try again!';
+        }
+      })
+      .then(async (responseJson) => {
+        console.log(responseJson);
+        await AsyncStorage.setItem('@session_token', responseJson.token);
+        this.props.navigation.navigate('AuthenticatedUser');
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
+
   render() {
-    const navigation = this.props.navigation;
+    // const navigation = this.props.navigation;
+    // if (this.state.isLoading) {
+    //   return (
+    //     <View>
+    //       <ActivityIndicator />
+    //     </View>
+    //   );
+    // }
     return (
       <View style={styles.container}>
         <Text style={styles.Label}>Email:</Text>
@@ -46,9 +95,7 @@ class Login extends Component {
           secureTextEntry={true}
         />
         <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => navigation.navigate('AuthenticatedUser')}>
+        <TouchableOpacity style={styles.Touch} onPress={() => this.login()}>
           <Text style={styles.TouchText}>Sign In</Text>
         </TouchableOpacity>
       </View>
