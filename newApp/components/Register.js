@@ -19,7 +19,7 @@ class Register extends Component {
       last_name: '',
       email: '',
       password: '',
-      token: '',
+      // token: '',
     };
   }
 
@@ -48,8 +48,8 @@ class Register extends Component {
     let to_send = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      password: this.state.password,
       email: this.state.email,
+      password: this.state.password,
     };
 
     return fetch('http://10.0.2.2:3333/api/1.0.0/user/', {

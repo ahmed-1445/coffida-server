@@ -69,11 +69,12 @@ class AuthenticatedUser extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.label}>Are you sure you want to logout?</Text>
+          <Text style={styles.Label}>Are you sure you want to logout?</Text>
           <View style={styles.space} />
           <TouchableOpacity style={styles.Touch} onPress={() => this.logout()}>
             <Text style={styles.TouchText}>Yes</Text>
           </TouchableOpacity>
+          <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
             onPress={() => this.props.navigation.navigate('AuthenticatedUser')}>
@@ -92,13 +93,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightseagreen',
   },
   Label: {
-    fontSize: 13,
+    fontSize: 15,
     color: 'white',
-  },
-  Input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
   },
   Touch: {
     backgroundColor: 'darkorchid',
@@ -107,8 +103,8 @@ const styles = StyleSheet.create({
   },
   TouchText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
+    // fontWeight: 'bold',
+    color: 'white',
   },
   space: {
     width: 20,

@@ -36,7 +36,7 @@ class Login extends Component {
 
   login = async () => {
     // Add some validation i.e. password strength
-    console.log('test');
+    // console.log('test');
     let to_send = {
       email: this.state.email,
       password: this.state.password,
