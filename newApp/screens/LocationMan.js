@@ -9,8 +9,8 @@ class LocationMan extends Component {
         <Text style={styles.Label}>Select one of the following options:</Text>
         <TouchableOpacity
           style={styles.Touch}
-          onPress={() => navigation.navigate('AllLocations')}>
-          <Text style={styles.TouchText}>View all Locations & Reviews</Text>
+          onPress={() => navigation.navigate('GetLocation')}>
+          <Text style={styles.TouchText}>View Location Information</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity

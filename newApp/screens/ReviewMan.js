@@ -21,7 +21,7 @@ class ReviewMan extends Component {
         <View style={styles.space} />
         <TouchableOpacity
           style={styles.Touch}
-          onPress={() => navigation.navigate('DeleteUser')}>
+          onPress={() => navigation.navigate('DeleteReview')}>
           <Text style={styles.TouchText}>Delete a Review</Text>
         </TouchableOpacity>
         <View style={styles.space} />

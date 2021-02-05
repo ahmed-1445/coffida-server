@@ -9,7 +9,7 @@ class UserMan extends Component {
         <Text style={styles.Label}>The following options are available:</Text>
         <TouchableOpacity
           style={styles.Touch}
-          onPress={() => navigation.navigate('UserInfo')}>
+          onPress={() => navigation.navigate('FindUser')}>
           <Text style={styles.TouchText}>Get User Information</Text>
         </TouchableOpacity>
         <View style={styles.space} />
