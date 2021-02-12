@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
 import {
   View,
-  TextInput,
-  ScrollView,
   Text,
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
-  // ActivityIndicator,
-  VirtualizedList,
-  LogBox,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -18,24 +13,23 @@ class GetUser extends Component {
     super(props);
 
     this.state = {
-      id: '',
-      loading: true,
+      // id: '',
+      user_id: '',
       first_name: '',
       last_name: '',
-      // email: '',
-      user_data: [],
+      email: '',
       token: '',
     };
   }
 
   componentDidMount() {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    this.getInfo();
   }
 
-  find = async () => {
+  getInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + this.state.id, {
-      // method: 'get',
+    const user_id = await AsyncStorage.getItem('@id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + user_id, {
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
@@ -50,10 +44,12 @@ class GetUser extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then((responseJson) => {
+      .then(async (responseJson) => {
         this.setState({
-          // loading: false,
-          user_data: responseJson,
+          user_id: responseJson.user_id,
+          first_name: responseJson.first_name,
+          last_name: responseJson.last_name,
+          email: responseJson.email,
         });
       })
       .catch((error) => {
@@ -63,51 +59,21 @@ class GetUser extends Component {
   };
 
   render() {
-    // if (this.state.loading) {
-    //   return (
-    //     <View>
-    //       <ActivityIndicator />
-    //     </View>
-    //   );
-    // } else {
+    const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <Text style={styles.Label}>
-            Please enter the following details...
-          </Text>
-          <View style={styles.space} />
-          <TextInput
-            placeholder="Enter user ID"
-            style={styles.Input}
-            onChangeText={(id) => this.setState({id})}
-            value={this.state.id}
-          />
-          {/*<TextInput*/}
-          {/*  placeholder="Enter Last Name"*/}
-          {/*  style={styles.Input}*/}
-          {/*  onChangeText={(last_name) => this.setState({last_name})}*/}
-          {/*  value={this.state.last_name}*/}
-          {/*/>*/}
-          <View style={styles.space} />
-          <TouchableOpacity style={styles.Touch} onPress={() => this.find()}>
-            <Text style={styles.TouchText}>Search</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <View style={styles.space} />
-          <VirtualizedList
-            data={this.state.user_data}
-            getItem={(data, index) => data[index]}
-            getItemCount={(data) => data.length}
-            renderItem={({item}) => (
-              <View>
-                <Text>{item.first_name}</Text>
-                <Text>{item.last_name}</Text>
-              </View>
-            )}
-            keyExtractor={(item, index) => item.id.toString()}
-          />
-        </ScrollView>
+        <Text style={styles.Label}>Your details...</Text>
+        <View style={styles.space} />
+        <Text style={styles.Label}>Account ID: {this.state.user_id}</Text>
+        <Text style={styles.Label}>First Name: {this.state.first_name}</Text>
+        <Text style={styles.Label}>Last Name: {this.state.last_name}</Text>
+        <Text style={styles.Label}>Email: {this.state.email}</Text>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('UpdateUser')}>
+          <Text style={styles.TouchText}>Update Details</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -139,8 +105,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   space: {
-    width: 5,
-    height: 5,
+    width: 10,
+    height: 10,
   },
 });
 

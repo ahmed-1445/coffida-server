@@ -52,7 +52,7 @@ class App extends Component {
           <Stack.Screen
             name="FindUser"
             component={GetUser}
-            options={{title: 'User Information Portal'}}
+            options={{title: 'View your Information'}}
           />
           <Stack.Screen
             name="UpdateUser"
@@ -62,7 +62,7 @@ class App extends Component {
           <Stack.Screen
             name="UserMan"
             component={UserMan}
-            options={{title: 'User Management'}}
+            options={{title: 'My Account'}}
           />
           <Stack.Screen
             name="ReviewMan"

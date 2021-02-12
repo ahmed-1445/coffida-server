@@ -19,6 +19,7 @@ class Login extends Component {
       email: '',
       password: '',
       token: '',
+      id: '',
     };
   }
 
@@ -36,7 +37,6 @@ class Login extends Component {
 
   login = async () => {
     // Add some validation i.e. password strength
-    // console.log('test');
     let to_send = {
       email: this.state.email,
       password: this.state.password,
@@ -60,6 +60,7 @@ class Login extends Component {
       .then(async (responseJson) => {
         console.log(responseJson);
         await AsyncStorage.setItem('@session_token', responseJson.token);
+        await AsyncStorage.setItem('@id', JSON.stringify(responseJson.id));
         this.props.navigation.navigate('AuthenticatedUser');
       })
       .catch((error) => {

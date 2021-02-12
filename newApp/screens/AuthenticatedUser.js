@@ -43,7 +43,7 @@ class AuthenticatedUser extends Component {
           <TouchableOpacity
             style={styles.Touch}
             onPress={() => navigation.navigate('UserMan')}>
-            <Text style={styles.TouchText}>User Management</Text>
+            <Text style={styles.TouchText}>My Account</Text>
           </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity
