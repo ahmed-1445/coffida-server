@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
+  FlatList,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -14,11 +15,13 @@ class GetUser extends Component {
 
     this.state = {
       // id: '',
+      isLoading: true,
       user_id: '',
       first_name: '',
       last_name: '',
       email: '',
       token: '',
+      // userData: [],
     };
   }
 
@@ -44,8 +47,10 @@ class GetUser extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then(async (responseJson) => {
+      .then((responseJson) => {
         this.setState({
+          isLoading: false,
+          // userData: responseJson,
           user_id: responseJson.user_id,
           first_name: responseJson.first_name,
           last_name: responseJson.last_name,
@@ -60,22 +65,30 @@ class GetUser extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    return (
-      <View style={styles.container}>
-        <Text style={styles.Label}>Your details...</Text>
-        <View style={styles.space} />
-        <Text style={styles.Label}>Account ID: {this.state.user_id}</Text>
-        <Text style={styles.Label}>First Name: {this.state.first_name}</Text>
-        <Text style={styles.Label}>Last Name: {this.state.last_name}</Text>
-        <Text style={styles.Label}>Email: {this.state.email}</Text>
-        <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => navigation.navigate('UpdateUser')}>
-          <Text style={styles.TouchText}>Update Details</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loading}>
+          <Text style={styles.Label}>Loading...</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.Label}>Your details...</Text>
+          <View style={styles.space} />
+          <Text style={styles.Label}>Account ID: {this.state.user_id}</Text>
+          <Text style={styles.Label}>First Name: {this.state.first_name}</Text>
+          <Text style={styles.Label}>Last Name: {this.state.last_name}</Text>
+          <Text style={styles.Label}>Email: {this.state.email}</Text>
+          <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => navigation.navigate('UpdateUser')}>
+            <Text style={styles.TouchText}>Update Details</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
   }
 }
 
@@ -84,6 +97,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 2,
     backgroundColor: 'lightseagreen',
+  },
+  loading: {
+    backgroundColor: 'lightseagreen',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   Label: {
     fontSize: 15,

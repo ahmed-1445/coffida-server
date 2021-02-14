@@ -20,6 +20,7 @@ import UpdateReview from './screens/UpdateReview';
 import DeleteReview from './screens/DeleteReview';
 import DeletePhoto from './screens/DeletePhoto';
 import GetLocation from './screens/GetLocation';
+import LocationDetails from './screens/LocationDetails';
 
 const Stack = createStackNavigator();
 
@@ -97,7 +98,12 @@ class App extends Component {
           <Stack.Screen
             name="GetLocation"
             component={GetLocation}
-            options={{title: 'Find a Location'}}
+            options={{title: 'View all Locations'}}
+          />
+          <Stack.Screen
+            name="LocationDetails"
+            component={LocationDetails}
+            options={{title: 'Location Details'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

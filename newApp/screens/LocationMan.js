@@ -9,7 +9,7 @@ class LocationMan extends Component {
         <Text style={styles.Label}>Select one of the following options:</Text>
         <TouchableOpacity
           style={styles.Touch}
-          onPress={() => navigation.navigate('GetLocation')}>
+          onPress={() => navigation.navigate('Location')}>
           <Text style={styles.TouchText}>View Location Information</Text>
         </TouchableOpacity>
         <View style={styles.space} />
