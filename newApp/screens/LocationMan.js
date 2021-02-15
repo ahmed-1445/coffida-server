@@ -9,20 +9,14 @@ class LocationMan extends Component {
         <Text style={styles.Label}>Select one of the following options:</Text>
         <TouchableOpacity
           style={styles.Touch}
-          onPress={() => navigation.navigate('Location')}>
-          <Text style={styles.TouchText}>View Location Information</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => navigation.navigate('FavLocation')}>
-          <Text style={styles.TouchText}>View Favourite Locations</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
           onPress={() => navigation.navigate('GetLocation')}>
-          <Text style={styles.TouchText}>View Locations</Text>
+          <Text style={styles.TouchText}>View all Locations</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('FavouriteLocations')}>
+          <Text style={styles.TouchText}>Liked Locations</Text>
         </TouchableOpacity>
       </View>
     );
@@ -36,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightseagreen',
   },
   Label: {
-    fontSize: 13,
+    fontSize: 15,
     color: 'white',
   },
   Input: {
@@ -45,17 +39,23 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
-    padding: 10,
-    alignItems: 'center',
+    // alignItems: 'center',
+    // borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 50,
   },
   TouchText: {
-    fontSize: 20,
+    fontSize: 15,
     color: 'white',
+    elevation: 8,
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 50,
   },
   space: {
-    width: 20,
-    height: 20,
+    width: 5,
+    height: 5,
   },
 });
 

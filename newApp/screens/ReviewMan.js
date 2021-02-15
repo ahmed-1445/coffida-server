@@ -7,11 +7,11 @@ class ReviewMan extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.Label}>The following options are available:</Text>
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => navigation.navigate('AddReview')}>
-          <Text style={styles.TouchText}>Add a Review</Text>
-        </TouchableOpacity>
+        {/*<TouchableOpacity*/}
+        {/*  style={styles.Touch}*/}
+        {/*  onPress={() => navigation.navigate('AddReview')}>*/}
+        {/*  <Text style={styles.TouchText}>Add a Review</Text>*/}
+        {/*</TouchableOpacity>*/}
         <View style={styles.space} />
         <TouchableOpacity
           style={styles.Touch}

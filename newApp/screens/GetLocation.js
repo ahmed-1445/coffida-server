@@ -62,7 +62,6 @@ class GetLocation extends Component {
           isLoading: false,
           listData: responseJson,
         });
-        console.log(this.state.listData);
       })
       .catch((error) => {
         console.log(error);
@@ -85,24 +84,25 @@ class GetLocation extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <Text style={styles.Label}>Locations:</Text>
-          <View style={styles.space} />
+          <Text style={styles.Label}>
+            Select one of the following locations:
+          </Text>
           <FlatList
             data={this.state.listData}
             renderItem={({item}) => (
               <TouchableOpacity
                 onPress={() => singleLocation(item.location_id)}>
+                <View style={styles.space} />
                 <View>
-                  {/*<Text style={styles.Label}>ID: {item.location_id}</Text>*/}
-                  <Text style={styles.Label}>Name: {item.location_name}</Text>
-                  <Text style={styles.Label}>City: {item.location_town}</Text>
-                  <View style={styles.space} />
+                  <Text style={styles.Label}>{item.location_name}</Text>
+                  <Text style={styles.Label}>{item.location_town}</Text>
+                  <View style={styles.row} />
                 </View>
+                <View style={styles.space} />
               </TouchableOpacity>
             )}
             keyExtractor={(item, index) => item.location_id.toString()}
           />
-          <View style={styles.space} />
         </View>
       );
     }
@@ -126,9 +126,23 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'white',
   },
+  // Boarder: {
+  //   borderWidth: 1.5,
+  //   borderColor: 'black',
+  //   borderRadius: 5,
+  // },
+  row: {
+    padding: 2,
+    borderBottomColor: 'white',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   space: {
     width: 10,
     height: 10,
+  },
+  spaceSmall: {
+    width: 7,
+    height: 7,
   },
 });
 
