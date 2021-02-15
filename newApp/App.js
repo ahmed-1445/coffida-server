@@ -21,6 +21,7 @@ import DeleteReview from './screens/DeleteReview';
 import DeletePhoto from './screens/DeletePhoto';
 import GetLocation from './screens/GetLocation';
 import LocationDetails from './screens/LocationDetails';
+import FavouriteLocations from "./screens/FavouriteLocations";
 
 const Stack = createStackNavigator();
 
@@ -103,7 +104,12 @@ class App extends Component {
           <Stack.Screen
             name="LocationDetails"
             component={LocationDetails}
-            options={{title: 'Location Details'}}
+            options={{title: 'Location Details & Reviews'}}
+          />
+          <Stack.Screen
+            name="FavouriteLocations"
+            component={FavouriteLocations}
+            options={{title: 'Favourite Locations'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

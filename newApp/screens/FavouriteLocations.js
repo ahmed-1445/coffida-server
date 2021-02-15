@@ -1,0 +1,141 @@
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ToastAndroid,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+// import FlatList from 'react-native-gesture-handler';
+
+class FavouriteLocations extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: true,
+      favLocations: [],
+      location_name: '',
+      location_town: '',
+    };
+  }
+
+  componentDidMount() {
+    // this.unsubscribe = this.props.navigation.addListener('focus', () => {
+    //   this.checkAuth();
+    // });
+    this.favLocations();
+  }
+
+  // componentWillUnmount() {
+  //   this.unsubscribe();
+  // }
+
+  // checkAuth = async () => {
+  //   const value = await AsyncStorage.getItem('@session_token');
+  //   if (value == null) {
+  //     this.props.navigation.navigate('Login');
+  //   }
+  // };
+
+  favLocations = async () => {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/find?search_in=favourite', {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': userToken,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else {
+          throw 'Error, please try again!';
+        }
+      })
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          favLocations: responseJson,
+          // location_name: responseJson.location_name,
+          // location_town: responseJson.location_town,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
+
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loading}>
+          <Text style={styles.Label}>Loading...</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.Label}>
+            Choose one of the following locations:
+          </Text>
+          <View style={styles.space} />
+          <FlatList
+            data={this.state.favLocations}
+            renderItem={({item}) => (
+              <View>
+                <View style={styles.row} />
+                <Text style={styles.Label}>Name: {item.location_name}</Text>
+                <Text style={styles.Label}>City: {item.location_town}</Text>
+                <View style={styles.row} />
+                <View style={styles.space} />
+              </View>
+            )}
+            keyExtractor={(item, index) => item.location_id.toString()}
+          />
+          <View style={styles.space} />
+        </View>
+      );
+    }
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 2,
+    backgroundColor: 'lightseagreen',
+  },
+  loading: {
+    backgroundColor: 'lightseagreen',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  Label: {
+    fontSize: 15,
+    color: 'white',
+  },
+  Boarder: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+  },
+  row: {
+    padding: 2,
+    borderBottomColor: 'white',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  space: {
+    width: 10,
+    height: 10,
+  },
+});
+
+export default FavouriteLocations;

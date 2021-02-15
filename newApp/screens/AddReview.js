@@ -6,7 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ToastAndroid,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class AddReview extends Component {
   constructor(props) {
@@ -17,21 +19,69 @@ class AddReview extends Component {
       priceRating: '',
       qualityRating: '',
       cleanlinessRating: '',
-      reviewComment: '',
+      reviewBody: '',
     };
   }
 
-  test = () => {
-    console.log(this.state);
-  };
+  // test = () => {
+  //   console.log(this.state);
+  // };
 
   // TextInput fields to be replaced with Stars
+
+  // componentDidMount() {
+  //   this.addReview();
+  // }
+
+  addReview = async () => {
+    // Needs validation
+    const userToken = await AsyncStorage.getItem('@session_token');
+    const locationID = await AsyncStorage.getItem('@location_id');
+    let details = {
+      overall_rating: parseInt(this.state.overallRating),
+      price_rating: parseInt(this.state.priceRating),
+      quality_rating: parseInt(this.state.qualityRating),
+      clenliness_rating: parseInt(this.state.cleanlinessRating),
+      review_body: this.state.reviewBody,
+    };
+
+    return fetch(
+      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review',
+      {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authorization': userToken,
+        },
+        body: JSON.stringify(details),
+      },
+    )
+      .then((response) => {
+        if (response.status === 201) {
+          return response.json();
+        } else if (response.status === 400) {
+          throw 'Please try again!';
+        } else {
+          throw 'Something went wrong...';
+        }
+      })
+      .then((responseJSON) => {
+        console.log('Review added!', responseJSON);
+        ToastAndroid.show('Review added', ToastAndroid.SHORT);
+        this.props.navigation.navigate('AuthenticatedUser');
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.title}>Please enter the following details:</Text>
+          <Text style={styles.Label}>Please enter the following details:</Text>
+          <View style={styles.space} />
           <View>
             <Text style={styles.Label}>Overall Rating:</Text>
             <TextInput
@@ -75,13 +125,15 @@ class AddReview extends Component {
             <TextInput
               placeholder="Any comments?"
               style={styles.Input}
-              onChangeText={(reviewComment) => this.setState({reviewComment})}
-              value={this.state.reviewComment}
+              onChangeText={(reviewBody) => this.setState({reviewBody})}
+              value={this.state.reviewBody}
             />
           </View>
           <View style={styles.space} />
           <View>
-            <TouchableOpacity style={styles.Touch} onPress={() => this.test()}>
+            <TouchableOpacity
+              style={styles.Touch}
+              onPress={() => this.addReview()}>
               <Text style={styles.TouchText}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -97,12 +149,11 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
-  title: {
-    color: 'white',
-    // backgroundColor: 'red', - needs further adjusting
-    padding: 3,
-    fontSize: 14,
-  },
+  // title: {
+  //   color: 'white',
+  //   padding: 3,
+  //   fontSize: 14,
+  // },
   Label: {
     fontSize: 13,
     color: 'white',
@@ -113,18 +164,21 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
-    padding: 10,
-    alignItems: 'center',
+    paddingVertical: 1,
+    paddingHorizontal: 20,
   },
   TouchText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: 'white',
+    elevation: 8,
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 115,
   },
   space: {
-    width: 20,
-    height: 20,
+    width: 10,
+    height: 10,
   },
 });
 

@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {
   View,
   TextInput,
-  // ScrollView,
+  ScrollView,
   Text,
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
-  // VirtualizedList,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -16,30 +15,31 @@ class UpdateUser extends Component {
     super(props);
 
     this.state = {
-      id: '',
+      // id: '',
       first_name: '',
       last_ame: '',
       email: '',
       password: '',
+      user_data: [],
     };
   }
 
-  test = () => {
-    console.log(this.state);
-  };
+  // componentDidMount() {
+  //   this.update();
+  // }
 
   update = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    // const id = await AsyncStorage.getItem('@user_id');
+    const id = await AsyncStorage.getItem('@user_id');
     let details = {
-      user_id: parseInt(this.state.id),
+      // user_id: parseInt(this.state.id),
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
       password: this.state.password,
     };
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/', +this.state.id, {
-      method: 'put',
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + id, {
+      method: 'patch',
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
@@ -56,11 +56,12 @@ class UpdateUser extends Component {
         }
       })
       .then(async (responseJson) => {
-        console.log(this.test);
         this.setState({
           // loading: false,
           user_data: responseJson,
         });
+        ToastAndroid.show('Account Details Updated!', ToastAndroid.SHORT);
+        this.props.navigation.navigate('AuthenticatedUser');
       })
       .catch((error) => {
         console.log(error);
@@ -71,60 +72,64 @@ class UpdateUser extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.Label}>Please fill in the below form...</Text>
-        <View style={styles.space} />
-        <Text style={styles.Label}>User ID:</Text>
-        <TextInput
-          placeholder="Enter your user ID"
-          style={styles.Input}
-          onChangeText={(id) => this.setState({id})}
-          value={this.state.id}
-        />
-        <View style={styles.space} />
-        <View>
-          <Text style={styles.Label}>First Name:</Text>
-          <TextInput
-            placeholder="Enter your first name"
-            style={styles.Input}
-            onChangeText={(first_name) => this.setState({first_name})}
-            value={this.state.first_name}
-          />
-        </View>
-        <View>
-          <Text style={styles.Label}>Last Name:</Text>
-          <TextInput
-            placeholder="Enter your last name"
-            style={styles.Input}
-            onChangeText={(last_name) => this.setState({last_name})}
-            value={this.state.last_name}
-          />
-        </View>
-        <View>
-          <Text style={styles.Label}>Email:</Text>
-          <TextInput
-            placeholder="Enter your Email Address"
-            style={styles.Input}
-            onChangeText={(email) => this.setState({email})}
-            value={this.state.email}
-          />
-        </View>
-        <View>
-          <Text style={styles.Label}>Password:</Text>
-          <TextInput
-            placeholder="Enter your password"
-            style={styles.Input}
-            onChangeText={(password) => this.setState({password})}
-            value={this.state.password}
-            secureTextEntry={true}
-          />
-        </View>
-        <View style={styles.space} />
-        <View>
-          <TouchableOpacity style={styles.Touch} onPress={() => this.update()}>
-            <Text style={styles.TouchText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.space} />
+        <ScrollView>
+          <Text style={styles.Label}>Please fill in the below form...</Text>
+          <View style={styles.space} />
+          {/*<Text style={styles.Label}>User ID:</Text>*/}
+          {/*<TextInput*/}
+          {/*  placeholder="Enter your user ID"*/}
+          {/*  style={styles.Input}*/}
+          {/*  onChangeText={(id) => this.setState({id})}*/}
+          {/*  value={this.state.id}*/}
+          {/*/>*/}
+          {/*<View style={styles.space} />*/}
+          <View>
+            <Text style={styles.Label}>First Name:</Text>
+            <TextInput
+              placeholder="Enter your first name"
+              style={styles.Input}
+              onChangeText={(first_name) => this.setState({first_name})}
+              value={this.state.first_name}
+            />
+          </View>
+          <View>
+            <Text style={styles.Label}>Last Name:</Text>
+            <TextInput
+              placeholder="Enter your last name"
+              style={styles.Input}
+              onChangeText={(last_name) => this.setState({last_name})}
+              value={this.state.last_name}
+            />
+          </View>
+          <View>
+            <Text style={styles.Label}>Email:</Text>
+            <TextInput
+              placeholder="Enter your Email Address"
+              style={styles.Input}
+              onChangeText={(email) => this.setState({email})}
+              value={this.state.email}
+            />
+          </View>
+          <View>
+            <Text style={styles.Label}>Password:</Text>
+            <TextInput
+              placeholder="Enter your password"
+              style={styles.Input}
+              onChangeText={(password) => this.setState({password})}
+              value={this.state.password}
+              secureTextEntry={true}
+            />
+          </View>
+          <View style={styles.space} />
+          <View style={styles.space} />
+          <View>
+            <TouchableOpacity
+              style={styles.Touch}
+              onPress={() => this.update()}>
+              <Text style={styles.TouchText}>Update</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
         <View style={styles.space} />
         {/*<VirtualizedList*/}
         {/*  data={this.state.user_data}*/}

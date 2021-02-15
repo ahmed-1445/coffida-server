@@ -100,16 +100,16 @@ class LocationDetails extends Component {
       const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
-          {/*<Text style={styles.Label}>Details:</Text>*/}
+          <View style={styles.rowSplit} />
           <Text style={styles.Label}>Name: {this.state.location_name}</Text>
           <Text style={styles.Label}>City: {this.state.location_town}</Text>
           {/*<Text style={styles.Label}>Latitude: {this.state.latitude}</Text>*/}
           {/*<Text style={styles.Label}>Longitude: {this.state.longitude}</Text>*/}
           {/*<Text style={styles.Label}>Photo Path: {this.state.photo_path}</Text>*/}
-          <Text style={styles.Label}>Average Overall Rating:               {this.state.avg_overall_rating}/10</Text>
-          <Text style={styles.Label}>Average Price Rating:                   {this.state.avg_price_rating}/10</Text>
-          <Text style={styles.Label}>Average Quality Rating:                {this.state.avg_quality_rating}/10</Text>
-          <Text style={styles.Label}>Average Cleanliness Rating:        {this.state.avg_clenliness_rating}/10</Text>
+          <Text style={styles.Label}>Average Overall Rating:               {this.state.avg_overall_rating}/5</Text>
+          <Text style={styles.Label}>Average Price Rating:                   {this.state.avg_price_rating}/5</Text>
+          <Text style={styles.Label}>Average Quality Rating:                {this.state.avg_quality_rating}/5</Text>
+          <Text style={styles.Label}>Average Cleanliness Rating:        {this.state.avg_clenliness_rating}/5</Text>
           <View style={styles.rowSplit} />
           <View style={styles.space} />
           <Text style={styles.Label}>Reviews:</Text>

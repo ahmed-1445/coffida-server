@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
-  // VirtualizedList,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -16,32 +15,35 @@ class UpdateReview extends Component {
     super(props);
 
     this.state = {
-      loc_id: '',
-      rev_id: '',
+      location_id: '',
+      review_id: '',
       overall_rating: '',
       quality_rating: '',
       clenliness_rating: '',
       review_body: '',
+      reviewData: [],
     };
   }
 
   update = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    // const id = await AsyncStorage.getItem('@user_id');
+    const locationID = await AsyncStorage.getItem('@location_id');
+    const reviewID = await AsyncStorage.getItem('@review_id');
     let details = {
-      loc_id: parseInt(this.state.loc_id),
-      rev_id: parseInt(this.state.rev_id),
+      location_id: parseInt(this.state.loc_id),
+      review_id: parseInt(this.state.rev_id),
       overall_rating: this.state.overall_rating,
       quality_rating: this.state.quality_rating,
       clenliness_rating: this.state.clenliness_rating,
       review_body: this.state.review_body,
     };
     return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/',
-      +this.state.loc_id,
-      '/review/' + this.state.rev_id,
+      'http://10.0.2.2:3333/api/1.0.0/location/' +
+        locationID +
+        '/review/' +
+        reviewID,
       {
-        method: 'put',
+        method: 'patch',
         headers: {
           'Content-Type': 'application/json',
           'X-Authorization': userToken,
@@ -59,10 +61,8 @@ class UpdateReview extends Component {
         }
       })
       .then(async (responseJson) => {
-        console.log(this.test);
         this.setState({
-          // loading: false,
-          user_data: responseJson,
+          reviewData: responseJson,
         });
       })
       .catch((error) => {
@@ -81,8 +81,8 @@ class UpdateReview extends Component {
           <TextInput
             placeholder="Enter the Location ID"
             style={styles.Input}
-            onChangeText={(loc_id) => this.setState({loc_id})}
-            value={this.state.loc_id}
+            onChangeText={(location_id) => this.setState({location_id})}
+            value={this.state.location_id}
           />
           <View style={styles.space} />
           <View>
@@ -90,8 +90,8 @@ class UpdateReview extends Component {
             <TextInput
               placeholder="Enter the Review ID"
               style={styles.Input}
-              onChangeText={(first_name) => this.setState({first_name})}
-              value={this.state.first_name}
+              onChangeText={(review_id) => this.setState({review_id})}
+              value={this.state.review_id}
             />
           </View>
           <View style={styles.space} />

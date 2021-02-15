@@ -38,32 +38,30 @@ class AuthenticatedUser extends Component {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <Text style={styles.Label}>Select of the following options:</Text>
-          <TouchableOpacity
-            style={styles.Touch}
-            onPress={() => navigation.navigate('UserMan')}>
-            <Text style={styles.TouchText}>My Account</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity
-            style={styles.Touch}
-            onPress={() => navigation.navigate('ReviewMan')}>
-            <Text style={styles.TouchText}>Review Management</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity
-            style={styles.Touch}
-            onPress={() => navigation.navigate('LocationMan')}>
-            <Text style={styles.TouchText}>Location Management</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity
-            style={styles.Touch}
-            onPress={() => navigation.navigate('Logout')}>
-            <Text style={styles.TouchText}>Logout</Text>
-          </TouchableOpacity>
-        </ScrollView>
+        <Text style={styles.Label}>Select of the following options:</Text>
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('UserMan')}>
+          <Text style={styles.TouchText}>My Account</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('ReviewMan')}>
+          <Text style={styles.TouchText}>Reviews</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('LocationMan')}>
+          <Text style={styles.TouchText}>Locations</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('Logout')}>
+          <Text style={styles.TouchText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -75,8 +73,14 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
+  // logout: {
+  //   marginTop: 10,
+  //   // flex: 2,
+  //   padding: 55,
+  //   backgroundColor: 'lightseagreen',
+  // },
   Label: {
-    fontSize: 13,
+    fontSize: 15,
     color: 'white',
   },
   Input: {
@@ -85,18 +89,23 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
-    padding: 10,
-    alignItems: 'center',
+    // alignItems: 'center',
+    // borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
   },
   TouchText: {
-    fontSize: 20,
-    // fontWeight: 'bold',
+    fontSize: 15,
     color: 'white',
+    elevation: 8,
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 95,
   },
   space: {
-    width: 20,
-    height: 20,
+    width: 10,
+    height: 10,
   },
 });
 
