@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import {Avatar} from 'react-native-elements';
 // import FlatList from 'react-native-gesture-handler';
 
 class GetLocation extends Component {
@@ -17,7 +18,7 @@ class GetLocation extends Component {
     this.state = {
       isLoading: true,
       listData: [],
-      // location_id: '',
+      loc_id: '',
     };
   }
 
@@ -26,6 +27,7 @@ class GetLocation extends Component {
       this.checkAuth();
     });
     this.allLocations();
+    // this.addFav();
   }
 
   componentWillUnmount() {
@@ -72,6 +74,10 @@ class GetLocation extends Component {
   render() {
     const singleLocation = async (location_id) => {
       await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
+      console.log('ID: ', location_id);
+      this.setState({
+        location_id: this.state.loc_id,
+      })
       this.props.navigation.navigate('LocationDetails');
     };
     // const navigation = this.props.navigation;
@@ -95,10 +101,9 @@ class GetLocation extends Component {
                 <View style={styles.space} />
                 <View>
                   <Text style={styles.Label}>{item.location_name}</Text>
-                  <Text style={styles.Label}>{item.location_town}</Text>
-                  <View style={styles.row} />
+                  <Text style={{fontSize: 15, color: 'white', }}>{item.location_town}</Text>
                 </View>
-                <View style={styles.space} />
+                <View style={styles.row} />
               </TouchableOpacity>
             )}
             keyExtractor={(item, index) => item.location_id.toString()}
@@ -115,6 +120,16 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
+  test: {
+    flex: 1,
+    // alignItems: '',
+  },
+  avatar: {
+    // padding: 2,
+    // flex: 1,
+    //marginLeft: 250,
+    marginRight: 20,
+  },
   loading: {
     backgroundColor: 'lightseagreen',
     flex: 1,
@@ -123,7 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Label: {
-    fontSize: 15,
+    fontSize: 20,
     color: 'white',
   },
   // Boarder: {

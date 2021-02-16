@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-// Importing all Screens & Components
+// Importing all screens
 import Home from './screens/Home';
 import Register from './screens/Register';
 import Login from './screens/Login';
@@ -21,7 +21,8 @@ import DeleteReview from './screens/DeleteReview';
 import DeletePhoto from './screens/DeletePhoto';
 import GetLocation from './screens/GetLocation';
 import LocationDetails from './screens/LocationDetails';
-import FavouriteLocations from "./screens/FavouriteLocations";
+import FavouriteLocations from './screens/FavouriteLocations';
+// import AddFavourite from './screens/AddFavourite';
 
 const Stack = createStackNavigator();
 
@@ -50,11 +51,6 @@ class App extends Component {
             name="Logout"
             component={Logout}
             options={{title: 'Goodbye!'}}
-          />
-          <Stack.Screen
-            name="FindUser"
-            component={GetUser}
-            options={{title: 'View your Information'}}
           />
           <Stack.Screen
             name="UpdateUser"
@@ -111,6 +107,11 @@ class App extends Component {
             component={FavouriteLocations}
             options={{title: 'Favourite Locations'}}
           />
+          {/*<Stack.Screen*/}
+          {/*  name="AddFavourite"*/}
+          {/*  component={AddFavourite}*/}
+          {/*  options={{title: 'Add a Favourite'}}*/}
+          {/*/>*/}
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -79,6 +79,7 @@ class FavouriteLocations extends Component {
         </View>
       );
     } else {
+      const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
           <Text style={styles.Label}>
@@ -90,15 +91,21 @@ class FavouriteLocations extends Component {
             renderItem={({item}) => (
               <View>
                 <View style={styles.row} />
-                <Text style={styles.Label}>Name: {item.location_name}</Text>
-                <Text style={styles.Label}>City: {item.location_town}</Text>
-                <View style={styles.row} />
                 <View style={styles.space} />
+                <Text style={styles.Label}>{item.location_name}</Text>
+                <Text style={styles.Label}>{item.location_town}</Text>
+                <View style={styles.space} />
+                <View style={styles.row} />
               </View>
             )}
             keyExtractor={(item, index) => item.location_id.toString()}
           />
           <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => navigation.navigate('AddFavourite')}>
+            <Text style={styles.TouchText}>Add a Favourite</Text>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -132,9 +139,22 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+  Touch: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  TouchText: {
+    fontSize: 14,
+    color: 'white',
+    elevation: 8,
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 7,
+    paddingHorizontal: 95,
+  },
   space: {
-    width: 10,
-    height: 10,
+    width: 5,
+    height: 5,
   },
 });
 

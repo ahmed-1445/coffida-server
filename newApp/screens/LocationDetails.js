@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Avatar } from "react-native-elements";
 
 class LocationDetails extends Component {
   constructor(props) {
@@ -89,6 +90,52 @@ class LocationDetails extends Component {
       });
   };
 
+  addFav = async () => {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    const location_id = await AsyncStorage.getItem('@location_id');
+    return fetch(
+      'http://10.0.2.2:3333/api/1.0.0/location/' + location_id + '/favourite',
+      {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authorization': userToken,
+        },
+      },
+    )
+      .then(() => {
+        ToastAndroid.show('Favourited it', ToastAndroid.SHORT);
+        console.log('Should be added');
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
+
+  delFav = async () => {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    const location_id = await AsyncStorage.getItem('@location_id');
+    return fetch(
+      'http://10.0.2.2:3333/api/1.0.0/location/' + location_id + '/favourite',
+      {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authorization': userToken,
+        },
+      },
+    )
+      .then(() => {
+        ToastAndroid.show('Favourited it', ToastAndroid.SHORT);
+        console.log('Should be added');
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -100,23 +147,39 @@ class LocationDetails extends Component {
       const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
-          <View style={styles.rowSplit} />
-          <Text style={styles.Label}>Name: {this.state.location_name}</Text>
-          <Text style={styles.Label}>City: {this.state.location_town}</Text>
+          <Text style={styles.Title}>{this.state.location_name} - {this.state.location_town}</Text>
+          <View style={styles.fav}>
+            <Avatar
+              rounded
+              size="small"
+              icon={{name: 'heart', type: 'font-awesome'}}
+              onPress={() => this.addFav()}
+              activeOpacity={0.7}
+            />
+          </View>
+          <View style={styles.noFav}>
+            <Avatar
+              rounded
+              size="small"
+              icon={{name: 'heart', type: 'font-awesome'}}
+              onPress={() => this.delFav()}
+              activeOpacity={0.7}
+            />
+          </View>
+          {/*<View style={styles.rowSplit} />*/}
           {/*<Text style={styles.Label}>Latitude: {this.state.latitude}</Text>*/}
           {/*<Text style={styles.Label}>Longitude: {this.state.longitude}</Text>*/}
           {/*<Text style={styles.Label}>Photo Path: {this.state.photo_path}</Text>*/}
-          <Text style={styles.Label}>Average Overall Rating:               {this.state.avg_overall_rating}/5</Text>
-          <Text style={styles.Label}>Average Price Rating:                   {this.state.avg_price_rating}/5</Text>
-          <Text style={styles.Label}>Average Quality Rating:                {this.state.avg_quality_rating}/5</Text>
-          <Text style={styles.Label}>Average Cleanliness Rating:        {this.state.avg_clenliness_rating}/5</Text>
+          <Text style={styles.rating}>Average Overall Rating:               {this.state.avg_overall_rating}/5</Text>
+          <Text style={styles.rating}>Average Price Rating:                   {this.state.avg_price_rating}/5</Text>
+          <Text style={styles.rating}>Average Quality Rating:                {this.state.avg_quality_rating}/5</Text>
+          <Text style={styles.rating}>Average Cleanliness Rating:        {this.state.avg_clenliness_rating}/5</Text>
           <View style={styles.rowSplit} />
-          <View style={styles.space} />
-          <Text style={styles.Label}>Reviews:</Text>
+          <Text style={styles.revTitle}>Reviews:</Text>
           <FlatList
             data={this.state.reviewData}
             renderItem={({item}) => (
-              <View>
+              <View style={styles.review}>
                 <View style={styles.row} />
                 <Text style={styles.Label}>Overall Rating: {item.overall_rating}</Text>
                 <Text style={styles.Label}>Price Rating: {item.price_rating}</Text>
@@ -147,6 +210,14 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
+  fav: {
+    alignSelf: 'flex-end',
+    top: -25,
+  },
+  noFav: {
+    alignSelf: 'flex-end',
+    top: -35,
+  },
   loading: {
     backgroundColor: 'lightseagreen',
     flex: 1,
@@ -157,6 +228,29 @@ const styles = StyleSheet.create({
   Label: {
     fontSize: 15,
     color: 'white',
+    // top: 0,
+  },
+  rating: {
+    fontSize: 15,
+    color: 'white',
+    top: -25,
+  },
+  review: {
+    fontSize: 15,
+    color: 'white',
+  },
+  Title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'white',
+    // elevation: 8,
+    // paddingHorizontal: 10,
+  },
+  revTitle: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'white',
+    top: -10,
   },
   Boarder: {
     borderWidth: 1,
@@ -167,11 +261,13 @@ const styles = StyleSheet.create({
     padding: 2,
     borderBottomColor: 'white',
     borderBottomWidth: 2,
+    // top: 0,
   },
   rowSplit: {
     padding: 2,
     borderBottomColor: 'white',
     borderBottomWidth: 5,
+    top: -25,
   },
   Touch: {
     paddingVertical: 10,

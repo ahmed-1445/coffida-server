@@ -16,7 +16,7 @@ class LocationMan extends Component {
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('FavouriteLocations')}>
-          <Text style={styles.TouchText}>Liked Locations</Text>
+          <Text style={styles.TouchText}>Favourite Locations</Text>
         </TouchableOpacity>
       </View>
     );
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // borderRadius: 10,
     paddingVertical: 15,
-    paddingHorizontal: 50,
+    paddingHorizontal: 45,
   },
   TouchText: {
     fontSize: 15,
