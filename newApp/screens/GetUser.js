@@ -16,12 +16,10 @@ class GetUser extends Component {
     this.state = {
       // id: '',
       isLoading: true,
-      user_id: '',
       first_name: '',
       last_name: '',
       email: '',
       token: '',
-      // userData: [],
     };
   }
 
@@ -50,8 +48,6 @@ class GetUser extends Component {
       .then((responseJson) => {
         this.setState({
           isLoading: false,
-          // userData: responseJson,
-          user_id: responseJson.user_id,
           first_name: responseJson.first_name,
           last_name: responseJson.last_name,
           email: responseJson.email,
@@ -76,10 +72,12 @@ class GetUser extends Component {
         <View style={styles.container}>
           <Text style={styles.Label}>Your details...</Text>
           <View style={styles.space} />
-          <Text style={styles.Label}>Account ID: {this.state.user_id}</Text>
-          <Text style={styles.Label}>First Name: {this.state.first_name}</Text>
+          <Text style={styles.Label}>
+            Name: {this.state.first_name} {this.state.last_name}
+          </Text>
           <Text style={styles.Label}>Last Name: {this.state.last_name}</Text>
           <Text style={styles.Label}>Email: {this.state.email}</Text>
+          <View style={styles.row} />
           <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
@@ -113,6 +111,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
+  },
+  row: {
+    padding: 2,
+    borderBottomColor: 'white',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   Touch: {
     backgroundColor: 'darkorchid',

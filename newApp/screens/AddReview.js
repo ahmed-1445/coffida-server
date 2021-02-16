@@ -56,19 +56,10 @@ class AddReview extends Component {
         body: JSON.stringify(details),
       },
     )
-      .then((response) => {
-        if (response.status === 201) {
-          return response.json();
-        } else if (response.status === 400) {
-          throw 'Please try again!';
-        } else {
-          throw 'Something went wrong...';
-        }
-      })
       .then((responseJSON) => {
         console.log('Review added!', responseJSON);
         ToastAndroid.show('Review added', ToastAndroid.SHORT);
-        this.props.navigation.navigate('AuthenticatedUser');
+        this.props.navigation.navigate('GetLocation');
       })
       .catch((error) => {
         console.log(error);

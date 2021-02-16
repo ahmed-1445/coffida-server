@@ -15,24 +15,59 @@ class UpdateUser extends Component {
     super(props);
 
     this.state = {
-      // id: '',
       first_name: '',
       last_ame: '',
       email: '',
       password: '',
-      user_data: [],
     };
   }
 
-  // componentDidMount() {
-  //   this.update();
-  // }
+  componentDidMount() {
+    this.getInfo();
+  }
 
-  update = async () => {
+  getInfo = async () => {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    const user_id = await AsyncStorage.getItem('@id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + user_id, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': userToken,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 400) {
+          throw 'Bad Request!';
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 404) {
+          throw 'Forbidden!';
+        } else if (response.status === 500) {
+          throw 'Server Error!';
+        } else {
+          throw 'Error, please try again!';
+        }
+      })
+      .then((responseJson) => {
+        this.setState({
+          user_id: responseJson.user_id,
+          first_name: responseJson.first_name,
+          last_name: responseJson.last_name,
+          email: responseJson.email,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
+
+  updateInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
     const id = await AsyncStorage.getItem('@user_id');
     let details = {
-      // user_id: parseInt(this.state.id),
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
@@ -48,20 +83,13 @@ class UpdateUser extends Component {
     })
       .then((response) => {
         if (response.status === 200) {
-          return response.json();
+          ToastAndroid.show('Account Details Updated!', ToastAndroid.SHORT);
+          this.props.navigation.navigate('UserMan');
         } else if (response.status === 400) {
-          throw 'Invalid email or password, please try again!';
+          throw 'Invalid details, please try again!';
         } else {
           throw 'Error, please try again!';
         }
-      })
-      .then(async (responseJson) => {
-        this.setState({
-          // loading: false,
-          user_data: responseJson,
-        });
-        ToastAndroid.show('Account Details Updated!', ToastAndroid.SHORT);
-        this.props.navigation.navigate('AuthenticatedUser');
       })
       .catch((error) => {
         console.log(error);
@@ -73,18 +101,10 @@ class UpdateUser extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.Label}>Please fill in the below form...</Text>
+          <Text style={styles.Label}>Update your account details:</Text>
           <View style={styles.space} />
-          {/*<Text style={styles.Label}>User ID:</Text>*/}
-          {/*<TextInput*/}
-          {/*  placeholder="Enter your user ID"*/}
-          {/*  style={styles.Input}*/}
-          {/*  onChangeText={(id) => this.setState({id})}*/}
-          {/*  value={this.state.id}*/}
-          {/*/>*/}
-          {/*<View style={styles.space} />*/}
           <View>
-            <Text style={styles.Label}>First Name:</Text>
+            <Text style={styles.Label}>Change first nme:</Text>
             <TextInput
               placeholder="Enter your first name"
               style={styles.Input}
@@ -93,7 +113,7 @@ class UpdateUser extends Component {
             />
           </View>
           <View>
-            <Text style={styles.Label}>Last Name:</Text>
+            <Text style={styles.Label}>Change last name:</Text>
             <TextInput
               placeholder="Enter your last name"
               style={styles.Input}
@@ -102,7 +122,7 @@ class UpdateUser extends Component {
             />
           </View>
           <View>
-            <Text style={styles.Label}>Email:</Text>
+            <Text style={styles.Label}>Change email:</Text>
             <TextInput
               placeholder="Enter your Email Address"
               style={styles.Input}
@@ -111,9 +131,9 @@ class UpdateUser extends Component {
             />
           </View>
           <View>
-            <Text style={styles.Label}>Password:</Text>
+            <Text style={styles.Label}>Change password:</Text>
             <TextInput
-              placeholder="Enter your password"
+              placeholder="Enter your password (required)"
               style={styles.Input}
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
@@ -125,22 +145,12 @@ class UpdateUser extends Component {
           <View>
             <TouchableOpacity
               style={styles.Touch}
-              onPress={() => this.update()}>
+              onPress={() => this.updateInfo()}>
               <Text style={styles.TouchText}>Update</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
         <View style={styles.space} />
-        {/*<VirtualizedList*/}
-        {/*  data={this.state.user_data}*/}
-        {/*  renderItem={({item}) => (*/}
-        {/*    <View>*/}
-        {/*      <Text>{item.first_name}</Text>*/}
-        {/*      <Text>{item.last_name}</Text>*/}
-        {/*    </View>*/}
-        {/*  )}*/}
-        {/*  keyExtractor={(item) => item.id.toString()}*/}
-        {/*/>*/}
       </View>
     );
   }
@@ -162,14 +172,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
-    padding: 10,
-    alignItems: 'center',
+    // alignItems: 'center',
+    // borderRadius: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 25,
   },
   TouchText: {
-    fontSize: 20,
-    // fontWeight: 'bold',
+    fontSize: 15,
     color: 'white',
+    elevation: 8,
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 110,
   },
   space: {
     width: 5,
