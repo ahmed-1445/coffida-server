@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Avatar} from 'react-native-elements';
-// import FlatList from 'react-native-gesture-handler';
 
 class GetLocation extends Component {
   constructor(props) {
@@ -27,7 +25,6 @@ class GetLocation extends Component {
       this.checkAuth();
     });
     this.allLocations();
-    // this.addFav();
   }
 
   componentWillUnmount() {
@@ -77,22 +74,23 @@ class GetLocation extends Component {
       console.log('ID: ', location_id);
       this.setState({
         location_id: this.state.loc_id,
-      })
+      });
       this.props.navigation.navigate('LocationDetails');
     };
     // const navigation = this.props.navigation;
     if (this.state.isLoading) {
       return (
         <View style={styles.loading}>
-          <Text style={styles.Label}>Loading...</Text>
+          <Text style={styles.Title}>Loading...</Text>
         </View>
       );
     } else {
       return (
-        <View style={styles.container}>
-          <Text style={styles.Label}>
+        <View style={styles.listContainer}>
+          <Text style={styles.Title}>
             Select one of the following locations:
           </Text>
+          <View style={styles.space} />
           <FlatList
             data={this.state.listData}
             renderItem={({item}) => (
@@ -100,8 +98,8 @@ class GetLocation extends Component {
                 onPress={() => singleLocation(item.location_id)}>
                 <View style={styles.space} />
                 <View>
-                  <Text style={styles.Label}>{item.location_name}</Text>
-                  <Text style={{fontSize: 15, color: 'white', }}>{item.location_town}</Text>
+                  <Text style={styles.Title}>{item.location_name}</Text>
+                  <Text style={styles.subTitle}>{item.location_town}</Text>
                 </View>
                 <View style={styles.row} />
               </TouchableOpacity>
@@ -120,9 +118,15 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
-  test: {
+  listContainer: {
     flex: 1,
-    // alignItems: '',
+    padding: 2,
+    backgroundColor: 'lightseagreen',
+  },
+  listItem: {
+    flex: 1,
+    padding: 2,
+    backgroundColor: 'white',
   },
   avatar: {
     // padding: 2,
@@ -137,15 +141,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Label: {
-    fontSize: 20,
+  Title: {
+    fontSize: 17,
     color: 'white',
   },
-  // Boarder: {
-  //   borderWidth: 1.5,
-  //   borderColor: 'black',
-  //   borderRadius: 5,
-  // },
+  subTitle: {
+    fontSize: 15,
+    color: 'white',
+  },
   row: {
     padding: 2,
     borderBottomColor: 'white',

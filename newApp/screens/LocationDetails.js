@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Avatar } from "react-native-elements";
+import {Avatar} from 'react-native-elements';
 
 class LocationDetails extends Component {
   constructor(props) {
@@ -104,8 +104,8 @@ class LocationDetails extends Component {
       },
     )
       .then(() => {
-        ToastAndroid.show('Favourited it', ToastAndroid.SHORT);
-        console.log('Should be added');
+        ToastAndroid.show('Favourited!', ToastAndroid.SHORT);
+        console.log('Added to fav!');
       })
       .catch((error) => {
         console.log(error);
@@ -127,8 +127,8 @@ class LocationDetails extends Component {
       },
     )
       .then(() => {
-        ToastAndroid.show('Favourited it', ToastAndroid.SHORT);
-        console.log('Should be added');
+        ToastAndroid.show('Unfavourited!', ToastAndroid.SHORT);
+        console.log('Removed from fav!');
       })
       .catch((error) => {
         console.log(error);
@@ -147,10 +147,11 @@ class LocationDetails extends Component {
       const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
-          <Text style={styles.Title}>{this.state.location_name} - {this.state.location_town}</Text>
+          <Text style={styles.Title}>
+            {this.state.location_name} - {this.state.location_town}
+          </Text>
           <View style={styles.fav}>
             <Avatar
-              rounded
               size="small"
               icon={{name: 'heart', type: 'font-awesome'}}
               onPress={() => this.addFav()}
@@ -159,7 +160,6 @@ class LocationDetails extends Component {
           </View>
           <View style={styles.noFav}>
             <Avatar
-              rounded
               size="small"
               icon={{name: 'heart', type: 'font-awesome'}}
               onPress={() => this.delFav()}

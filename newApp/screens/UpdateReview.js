@@ -15,60 +15,115 @@ class UpdateReview extends Component {
     super(props);
 
     this.state = {
-      location_id: '',
-      review_id: '',
       overall_rating: '',
+      oRating: '',
       quality_rating: '',
       clenliness_rating: '',
       review_body: '',
       reviewData: [],
+      // origData: [],
     };
   }
 
-  update = async () => {
+  componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.checkAuth();
+    });
+    this.getReview();
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  checkAuth = async () => {
+    const value = await AsyncStorage.getItem('@session_token');
+    if (value == null) {
+      this.props.navigation.navigate('Login');
+    }
+  };
+
+  getReview = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const locationID = await AsyncStorage.getItem('@location_id');
-    const reviewID = await AsyncStorage.getItem('@review_id');
-    let details = {
-      location_id: parseInt(this.state.loc_id),
-      review_id: parseInt(this.state.rev_id),
-      overall_rating: this.state.overall_rating,
-      quality_rating: this.state.quality_rating,
-      clenliness_rating: this.state.clenliness_rating,
-      review_body: this.state.review_body,
-    };
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' +
-        locationID +
-        '/review/' +
-        reviewID,
-      {
-        method: 'patch',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Authorization': userToken,
-        },
-        body: JSON.stringify(details),
+    const userID = await AsyncStorage.getItem('@id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': userToken,
       },
-    )
+    })
       .then((response) => {
         if (response.status === 200) {
           return response.json();
         } else if (response.status === 400) {
-          throw 'Invalid details, please try again!';
+          throw 'Bad Request!';
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 404) {
+          throw 'Forbidden!';
+        } else if (response.status === 500) {
+          throw 'Server Error!';
         } else {
           throw 'Error, please try again!';
         }
       })
-      .then(async (responseJson) => {
+      .then((responseJson) => {
         this.setState({
-          reviewData: responseJson,
+          // origData: responseJson.reviews,
+          oRating: responseJson.reviews,
         });
+        console.log(this.state.oRating);
       })
       .catch((error) => {
         console.log(error);
         ToastAndroid.show(error, ToastAndroid.SHORT);
       });
+  };
+
+  updateReview = async () => {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    const locationID = await AsyncStorage.getItem('@location_id');
+    const reviewID = await AsyncStorage.getItem('@review_id');
+    let details = {
+      overall_rating: this.state.overall_rating,
+      quality_rating: this.state.quality_rating,
+      clenliness_rating: this.state.clenliness_rating,
+      review_body: this.state.review_body,
+    };
+    return (
+      fetch(
+        'http://10.0.2.2:3333/api/1.0.0/location/' +
+          locationID +
+          '/review/' +
+          reviewID,
+        {
+          method: 'patch',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': userToken,
+          },
+          body: JSON.stringify(details),
+        },
+      )
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else if (response.status === 400) {
+            throw 'Invalid details, please try again!';
+          } else {
+            throw 'Error, please try again!';
+          }
+        })
+        // .then(async (responseJson) => {
+        //   this.setState({
+        //     reviewData: responseJson,
+        //   });
+        // })
+        .catch((error) => {
+          console.log(error);
+          ToastAndroid.show(error, ToastAndroid.SHORT);
+        })
+    );
   };
 
   render() {
@@ -77,31 +132,13 @@ class UpdateReview extends Component {
         <ScrollView>
           <Text style={styles.Label}>Please fill in the below form...</Text>
           <View style={styles.space} />
-          <Text style={styles.Label}>Location ID:</Text>
-          <TextInput
-            placeholder="Enter the Location ID"
-            style={styles.Input}
-            onChangeText={(location_id) => this.setState({location_id})}
-            value={this.state.location_id}
-          />
-          <View style={styles.space} />
-          <View>
-            <Text style={styles.Label}>Review ID:</Text>
-            <TextInput
-              placeholder="Enter the Review ID"
-              style={styles.Input}
-              onChangeText={(review_id) => this.setState({review_id})}
-              value={this.state.review_id}
-            />
-          </View>
-          <View style={styles.space} />
           <View>
             <Text style={styles.Label}>Overall Rating:</Text>
             <TextInput
               placeholder="What's the overall rating?"
               style={styles.Input}
               onChangeText={(overall_rating) => this.setState({overall_rating})}
-              value={this.state.overall_rating}
+              value={this.state.oRating}
             />
           </View>
           <View style={styles.space} />
@@ -140,12 +177,10 @@ class UpdateReview extends Component {
           <View>
             <TouchableOpacity
               style={styles.Touch}
-              onPress={() => this.update()}>
+              onPress={() => this.updateReview()}>
               <Text style={styles.TouchText}>Submit</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.space} />
-          <View style={styles.space} />
         </ScrollView>
       </View>
     );

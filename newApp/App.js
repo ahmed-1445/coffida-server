@@ -10,7 +10,6 @@ import Register from './screens/Register';
 import Login from './screens/Login';
 import AuthenticatedUser from './screens/AuthenticatedUser';
 import Logout from './screens/Logout';
-import GetUser from './screens/GetUser';
 import UpdateUser from './screens/UpdateUser';
 import UserMan from './screens/UserMan';
 import ReviewMan from './screens/ReviewMan';
@@ -22,7 +21,7 @@ import DeletePhoto from './screens/DeletePhoto';
 import GetLocation from './screens/GetLocation';
 import LocationDetails from './screens/LocationDetails';
 import FavouriteLocations from './screens/FavouriteLocations';
-// import AddFavourite from './screens/AddFavourite';
+import UserReviews from './screens/UserReviews';
 
 const Stack = createStackNavigator();
 
@@ -107,11 +106,11 @@ class App extends Component {
             component={FavouriteLocations}
             options={{title: 'Favourite Locations'}}
           />
-          {/*<Stack.Screen*/}
-          {/*  name="AddFavourite"*/}
-          {/*  component={AddFavourite}*/}
-          {/*  options={{title: 'Add a Favourite'}}*/}
-          {/*/>*/}
+          <Stack.Screen
+            name="UserReviews"
+            component={UserReviews}
+            options={{title: 'My Reviews'}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
