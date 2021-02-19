@@ -16,12 +16,10 @@ class UpdateReview extends Component {
 
     this.state = {
       overall_rating: '',
-      oRating: '',
       quality_rating: '',
       clenliness_rating: '',
       review_body: '',
       reviewData: [],
-      // origData: [],
     };
   }
 
@@ -29,7 +27,7 @@ class UpdateReview extends Component {
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
       this.checkAuth();
     });
-    this.getReview();
+    // this.getReview();
   }
 
   componentWillUnmount() {
@@ -43,36 +41,73 @@ class UpdateReview extends Component {
     }
   };
 
-  getReview = async () => {
+  // getReview = async () => {
+  //   const userToken = await AsyncStorage.getItem('@session_token');
+  //   const userID = await AsyncStorage.getItem('@id');
+  //   return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-Authorization': userToken,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         return response.json();
+  //       } else if (response.status === 400) {
+  //         throw 'Bad Request!';
+  //       } else if (response.status === 401) {
+  //         throw 'Not logged in, please login again!';
+  //       } else if (response.status === 404) {
+  //         throw 'Forbidden!';
+  //       } else if (response.status === 500) {
+  //         throw 'Server Error!';
+  //       } else {
+  //         throw 'Error, please try again!';
+  //       }
+  //     })
+  //     .then((responseJson) => {
+  //       this.setState({
+  //         // origData: responseJson.reviews,
+  //         oRating: responseJson.reviews,
+  //       });
+  //       console.log(this.state.oRating);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       ToastAndroid.show(error, ToastAndroid.SHORT);
+  //     });
+  // };
+
+  updateReview = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const userID = await AsyncStorage.getItem('@id');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Authorization': userToken,
+    const locationID = await AsyncStorage.getItem('@location_id');
+    const reviewID = await AsyncStorage.getItem('@review_id');
+    let details = {
+      overall_rating: parseInt(this.state.overall_rating),
+      quality_rating: parseInt(this.state.quality_rating),
+      clenliness_rating: parseInt(this.state.clenliness_rating),
+      review_body: this.state.review_body,
+    };
+    return fetch(
+      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID, {
+        method: 'patch',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authorization': userToken,
+        },
+        body: JSON.stringify(details),
       },
-    })
+      console.log(details),
+    )
       .then((response) => {
         if (response.status === 200) {
-          return response.json();
+          ToastAndroid.show('Review Updated!', ToastAndroid.SHORT);
+          this.props.navigation.navigate('UserReviews');
         } else if (response.status === 400) {
-          throw 'Bad Request!';
-        } else if (response.status === 401) {
-          throw 'Not logged in, please login again!';
-        } else if (response.status === 404) {
-          throw 'Forbidden!';
-        } else if (response.status === 500) {
-          throw 'Server Error!';
+          throw 'Invalid details, please try again!';
         } else {
           throw 'Error, please try again!';
         }
-      })
-      .then((responseJson) => {
-        this.setState({
-          // origData: responseJson.reviews,
-          oRating: responseJson.reviews,
-        });
-        console.log(this.state.oRating);
       })
       .catch((error) => {
         console.log(error);
@@ -80,50 +115,14 @@ class UpdateReview extends Component {
       });
   };
 
-  updateReview = async () => {
-    const userToken = await AsyncStorage.getItem('@session_token');
-    const locationID = await AsyncStorage.getItem('@location_id');
-    const reviewID = await AsyncStorage.getItem('@review_id');
-    let details = {
-      overall_rating: this.state.overall_rating,
-      quality_rating: this.state.quality_rating,
-      clenliness_rating: this.state.clenliness_rating,
-      review_body: this.state.review_body,
-    };
-    return (
-      fetch(
-        'http://10.0.2.2:3333/api/1.0.0/location/' +
-          locationID +
-          '/review/' +
-          reviewID,
-        {
-          method: 'patch',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Authorization': userToken,
-          },
-          body: JSON.stringify(details),
-        },
-      )
-        .then((response) => {
-          if (response.status === 200) {
-            return response.json();
-          } else if (response.status === 400) {
-            throw 'Invalid details, please try again!';
-          } else {
-            throw 'Error, please try again!';
-          }
-        })
-        // .then(async (responseJson) => {
-        //   this.setState({
-        //     reviewData: responseJson,
-        //   });
-        // })
-        .catch((error) => {
-          console.log(error);
-          ToastAndroid.show(error, ToastAndroid.SHORT);
-        })
-    );
+  handleInputChange = (text) => {
+    if (/^\d+$/.test(text)) {
+      this.setState({
+        overall_rating: text,
+        quality_rating: text,
+        clenliness_rating: text,
+      });
+    }
   };
 
   render() {
@@ -136,9 +135,11 @@ class UpdateReview extends Component {
             <Text style={styles.Label}>Overall Rating:</Text>
             <TextInput
               placeholder="What's the overall rating?"
+              keyboardType={'numeric'}
               style={styles.Input}
-              onChangeText={(overall_rating) => this.setState({overall_rating})}
-              value={this.state.oRating}
+              onChangeText={this.handleInputChange}
+              value={this.handleInputChange.overall_rating}
+              maxLength={5}
             />
           </View>
           <View style={styles.space} />
@@ -146,9 +147,11 @@ class UpdateReview extends Component {
             <Text style={styles.Label}>Quality Rating:</Text>
             <TextInput
               placeholder="What's the quality rating?"
+              keyboardType={'numeric'}
               style={styles.Input}
-              onChangeText={(quality_rating) => this.setState({quality_rating})}
-              value={this.state.quality_rating}
+              onChangeText={this.handleInputChange}
+              value={this.handleInputChange.quality_rating}
+              maxLength={5}
             />
           </View>
           <View style={styles.space} />
@@ -156,11 +159,11 @@ class UpdateReview extends Component {
             <Text style={styles.Label}>Cleanliness Rating:</Text>
             <TextInput
               placeholder="What's the cleanliness rating?"
+              keyboardType={'numeric'}
               style={styles.Input}
-              onChangeText={(clenliness_rating) =>
-                this.setState({clenliness_rating})
-              }
-              value={this.state.clenliness_rating}
+              onChangeText={this.handleInputChange}
+              value={this.handleInputChange.clenliness_rating}
+              maxLength={5}
             />
           </View>
           <View style={styles.space} />
@@ -219,3 +222,6 @@ const styles = StyleSheet.create({
 });
 
 export default UpdateReview;
+
+// onChangeText={(quality_rating) => this.setState({quality_rating})}
+// value={this.state.quality_rating}

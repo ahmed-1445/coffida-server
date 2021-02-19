@@ -23,16 +23,6 @@ class AddReview extends Component {
     };
   }
 
-  // test = () => {
-  //   console.log(this.state);
-  // };
-
-  // TextInput fields to be replaced with Stars
-
-  // componentDidMount() {
-  //   this.addReview();
-  // }
-
   addReview = async () => {
     // Needs validation
     const userToken = await AsyncStorage.getItem('@session_token');
@@ -58,7 +48,7 @@ class AddReview extends Component {
     )
       .then((responseJSON) => {
         console.log('Review added!', responseJSON);
-        ToastAndroid.show('Review added', ToastAndroid.SHORT);
+        ToastAndroid.show('Review added!', ToastAndroid.SHORT);
         this.props.navigation.navigate('GetLocation');
       })
       .catch((error) => {

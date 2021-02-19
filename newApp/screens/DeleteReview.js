@@ -20,41 +20,28 @@ class DeleteReview extends Component {
     };
   }
 
-  delete = async () => {
+  deleteReview = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    // const id = await AsyncStorage.getItem('@user_id');
-    let details = {
-      loc_id: parseInt(this.state.loc_id),
-      rev_id: parseInt(this.state.rev_id),
-    };
+    // const location_id = await AsyncStorage.getItem('@location_id');
+    const rev_id = await AsyncStorage.getItem('@review_id');
+    console.log(this.state.loc_id);
+    console.log(this.state.rev_id);
     return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/',
-      +this.state.loc_id,
-      '/review/' + this.state.rev_id,
+      'http://10.0.2.2:3333/api/1.0.0/location/' +
+      this.state.loc_id +
+      '/review/' +
+      this.state.rev_id,
       {
         method: 'delete',
         headers: {
           'Content-Type': 'application/json',
           'X-Authorization': userToken,
         },
-        body: JSON.stringify(details),
       },
     )
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        } else if (response.status === 400) {
-          throw 'Invalid details, please try again!';
-        } else {
-          throw 'Error, please try again!';
-        }
-      })
-      .then(async (responseJson) => {
-        console.log(this.test);
-        this.setState({
-          // loading: false,
-          user_data: responseJson,
-        });
+      .then(() => {
+        ToastAndroid.show('Deleted!', ToastAndroid.SHORT);
+        console.log('Deleted Review!');
       })
       .catch((error) => {
         console.log(error);

@@ -13,18 +13,18 @@ class ReviewMan extends Component {
           <Text style={styles.TouchText}>My Reviews</Text>
         </TouchableOpacity>
         <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => navigation.navigate('UpdateReview')}>
-          <Text style={styles.TouchText}>Update a Review</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => navigation.navigate('DeleteReview')}>
-          <Text style={styles.TouchText}>Delete a Review</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
+        {/*<TouchableOpacity*/}
+        {/*  style={styles.Touch}*/}
+        {/*  onPress={() => navigation.navigate('UpdateReview')}>*/}
+        {/*  <Text style={styles.TouchText}>Update a Review</Text>*/}
+        {/*</TouchableOpacity>*/}
+        {/*<View style={styles.space} />*/}
+        {/*<TouchableOpacity*/}
+        {/*  style={styles.Touch}*/}
+        {/*  onPress={() => navigation.navigate('DeleteReview')}>*/}
+        {/*  <Text style={styles.TouchText}>Delete a Review</Text>*/}
+        {/*</TouchableOpacity>*/}
+        {/*<View style={styles.space} />*/}
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('ViewPhoto')}>

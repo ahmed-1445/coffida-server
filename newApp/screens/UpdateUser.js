@@ -52,7 +52,6 @@ class UpdateUser extends Component {
       })
       .then((responseJson) => {
         this.setState({
-          user_id: responseJson.user_id,
           first_name: responseJson.first_name,
           last_name: responseJson.last_name,
           email: responseJson.email,
@@ -104,7 +103,7 @@ class UpdateUser extends Component {
           <Text style={styles.Label}>Update your account details:</Text>
           <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change first nme:</Text>
+            <Text style={styles.Label}>Change first name:</Text>
             <TextInput
               placeholder="Enter your first name"
               style={styles.Input}
