@@ -16,10 +16,12 @@ class UpdateReview extends Component {
 
     this.state = {
       overall_rating: '',
+      price_rating: '',
       quality_rating: '',
       clenliness_rating: '',
       review_body: '',
       reviewData: [],
+      location_reviews: [],
     };
   }
 
@@ -27,7 +29,7 @@ class UpdateReview extends Component {
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
       this.checkAuth();
     });
-    // this.getReview();
+    this.getReview();
   }
 
   componentWillUnmount() {
@@ -41,42 +43,42 @@ class UpdateReview extends Component {
     }
   };
 
-  // getReview = async () => {
-  //   const userToken = await AsyncStorage.getItem('@session_token');
-  //   const userID = await AsyncStorage.getItem('@id');
-  //   return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'X-Authorization': userToken,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         return response.json();
-  //       } else if (response.status === 400) {
-  //         throw 'Bad Request!';
-  //       } else if (response.status === 401) {
-  //         throw 'Not logged in, please login again!';
-  //       } else if (response.status === 404) {
-  //         throw 'Forbidden!';
-  //       } else if (response.status === 500) {
-  //         throw 'Server Error!';
-  //       } else {
-  //         throw 'Error, please try again!';
-  //       }
-  //     })
-  //     .then((responseJson) => {
-  //       this.setState({
-  //         // origData: responseJson.reviews,
-  //         oRating: responseJson.reviews,
-  //       });
-  //       console.log(this.state.oRating);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       ToastAndroid.show(error, ToastAndroid.SHORT);
-  //     });
-  // };
+  getReview = async () => {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    const userID = await AsyncStorage.getItem('@id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': userToken,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 400) {
+          throw 'Bad Request!';
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 404) {
+          throw 'Forbidden!';
+        } else if (response.status === 500) {
+          throw 'Server Error!';
+        } else {
+          throw 'Error, please try again!';
+        }
+      })
+      .then((responseJson) => {
+        this.setState({
+          // origData: responseJson.reviews,
+          location_reviews: responseJson,
+        });
+        console.log(this.state.location_reviews);
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
 
   updateReview = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
@@ -84,12 +86,17 @@ class UpdateReview extends Component {
     const reviewID = await AsyncStorage.getItem('@review_id');
     let details = {
       overall_rating: parseInt(this.state.overall_rating),
+      price_rating: parseInt(this.state.price_rating),
       quality_rating: parseInt(this.state.quality_rating),
       clenliness_rating: parseInt(this.state.clenliness_rating),
       review_body: this.state.review_body,
     };
     return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID, {
+      'http://10.0.2.2:3333/api/1.0.0/location/' +
+        locationID +
+        '/review/' +
+        reviewID,
+      {
         method: 'patch',
         headers: {
           'Content-Type': 'application/json',
@@ -119,6 +126,7 @@ class UpdateReview extends Component {
     if (/^\d+$/.test(text)) {
       this.setState({
         overall_rating: text,
+        price_rating: text,
         quality_rating: text,
         clenliness_rating: text,
       });
@@ -126,6 +134,7 @@ class UpdateReview extends Component {
   };
 
   render() {
+    const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -142,6 +151,16 @@ class UpdateReview extends Component {
               maxLength={5}
             />
           </View>
+          <View style={styles.space} />
+          <Text style={styles.Label}>Price Rating:</Text>
+          <TextInput
+            placeholder="What's the price rating?"
+            keyboardType={'numeric'}
+            style={styles.Input}
+            onChangeText={this.handleInputChange}
+            value={this.handleInputChange.price_rating}
+            maxLength={5}
+          />
           <View style={styles.space} />
           <View>
             <Text style={styles.Label}>Quality Rating:</Text>
@@ -177,13 +196,17 @@ class UpdateReview extends Component {
             />
           </View>
           <View style={styles.space} />
-          <View>
-            <TouchableOpacity
-              style={styles.Touch}
-              onPress={() => this.updateReview()}>
-              <Text style={styles.TouchText}>Submit</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => navigation.navigate('AddPhoto')}>
+            <Text style={styles.TouchText}>Add Photo</Text>
+          </TouchableOpacity>
+          <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => this.updateReview()}>
+            <Text style={styles.TouchText}>Submit</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );

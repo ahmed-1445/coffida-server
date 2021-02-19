@@ -17,8 +17,22 @@ class UserReviews extends Component {
   }
 
   componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.checkAuth();
+    });
     this.getReviews();
   }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  checkAuth = async () => {
+    const value = await AsyncStorage.getItem('@session_token');
+    if (value == null) {
+      this.props.navigation.navigate('Login');
+    }
+  };
 
   getReviews = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
@@ -44,8 +58,8 @@ class UserReviews extends Component {
           reviewData: responseJson,
           locationData: responseJson,
         });
-        console.log('Location: ', this.state.reviewData);
-        console.log('Review: ', this.state.locationData);
+        console.log('Review: ', this.state.reviewData);
+        console.log('Location: ', this.state.locationData);
       })
       .catch((error) => {
         console.log(error);
@@ -72,6 +86,7 @@ class UserReviews extends Component {
       .then(() => {
         ToastAndroid.show('Deleted!', ToastAndroid.SHORT);
         console.log('Deleted Review!');
+        this.getReviews();
       })
       .catch((error) => {
         console.log(error);
@@ -100,6 +115,7 @@ class UserReviews extends Component {
       .then(() => {
         ToastAndroid.show('Liked!', ToastAndroid.SHORT);
         console.log('Added to likes!');
+        this.getReviews();
       })
       .catch((error) => {
         console.log(error);
@@ -124,6 +140,7 @@ class UserReviews extends Component {
       .then(() => {
         ToastAndroid.show('Unliked!', ToastAndroid.SHORT);
         console.log('Removed from likes!');
+        this.getReviews();
       })
       .catch((error) => {
         console.log(error);
@@ -139,17 +156,17 @@ class UserReviews extends Component {
       console.log('Location ID: ', location_id);
       this.deleteReview();
     };
-    // const updateReview = async (review_id, location_id) => {
-    //   // await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
-    //   await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
-    //   this.setState({
-    //     // review_id: this.state.review_id,
-    //     location_id: this.state.loc_id,
-    //   });
-    //   console.log('Review ID:', review_id);
-    //   console.log('Location ID:', location_id);
-    //   this.props.navigation.navigate('UpdateReview');
-    // };
+    const updateReview = async (review_id, location_id) => {
+      await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
+      await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
+      this.setState({
+        location_id: this.state.loc_id,
+        review_id: this.state.rev_id,
+      });
+      console.log('Review ID:', review_id);
+      console.log('Location ID:', location_id);
+      this.props.navigation.navigate('UpdateReview');
+    };
     const like = async (review_id, location_id) => {
       await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
       await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
@@ -186,10 +203,16 @@ class UserReviews extends Component {
                   data={this.state.locationData.reviews}
                   renderItem={({item}) => (
                     <View style={styles.review}>
-                      <View style={styles.row} />
-                      <Text style={styles.Label}>Loc ID: {item.location.location_id}</Text>
-                      <Text style={styles.Title}>{item.location.location_name} - {item.location.location_town}</Text>
-                      <Text style={styles.Label}>Rev ID: {item.review.review_id}</Text>
+                      <Text style={styles.Label}>
+                        Loc ID: {item.location.location_id}
+                      </Text>
+                      <Text style={styles.Title}>
+                        {item.location.location_name} -{' '}
+                        {item.location.location_town}
+                      </Text>
+                      <Text style={styles.Label}>
+                        Rev ID: {item.review.review_id}
+                      </Text>
                       <Text style={styles.Label}>
                         Overall Rating: {item.review.overall_rating}
                       </Text>
@@ -237,8 +260,7 @@ class UserReviews extends Component {
                       <View style={styles.row} />
                     </View>
                   )}
-                  keyExtractor={(item, index) =>
-                    item.location.location_id.toString()
+                  keyExtractor={(item, index) => item.location.location_id.toString()
                   }
                 />
                 <View style={styles.space} />
