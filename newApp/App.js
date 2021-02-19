@@ -22,6 +22,7 @@ import GetLocation from './screens/GetLocation';
 import LocationDetails from './screens/LocationDetails';
 import FavouriteLocations from './screens/FavouriteLocations';
 import UserReviews from './screens/UserReviews';
+import AddPhoto from './screens/AddPhoto';
 
 const Stack = createStackNavigator();
 
@@ -110,6 +111,11 @@ class App extends Component {
             name="UserReviews"
             component={UserReviews}
             options={{title: 'My Reviews'}}
+          />
+          <Stack.Screen
+            name="AddPhoto"
+            component={AddPhoto}
+            options={{title: 'Take a Photo'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

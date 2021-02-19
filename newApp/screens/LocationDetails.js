@@ -17,6 +17,7 @@ class LocationDetails extends Component {
     this.state = {
       isLoading: true,
       // locationData: [],
+      location_id: '',
       location_name: '',
       location_town: '',
       latitude: '',
@@ -71,6 +72,7 @@ class LocationDetails extends Component {
         this.setState({
           isLoading: false,
           // locationData: responseJson,
+          location_id: responseJson.location_id,
           location_name: responseJson.location_name,
           location_town: responseJson.location_town,
           latitude: responseJson.latitude,
@@ -170,10 +172,19 @@ class LocationDetails extends Component {
           {/*<Text style={styles.Label}>Latitude: {this.state.latitude}</Text>*/}
           {/*<Text style={styles.Label}>Longitude: {this.state.longitude}</Text>*/}
           {/*<Text style={styles.Label}>Photo Path: {this.state.photo_path}</Text>*/}
-          <Text style={styles.rating}>Average Overall Rating:               {this.state.avg_overall_rating}/5</Text>
-          <Text style={styles.rating}>Average Price Rating:                   {this.state.avg_price_rating}/5</Text>
-          <Text style={styles.rating}>Average Quality Rating:                {this.state.avg_quality_rating}/5</Text>
-          <Text style={styles.rating}>Average Cleanliness Rating:        {this.state.avg_clenliness_rating}/5</Text>
+          {/*<Text style={styles.rating}>Location ID: {this.state.location_id}</Text>*/}
+          <Text style={styles.rating}>
+            Average Overall Rating: {this.state.avg_overall_rating}/5
+          </Text>
+          <Text style={styles.rating}>
+            Average Price Rating: {this.state.avg_price_rating}/5
+          </Text>
+          <Text style={styles.rating}>
+            Average Quality Rating: {this.state.avg_quality_rating}/5
+          </Text>
+          <Text style={styles.rating}>
+            Average Cleanliness Rating: {this.state.avg_clenliness_rating}/5
+          </Text>
           <View style={styles.rowSplit} />
           <Text style={styles.revTitle}>Reviews:</Text>
           <FlatList
@@ -181,10 +192,18 @@ class LocationDetails extends Component {
             renderItem={({item}) => (
               <View style={styles.review}>
                 <View style={styles.row} />
-                <Text style={styles.Label}>Overall Rating: {item.overall_rating}</Text>
-                <Text style={styles.Label}>Price Rating: {item.price_rating}</Text>
-                <Text style={styles.Label}>Quality Rating: {item.quality_rating}</Text>
-                <Text style={styles.Label}>Cleanliness Rating: {item.clenliness_rating}</Text>
+                <Text style={styles.Label}>
+                  Overall Rating: {item.overall_rating}
+                </Text>
+                <Text style={styles.Label}>
+                  Price Rating: {item.price_rating}
+                </Text>
+                <Text style={styles.Label}>
+                  Quality Rating: {item.quality_rating}
+                </Text>
+                <Text style={styles.Label}>
+                  Cleanliness Rating: {item.clenliness_rating}
+                </Text>
                 <Text style={styles.Label}>Comments: {item.review_body}</Text>
                 <Text style={styles.Label}>Likes: {item.likes}</Text>
                 <View style={styles.row} />
