@@ -70,7 +70,7 @@ class UserMan extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <Text style={styles.Label}>Your details...</Text>
+          <Text style={styles.Label}>Account details:</Text>
           <View style={styles.space} />
           <Text style={styles.Label}>
             Full Name: {this.state.first_name} {this.state.last_name}
@@ -86,6 +86,11 @@ class UserMan extends Component {
           <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
+            onPress={() => navigation.navigate('UserReviews')}>
+            <Text style={styles.customReviews}>My Reviews</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.Back}
             onPress={() => navigation.navigate('AuthenticatedUser')}>
             <Text style={styles.TouchText}>Back</Text>
           </TouchableOpacity>
@@ -108,6 +113,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  customReviews: {
+    fontSize: 15,
+    color: 'white',
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 150,
+  },
   Label: {
     fontSize: 15,
     color: 'white',
@@ -124,16 +137,18 @@ const styles = StyleSheet.create({
   },
   Touch: {
     paddingVertical: 5,
-    // paddingHorizontal: 5,
+  },
+  Back: {
+    paddingVertical: 10,
+    top: 400,
   },
   TouchText: {
     fontSize: 15,
     color: 'white',
-    elevation: 8,
     backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 5,
-    paddingHorizontal: 135,
+    paddingHorizontal: 170,
   },
   space: {
     width: 10,

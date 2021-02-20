@@ -6,7 +6,7 @@ class LocationMan extends Component {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.Label}>Select one of the following options:</Text>
+        <Text style={styles.Label}>Here you can see all location and your favourites:</Text>
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('GetLocation')}>
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
   TouchText: {
     fontSize: 15,
     color: 'white',
-    elevation: 8,
+    // elevation: 8,
     backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 50,
+    paddingHorizontal: 80,
   },
   space: {
     width: 5,

@@ -12,7 +12,6 @@ import AuthenticatedUser from './screens/AuthenticatedUser';
 import Logout from './screens/Logout';
 import UpdateUser from './screens/UpdateUser';
 import UserMan from './screens/UserMan';
-import ReviewMan from './screens/ReviewMan';
 import AddReview from './screens/AddReview';
 import LocationMan from './screens/LocationMan';
 import UpdateReview from './screens/UpdateReview';
@@ -23,6 +22,7 @@ import LocationDetails from './screens/LocationDetails';
 import FavouriteLocations from './screens/FavouriteLocations';
 import UserReviews from './screens/UserReviews';
 import AddPhoto from './screens/AddPhoto';
+import GetPhoto from './screens/GetPhoto';
 
 const Stack = createStackNavigator();
 
@@ -45,7 +45,7 @@ class App extends Component {
           <Stack.Screen
             name="AuthenticatedUser"
             component={AuthenticatedUser}
-            options={{title: 'Welcome User!'}}
+            options={{title: 'Welcome!'}}
           />
           <Stack.Screen
             name="Logout"
@@ -61,11 +61,6 @@ class App extends Component {
             name="UserMan"
             component={UserMan}
             options={{title: 'My Account'}}
-          />
-          <Stack.Screen
-            name="ReviewMan"
-            component={ReviewMan}
-            options={{title: 'Review Management'}}
           />
           <Stack.Screen
             name="AddReview"
@@ -116,6 +111,11 @@ class App extends Component {
             name="AddPhoto"
             component={AddPhoto}
             options={{title: 'Take a Photo'}}
+          />
+          <Stack.Screen
+            name="GetPhoto"
+            component={GetPhoto}
+            options={{title: 'Review Photo'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

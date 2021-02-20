@@ -61,7 +61,7 @@ class AddReview extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.Label}>Please enter the following details:</Text>
+          <Text style={styles.Title}>Please enter the following details:</Text>
           <View style={styles.space} />
           <View>
             <Text style={styles.Label}>Overall Rating:</Text>
@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
-  // title: {
-  //   color: 'white',
-  //   padding: 3,
-  //   fontSize: 14,
-  // },
+  Title: {
+    color: 'white',
+    padding: 3,
+    fontSize: 16,
+  },
   Label: {
     fontSize: 13,
     color: 'white',
@@ -151,11 +151,10 @@ const styles = StyleSheet.create({
   TouchText: {
     fontSize: 15,
     color: 'white',
-    elevation: 8,
     backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 15,
-    paddingHorizontal: 115,
+    paddingHorizontal: 150,
   },
   space: {
     width: 10,

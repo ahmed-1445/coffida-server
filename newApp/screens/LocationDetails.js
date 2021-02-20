@@ -295,11 +295,10 @@ const styles = StyleSheet.create({
   TouchText: {
     fontSize: 14,
     color: 'white',
-    elevation: 8,
     backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 7,
-    paddingHorizontal: 95,
+    paddingHorizontal: 130,
   },
   space: {
     width: 7,

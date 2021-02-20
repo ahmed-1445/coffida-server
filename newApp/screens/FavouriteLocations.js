@@ -100,12 +100,12 @@ class FavouriteLocations extends Component {
             )}
             keyExtractor={(item, index) => item.location_id.toString()}
           />
-          <View style={styles.space} />
-          <TouchableOpacity
-            style={styles.Touch}
-            onPress={() => navigation.navigate('AddFavourite')}>
-            <Text style={styles.TouchText}>Add a Favourite</Text>
-          </TouchableOpacity>
+          {/*<View style={styles.space} />*/}
+          {/*<TouchableOpacity*/}
+          {/*  style={styles.Touch}*/}
+          {/*  onPress={() => navigation.navigate('AddFavourite')}>*/}
+          {/*  <Text style={styles.TouchText}>Add a Favourite</Text>*/}
+          {/*</TouchableOpacity>*/}
         </View>
       );
     }
@@ -146,11 +146,10 @@ const styles = StyleSheet.create({
   TouchText: {
     fontSize: 14,
     color: 'white',
-    elevation: 8,
     backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 7,
-    paddingHorizontal: 95,
+    paddingHorizontal: 125,
   },
   space: {
     width: 5,

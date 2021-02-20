@@ -128,7 +128,11 @@ class UserReviews extends Component {
     const location_id = await AsyncStorage.getItem('@location_id');
     const review_id = await AsyncStorage.getItem('@review_id');
     return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + location_id + '/review/' + review_id + '/like',
+      'http://10.0.2.2:3333/api/1.0.0/location/' +
+        location_id +
+        '/review/' +
+        review_id +
+        '/like',
       {
         method: 'delete',
         headers: {
@@ -181,6 +185,17 @@ class UserReviews extends Component {
       console.log('Review ID:', review_id);
       this.deleteLike();
     };
+    const getPhoto = async (review_id, location_id) => {
+      await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
+      await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
+      this.setState({
+        location_id: this.state.loc_id,
+        review_id: this.state.rev_id,
+      });
+      console.log('Review ID:', review_id);
+      console.log('Location ID:', location_id);
+      this.props.navigation.navigate('GetPhoto');
+    };
     // const navigation = this.props.navigation;
     if (this.state.isLoading) {
       return (
@@ -203,70 +218,56 @@ class UserReviews extends Component {
                   data={this.state.locationData.reviews}
                   renderItem={({item}) => (
                     <View style={styles.review}>
-                      <Text style={styles.Label}>
-                        Loc ID: {item.location.location_id}
-                      </Text>
-                      <Text style={styles.Title}>
-                        {item.location.location_name} -{' '}
-                        {item.location.location_town}
-                      </Text>
-                      <Text style={styles.Label}>
-                        Rev ID: {item.review.review_id}
-                      </Text>
-                      <Text style={styles.Label}>
-                        Overall Rating: {item.review.overall_rating}
-                      </Text>
-                      <Text style={styles.Label}>
-                        Price Rating: {item.review.price_rating}
-                      </Text>
-                      <Text style={styles.Label}>
-                        Quality Rating: {item.review.quality_rating}
-                      </Text>
-                      <Text style={styles.Label}>
-                        Cleanliness Rating: {item.review.clenliness_rating}
-                      </Text>
-                      <Text style={styles.Label}>
-                        Comments: {item.review.review_body}
-                      </Text>
-                      <Text style={styles.Label}>
-                        Likes: {item.review.likes}
-                      </Text>
+                      <Text style={styles.Label}>Loc ID: {item.location.location_id}</Text>
+                      <Text style={styles.Title}>{item.location.location_name} - {item.location.location_town}</Text>
+                      <Text style={styles.Label}>Rev ID: {item.review.review_id}</Text>
+                      <Text style={styles.Label}>Overall Rating: {item.review.overall_rating}</Text>
+                      <Text style={styles.Label}>Price Rating: {item.review.price_rating}</Text>
+                      <Text style={styles.Label}>Quality Rating: {item.review.quality_rating}</Text>
+                      <Text style={styles.Label}>Cleanliness Rating: {item.review.clenliness_rating}</Text>
+                      <Text style={styles.Label}>Comments: {item.review.review_body}</Text>
+                      <Text style={styles.Label}>Likes: {item.review.likes}</Text>
                       <Button
                         // style={styles.Touch}
                         small
                         icon={{name: 'edit'}}
                         title="Edit"
-                        onPress={() => this.props.navigation.navigate('UpdateReview')}
+                        onPress={() => updateReview(item.review.review_id, item.location.location_id)}
+                      />
+                      <View style={styles.space} />
+                      <Button
+                        small
+                        title="See photo"
+                        onPress={() => getPhoto(item.review.review_id, item.location.location_id)}
                       />
                       <View style={styles.space} />
                       <Button
                         small
                         title="Delete"
-                        onPress={() => removeReview(item.review.review_id, item.location.location_id)}
+                        onPress={() =>
+                          removeReview(item.review.review_id, item.location.location_id)}
                       />
                       <View style={styles.space} />
                       <Button
                         small
                         title="Like"
-                        onPress={() => like(item.review.review_id, item.location.location_id)
-                        }
+                        onPress={() => like(item.review.review_id, item.location.location_id)}
                       />
                       <View style={styles.space} />
                       <Button
                         small
                         title="Unlike"
-                        onPress={() => unlike(item.review.review_id, item.location.location_id,)}
+                        onPress={() => unlike(item.review.review_id, item.location.location_id)}
                       />
                       <View style={styles.row} />
                     </View>
                   )}
-                  keyExtractor={(item, index) => item.location.location_id.toString()
-                  }
+                  keyExtractor={(item) => item.location.location_id.toString()}
                 />
                 <View style={styles.space} />
               </View>
             )}
-            keyExtractor={(item, index) => item.review.review_id.toString()}
+            keyExtractor={(item) => item.review.review_id.toString()}
           />
         </View>
       );
@@ -290,7 +291,6 @@ const styles = StyleSheet.create({
   Label: {
     fontSize: 15,
     color: 'white',
-    // top: 0,
   },
   review: {
     fontSize: 15,
@@ -300,14 +300,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     color: 'white',
-    // elevation: 8,
     // paddingHorizontal: 10,
   },
   row: {
     padding: 2,
     borderBottomColor: 'white',
     borderBottomWidth: 2,
-    // top: 0,
   },
   Touch: {
     paddingVertical: 10,
@@ -316,7 +314,6 @@ const styles = StyleSheet.create({
   TouchText: {
     fontSize: 14,
     color: 'white',
-    elevation: 8,
     backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 7,

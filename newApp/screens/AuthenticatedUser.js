@@ -38,17 +38,11 @@ class AuthenticatedUser extends Component {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.Label}>Select of the following options:</Text>
+        <Text style={styles.Title}>What would you like to do?</Text>
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('UserMan')}>
           <Text style={styles.TouchText}>My Account</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => navigation.navigate('ReviewMan')}>
-          <Text style={styles.TouchText}>Reviews</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
@@ -73,35 +67,22 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
-  // logout: {
-  //   marginTop: 10,
-  //   // flex: 2,
-  //   padding: 55,
-  //   backgroundColor: 'lightseagreen',
-  // },
-  Label: {
-    fontSize: 15,
+  Title: {
+    fontSize: 17,
     color: 'white',
-  },
-  Input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
   },
   Touch: {
     // alignItems: 'center',
-    // borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 20,
   },
   TouchText: {
-    fontSize: 15,
+    fontSize: 16,
     color: 'white',
-    elevation: 8,
     backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 5,
-    paddingHorizontal: 95,
+    paddingHorizontal: 132,
   },
   space: {
     width: 10,

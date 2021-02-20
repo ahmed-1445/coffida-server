@@ -1,52 +1,53 @@
 import React, {Component} from 'react';
-import {View, Button, Alert, ToastAndroid, StyleSheet} from 'react-native';
+import {View, Button, ToastAndroid, StyleSheet} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class AddPhoto extends Component {
-  addPhoto = async (data) => {
+  addPhoto = async (image) => {
     const userToken = await AsyncStorage.getItem('@session_token');
     const locationID = await AsyncStorage.getItem('@location_id');
     const reviewID = await AsyncStorage.getItem('@review_id');
-    console.log(data.uri);
+    console.log(image.uri);
     return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' +
-        locationID +
-        '/review/' +
-        reviewID +
-        '/photo',
-      {
+      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID + '/photo',{
         method: 'post',
         headers: {
           'Content-Type': 'image/jpeg',
           'X-Authorization': userToken,
         },
-        body: data,
+        body: image,
       },
     )
       .then((response) => {
-        Alert.prompt(response.status);
-        ToastAndroid.show('Photo added!', ToastAndroid.SHORT);
-        this.props.navigation.navigate('UpdateReview');
+        if (response.status === 200) {
+          // Alert.prompt(response.status);
+          ToastAndroid.show('Photo added!', ToastAndroid.SHORT);
+          this.props.navigation.navigate('UpdateReview');
+        } else if (response.status === 400) {
+          throw 'Invalid details, please try again!';
+        } else {
+          throw 'Error, please try again!';
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  takePicture = async () => {
+  capture = async () => {
     if (this.camera) {
-      const options = {quality: 0.5, base64: true};
-      const data = await this.camera.takePictureAsync(options);
-      this.addPhoto(data);
+      const settings = {quality: 0.5, base64: true};
+      const image = await this.camera.takePictureAsync(settings);
+      this.addPhoto(image);
     }
   };
 
   render() {
     return (
       <View style={styles.cameraContainer}>
-        <RNCamera ref={(ref) => {this.camera = ref;}} style={styles.camera} />
-        <Button title="Capture" onPress={() => this.takePicture()} />
+        <RNCamera style={styles.camera} ref={(ref) => {this.camera = ref;}} />
+        <Button title="Capture" onPress={() => this.capture()} />
       </View>
     );
   }
