@@ -23,6 +23,7 @@ import FavouriteLocations from './screens/FavouriteLocations';
 import UserReviews from './screens/UserReviews';
 import AddPhoto from './screens/AddPhoto';
 import GetPhoto from './screens/GetPhoto';
+import LocationMap from './screens/LocationMap';
 
 const Stack = createStackNavigator();
 
@@ -116,6 +117,11 @@ class App extends Component {
             name="GetPhoto"
             component={GetPhoto}
             options={{title: 'Review Photo'}}
+          />
+          <Stack.Screen
+            name="LocationMap"
+            component={LocationMap}
+            options={{title: 'Location Map'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

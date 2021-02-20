@@ -18,6 +18,12 @@ class LocationMan extends Component {
           onPress={() => navigation.navigate('FavouriteLocations')}>
           <Text style={styles.TouchText}>Favourite Locations</Text>
         </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => navigation.navigate('LocationMap')}>
+          <Text style={styles.TouchText}>Locations Map</Text>
+        </TouchableOpacity>
       </View>
     );
   }
