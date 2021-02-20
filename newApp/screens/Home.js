@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 
 class Home extends Component {
   render() {
@@ -7,6 +7,11 @@ class Home extends Component {
 
     return (
       <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={require('./../icons/coffeeCup.png')}
+        />
+        <Text style={styles.Label}>Welcome to CoffiDa!</Text>
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('Register')}>
@@ -31,14 +36,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'lightseagreen',
   },
-  TouchText: {
+  image: {
+    alignSelf: 'center',
+    width: 165,
+    height: 240,
+    top: -110,
+  },
+  Label: {
+    fontSize: 30,
     color: 'white',
+    alignSelf: 'center',
+    top: -90,
+  },
+  TouchText: {
     fontSize: 20,
+    color: 'white',
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 138,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
-    padding: 3.5,
-    alignItems: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
   },
   space: {
     width: 30,

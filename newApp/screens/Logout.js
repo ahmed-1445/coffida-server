@@ -40,7 +40,7 @@ class AuthenticatedUser extends Component {
   logout = async () => {
     let token = await AsyncStorage.getItem('@session_token');
     await AsyncStorage.removeItem('@session_token');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/logout/', {
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/logout', {
       method: 'post',
       headers: {
         'X-Authorization': token,
@@ -49,9 +49,6 @@ class AuthenticatedUser extends Component {
       .then(async (response) => {
         if (response.status === 200) {
           ToastAndroid.show('Successfully logged out!', ToastAndroid.SHORT);
-          this.props.navigation.navigate('Login');
-        } else if (response.status === 201) {
-          ToastAndroid.show('Logged out!', ToastAndroid.SHORT);
           await AsyncStorage.removeItem('@session_token');
           this.props.navigation.navigate('Login');
         } else {
@@ -68,19 +65,19 @@ class AuthenticatedUser extends Component {
     // const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <Text style={styles.Label}>Are you sure you want to logout?</Text>
-          <View style={styles.space} />
-          <TouchableOpacity style={styles.Touch} onPress={() => this.logout()}>
-            <Text style={styles.TouchText}>Yes</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity
-            style={styles.Touch}
-            onPress={() => this.props.navigation.navigate('AuthenticatedUser')}>
-            <Text style={styles.TouchText}>No</Text>
-          </TouchableOpacity>
-        </ScrollView>
+        <View style={styles.space} />
+        <Text style={styles.Label}>Are you sure you want to logout?</Text>
+        <View style={styles.space} />
+        <TouchableOpacity style={styles.Touch} onPress={() => this.logout()}>
+          <Text style={styles.TouchText}>Yes</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
+          onPress={() => this.props.navigation.navigate('AuthenticatedUser')}>
+          <Text style={styles.TouchText}>No</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -93,22 +90,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightseagreen',
   },
   Label: {
-    fontSize: 15,
+    fontSize: 16,
     color: 'white',
+    alignSelf: 'center',
   },
   Touch: {
     backgroundColor: 'darkorchid',
     padding: 10,
     alignItems: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
   TouchText: {
     fontSize: 20,
-    // fontWeight: 'bold',
     color: 'white',
+    paddingVertical: 5,
+    paddingHorizontal: 138,
   },
   space: {
-    width: 20,
-    height: 20,
+    width: 5,
+    height: 5,
   },
 });
 

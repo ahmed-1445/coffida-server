@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Welcome to CoffiDa!" component={Home} />
+          <Stack.Screen name="CoffiDa" component={Home} />
           <Stack.Screen
             name="Register"
             component={Register}
@@ -41,7 +41,7 @@ class App extends Component {
           <Stack.Screen
             name="Login"
             component={Login}
-            options={{title: 'CoffiDa Sign In'}}
+            options={{title: 'Sign In'}}
           />
           <Stack.Screen
             name="AuthenticatedUser"

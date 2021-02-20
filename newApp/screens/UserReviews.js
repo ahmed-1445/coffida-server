@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ToastAndroid, FlatList} from 'react-native';
+import { View, Text, StyleSheet, ToastAndroid, FlatList, Image, TouchableHighlight, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
 import {Button} from 'react-native-elements';
 
@@ -218,9 +218,18 @@ class UserReviews extends Component {
                   data={this.state.locationData.reviews}
                   renderItem={({item}) => (
                     <View style={styles.review}>
-                      <Text style={styles.Label}>Loc ID: {item.location.location_id}</Text>
+                      <TouchableOpacity style={styles.image}
+                        onPress={() => like(item.review.review_id, item.location.location_id)}>
+                        <Image style={styles.image} source={require('./../icons/like.png')} />
+                      </TouchableOpacity>
+                      <View style={styles.space} />
+                      <TouchableOpacity style={styles.image}
+                        onPress={() => removeReview(item.review.review_id, item.location.location_id)}>
+                        <Image style={styles.image} source={require('./../icons/delete.png')} />
+                      </TouchableOpacity>
+                      {/*<Text style={styles.Label}>Loc ID: {item.location.location_id}</Text>*/}
                       <Text style={styles.Title}>{item.location.location_name} - {item.location.location_town}</Text>
-                      <Text style={styles.Label}>Rev ID: {item.review.review_id}</Text>
+                      {/*<Text style={styles.Label}>Rev ID: {item.review.review_id}</Text>*/}
                       <Text style={styles.Label}>Overall Rating: {item.review.overall_rating}</Text>
                       <Text style={styles.Label}>Price Rating: {item.review.price_rating}</Text>
                       <Text style={styles.Label}>Quality Rating: {item.review.quality_rating}</Text>
@@ -239,19 +248,6 @@ class UserReviews extends Component {
                         small
                         title="See photo"
                         onPress={() => getPhoto(item.review.review_id, item.location.location_id)}
-                      />
-                      <View style={styles.space} />
-                      <Button
-                        small
-                        title="Delete"
-                        onPress={() =>
-                          removeReview(item.review.review_id, item.location.location_id)}
-                      />
-                      <View style={styles.space} />
-                      <Button
-                        small
-                        title="Like"
-                        onPress={() => like(item.review.review_id, item.location.location_id)}
                       />
                       <View style={styles.space} />
                       <Button
@@ -281,6 +277,18 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: 'lightseagreen',
   },
+  image: {
+    width: 40,
+    height: 40,
+    alignSelf: 'flex-end',
+    top: 10,
+  },
+  delete: {
+    width: 45,
+    height: 45,
+    alignSelf: 'flex-end',
+    top: -45,
+  },
   loading: {
     backgroundColor: 'lightseagreen',
     flex: 1,
@@ -291,6 +299,7 @@ const styles = StyleSheet.create({
   Label: {
     fontSize: 15,
     color: 'white',
+    // top: -90,
   },
   review: {
     fontSize: 15,
@@ -300,6 +309,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     color: 'white',
+    // top: -90,
     // paddingHorizontal: 10,
   },
   row: {

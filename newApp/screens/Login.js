@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  ToastAndroid,
-  // ActivityIndicator,
-} from 'react-native';
+import {View, TextInput, StyleSheet, Text, TouchableOpacity, ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends Component {
@@ -99,6 +91,12 @@ class Login extends Component {
         <TouchableOpacity style={styles.Touch} onPress={() => this.login()}>
           <Text style={styles.TouchText}>Sign In</Text>
         </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={() => this.props.navigation.navigate('Register')}>
+          <Text style={styles.Register}>Need to register?</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -111,8 +109,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightseagreen',
   },
   Label: {
-    fontSize: 13,
+    fontSize: 16,
     color: 'white',
+  },
+  Register: {
+    fontSize: 16,
+    color: 'white',
+    alignSelf: 'center',
+  },
+  Button: {
+    width: 100,
+    height: 50,
+    alignSelf: 'center',
   },
   Input: {
     borderWidth: 1,
@@ -123,11 +131,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'darkorchid',
     padding: 10,
     alignItems: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
   TouchText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: 'white',
+    paddingVertical: 5,
+    paddingHorizontal: 138,
   },
   space: {
     width: 20,

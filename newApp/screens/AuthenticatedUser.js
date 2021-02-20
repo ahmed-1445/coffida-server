@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class AuthenticatedUser extends Component {
@@ -39,6 +33,7 @@ class AuthenticatedUser extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.Title}>What would you like to do?</Text>
+        <View style={styles.space} />
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('UserMan')}>
@@ -50,9 +45,13 @@ class AuthenticatedUser extends Component {
           onPress={() => navigation.navigate('LocationMan')}>
           <Text style={styles.TouchText}>Locations</Text>
         </TouchableOpacity>
-        <View style={styles.space} />
+        <Image
+          style={styles.Image}
+          source={require('./../icons/coffeeDessert.png')}
+        />
+        <Text style={styles.Label}>Feeling a coffee?</Text>
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.Logout}
           onPress={() => navigation.navigate('Logout')}>
           <Text style={styles.TouchText}>Logout</Text>
         </TouchableOpacity>
@@ -68,8 +67,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightseagreen',
   },
   Title: {
-    fontSize: 17,
+    fontSize: 16,
     color: 'white',
+  },
+  Image: {
+    alignSelf: 'center',
+    width: 250,
+    height: 250,
+    top: 30,
   },
   Touch: {
     // alignItems: 'center',
@@ -77,6 +82,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   TouchText: {
+    fontSize: 16,
+    color: 'white',
+    backgroundColor: 'darkorchid',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 132,
+  },
+  Label: {
+    fontSize: 24,
+    color: 'white',
+    alignSelf: 'center',
+    top: 5,
+  },
+  Logout: {
+    paddingVertical: 5,
+    paddingHorizontal: 37,
+    top: 200,
+  },
+  LogoutText: {
     fontSize: 16,
     color: 'white',
     backgroundColor: 'darkorchid',

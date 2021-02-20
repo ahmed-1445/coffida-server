@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, PermissionsAndroid, Alert, StyleSheet} from 'react-native';
+import { View, Text, PermissionsAndroid, Alert, StyleSheet, ToastAndroid } from "react-native";
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import AsyncStorage from '@react-native-community/async-storage';
 
 async function requestLocationPermission() {
   try {
@@ -35,12 +36,58 @@ class LocationMap extends Component {
       isLoading: true,
       location: null,
       locationPermission: false,
+      // location_name: '',
+      latitude: '',
+      longitude: '',
+      listLocations: [],
     };
   }
+
+  componentDidMount() {
+    this.findCoordinates();
+    this.allLocations();
+  }
+
+  allLocations = async () => {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/find', {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': userToken,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else {
+          throw 'Error, please try again!';
+        }
+      })
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          listLocations: responseJson,
+          // location_name: responseJson.location_name,
+          // latitude: responseJson.latitude,
+          // longitude: responseJson.longitude,
+        });
+        this.state.listLocations.toString();
+        console.log('Data:', this.state.listLocations);
+        // console.log(this.state.latitude);
+        // console.log(this.state.longitude);
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
+      });
+  };
+
   findCoordinates() {
-    console.log('state', this.state);
+    // console.log('state', this.state);
     if (!this.state.locationPermission) {
-      console.log('asking for permission...');
+      console.log('Requesting permission...');
       this.state.locationPermission = requestLocationPermission();
     }
 
@@ -51,32 +98,28 @@ class LocationMap extends Component {
       },
       isLoading: false,
     });
-    // Geolocation.getCurrentPosition(
-    //   (position) => {
-    //     //const location = JSON.stringify(position);
-    //     const location = position;
-    //     console.log('LOCATION 1: ', location.coords);
-    //     this.setState({
-    //       location: {
-    //         longitude: location.coords.longitude,
-    //         latitude: location.coords.latitude,
-    //       },
-    //     });
-    //     this.setState({isLoading: false});
-    //   },
-    //   (error) => {
-    //     Alert.alert(error.message);
-    //   },
-    //   {
-    //     enableHighAccuracy: true,
-    //     timeout: 20000,
-    //     maximumAge: 1000,
-    //   },
-    // );
-  }
-
-  componentDidMount() {
-    this.findCoordinates();
+    Geolocation.getCurrentPosition(
+      (position) => {
+        //const location = JSON.stringify(position);
+        const location = position;
+        // console.log('LOCATION 1: ', location.coords);
+        this.setState({
+          location: {
+            longitude: location.coords.longitude,
+            latitude: location.coords.latitude,
+          },
+        });
+        this.setState({isLoading: false});
+      },
+      (error) => {
+        Alert.alert(error.message);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000,
+      },
+    );
   }
 
   render() {
@@ -87,7 +130,7 @@ class LocationMap extends Component {
         </View>
       );
     } else {
-      console.log('LOCATION 2: ', this.state.location);
+      // console.log('LOCATION 2: ', this.state.location);
       return (
         <View style={{flex: 1}}>
           <MapView
@@ -101,7 +144,7 @@ class LocationMap extends Component {
             }}>
             <Marker
               coordinate={this.state.location}
-              title="My location"
+              title="Current location"
               description="Here I am"
             />
           </MapView>

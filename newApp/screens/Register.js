@@ -19,29 +19,8 @@ class Register extends Component {
       last_name: '',
       email: '',
       password: '',
-      // token: '',
     };
   }
-
-  // componentDidMount() {
-  //   this._unsubscribe = this.props.navigation.addListener('focus', () => {
-  //     this.register();
-  //   });
-  // }
-  //
-  // componentWillUnmount() {
-  //   this._unsubscribe();
-  // }
-  //
-  // checkAuth = async () => {
-  //   const value = await AsyncStorage.getItem('@session_token');
-  //   if (value !== null) {
-  //     this.setState({token: value});
-  //   } else {
-  //     this.props.navigation.navigate('Login');
-  //   }
-  // };
-  //
 
   register = () => {
     // Needs validation
@@ -63,7 +42,7 @@ class Register extends Component {
         if (response.status === 201) {
           return response.json();
         } else if (response.status === 400) {
-          throw 'Please try again!';
+          throw 'Fill in the form in full, please try again!';
         } else {
           throw 'Something went wrong...';
         }
@@ -84,7 +63,8 @@ class Register extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.title}>Please fill in the below form...</Text>
+          <Text style={styles.title}>Please fill in the form:</Text>
+          <View style={styles.space} />
           <View>
             <Text style={styles.Label}>First Name:</Text>
             <TextInput
@@ -123,6 +103,7 @@ class Register extends Component {
             />
           </View>
           <View style={styles.space} />
+          <View style={styles.space} />
           <View>
             <TouchableOpacity
               style={styles.Touch}
@@ -143,13 +124,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightseagreen',
   },
   title: {
+    fontSize: 17,
     color: 'white',
-    // backgroundColor: 'red', - needs further adjusting
     padding: 3,
-    fontSize: 14,
   },
   Label: {
-    fontSize: 13,
+    fontSize: 16,
     color: 'white',
   },
   Input: {
@@ -159,17 +139,21 @@ const styles = StyleSheet.create({
   },
   Touch: {
     backgroundColor: 'darkorchid',
-    padding: 10,
+    // padding: 10,
     alignItems: 'center',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
   },
   TouchText: {
     fontSize: 20,
-    fontWeight: 'bold',
     color: 'white',
+    paddingVertical: 5,
+    paddingHorizontal: 138,
   },
   space: {
-    width: 20,
-    height: 20,
+    width: 10,
+    height: 10,
   },
 });
 

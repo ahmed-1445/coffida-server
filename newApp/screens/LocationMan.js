@@ -22,7 +22,7 @@ class LocationMan extends Component {
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('LocationMap')}>
-          <Text style={styles.TouchText}>Locations Map</Text>
+          <Text style={styles.TouchText}>Coffee Shops Near Me</Text>
         </TouchableOpacity>
       </View>
     );
