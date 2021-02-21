@@ -47,9 +47,23 @@ class AddReview extends Component {
       },
     )
       .then((responseJSON) => {
-        console.log('Review added!', responseJSON);
-        ToastAndroid.show('Review added!', ToastAndroid.SHORT);
-        this.props.navigation.navigate('GetLocation');
+        if (responseJSON.status === 201) {
+          console.log('Review added!', responseJSON);
+          ToastAndroid.show('Review added!', ToastAndroid.SHORT);
+          this.props.navigation.navigate('GetLocation');
+        } else if (responseJSON.status === 400) {
+          throw 'Fill in the form in full, please try again!';
+        } else if (responseJSON.status === 401) {
+          throw 'Unauthorised, please log in!';
+        } else if (responseJSON.status === 403) {
+          throw 'Forbidden!';
+        } else if (responseJSON.status === 404) {
+          throw 'Not found!';
+        } else if (responseJSON.status === 500) {
+          throw 'Server error!';
+        } else {
+          throw 'Something went wrong, please try again!';
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -128,16 +142,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   Title: {
-    color: 'white',
+    color: 'black',
     padding: 3,
     fontSize: 16,
   },
   Label: {
-    fontSize: 13,
-    color: 'white',
+    fontSize: 16,
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
@@ -149,12 +163,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   TouchText: {
-    fontSize: 15,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    fontSize: 16,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 15,
-    paddingHorizontal: 150,
+    paddingHorizontal: 145,
   },
   space: {
     width: 10,

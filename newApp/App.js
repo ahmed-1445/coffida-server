@@ -15,8 +15,6 @@ import UserMan from './screens/UserMan';
 import AddReview from './screens/AddReview';
 import LocationMan from './screens/LocationMan';
 import UpdateReview from './screens/UpdateReview';
-import DeleteReview from './screens/DeleteReview';
-import DeletePhoto from './screens/DeletePhoto';
 import GetLocation from './screens/GetLocation';
 import LocationDetails from './screens/LocationDetails';
 import FavouriteLocations from './screens/FavouriteLocations';
@@ -82,16 +80,6 @@ class App extends Component {
             name="UpdateReview"
             component={UpdateReview}
             options={{title: 'Update Review'}}
-          />
-          <Stack.Screen
-            name="DeleteReview"
-            component={DeleteReview}
-            options={{title: 'Delete Review'}}
-          />
-          <Stack.Screen
-            name="DeletePhoto"
-            component={DeletePhoto}
-            options={{title: 'Delete Photo'}}
           />
           <Stack.Screen
             name="GetLocation"

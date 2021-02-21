@@ -48,6 +48,10 @@ class AuthenticatedUser extends Component {
           this.props.navigation.navigate('Home');
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
         } else if (response.status === 500) {
           throw 'Server Error!';
         } else {

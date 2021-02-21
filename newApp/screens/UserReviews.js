@@ -83,10 +83,24 @@ class UserReviews extends Component {
         },
       },
     )
-      .then(() => {
-        ToastAndroid.show('Deleted!', ToastAndroid.SHORT);
-        console.log('Deleted Review!');
-        this.getReviews();
+      .then((response) => {
+        if (response.status === 200) {
+          ToastAndroid.show('Deleted!', ToastAndroid.SHORT);
+          console.log('Deleted Review!');
+          this.getReviews();
+        } else if (response.status === 400) {
+          throw 'Bad Request!';
+        } else if (response.status === 401) {
+          throw 'Unauthorised!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
+        } else {
+          throw 'Error, please try again!';
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -112,10 +126,24 @@ class UserReviews extends Component {
         },
       },
     )
-      .then(() => {
-        ToastAndroid.show('Liked!', ToastAndroid.SHORT);
-        console.log('Added to likes!');
-        this.getReviews();
+      .then((response) => {
+        if (response.status === 200) {
+          ToastAndroid.show('Liked!', ToastAndroid.SHORT);
+          console.log('Added to likes!');
+          this.getReviews();
+        } else if (response.status === 400) {
+          throw 'Bad Request!';
+        } else if (response.status === 401) {
+          throw 'Unauthorised!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
+        } else {
+          throw 'Error, please try again!';
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -141,10 +169,24 @@ class UserReviews extends Component {
         },
       },
     )
-      .then(() => {
-        ToastAndroid.show('Unliked!', ToastAndroid.SHORT);
-        console.log('Removed from likes!');
-        this.getReviews();
+      .then((response) => {
+        if (response.status === 200) {
+          ToastAndroid.show('Unliked!', ToastAndroid.SHORT);
+          console.log('Removed from likes!');
+          this.getReviews();
+        } else if (response.status === 400) {
+          throw 'Bad Request!';
+        } else if (response.status === 401) {
+          throw 'Unauthorised!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
+        } else {
+          throw 'Error, please try again!';
+        }
       })
       .catch((error) => {
         console.log(error);

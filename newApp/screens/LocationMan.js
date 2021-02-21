@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 
 class LocationMan extends Component {
   render() {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.Label}>Here you can see all location and your favourites:</Text>
+        <View style={styles.space} />
+        {/* <Text style={styles.Label}>Here you can see all location and your favourites:</Text> */}
         <TouchableOpacity
           style={styles.Touch}
           onPress={() => navigation.navigate('GetLocation')}>
@@ -30,6 +31,10 @@ class LocationMan extends Component {
           onPress={() => navigation.navigate('LocationMap')}>
           <Text style={styles.TouchText}>Coffee Shops Near Me</Text>
         </TouchableOpacity>
+        <Image
+          style={styles.Image}
+          source={require('./../icons/locationSketch.png')}
+        />
       </View>
     );
   }
@@ -44,6 +49,12 @@ const styles = StyleSheet.create({
   Label: {
     fontSize: 17,
     color: 'black',
+  },
+  Image: {
+    alignSelf: 'center',
+    width: 150,
+    height: 150,
+    top: 55,
   },
   Input: {
     borderWidth: 1,
@@ -61,12 +72,12 @@ const styles = StyleSheet.create({
     color: 'black',
     backgroundColor: '#f77c39',
     borderRadius: 10,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 100,
   },
   space: {
-    width: 5,
-    height: 5,
+    width: 15,
+    height: 15,
   },
 });
 

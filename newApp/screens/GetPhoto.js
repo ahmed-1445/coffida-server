@@ -37,12 +37,23 @@ class GetPhoto extends Component {
       },
     )
       .then((response) => {
-        Alert.prompt(response.status.valueOf(200));
-        this.setState({
-          imageURL: response.url + '?timestamp=' + Date.now(),
-        });
-        this.state.imageURL.stringify;
-        // console.log('URL:', this.state.imageURL);
+        if (response.status === 200) {
+          this.setState({imageURL: response.url + '?timestamp=' + Date.now()});
+          this.state.imageURL.stringify;
+          // console.log('URL:', this.state.imageURL);
+        } else if (response.status === 400) {
+          throw 'Invalid details, please try again!';
+        } else if (response.status === 401) {
+          throw 'Unauthorised!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
+        } else {
+          throw 'Error, please try again!';
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -59,10 +70,22 @@ class GetPhoto extends Component {
         method: 'delete',
         headers: {'X-Authorization': userToken},
     })
-      .then(() => {
-        ToastAndroid.show('Photo deleted!', ToastAndroid.SHORT);
-        this.props.navigation.navigate('UserReviews');
-        console.log('here');
+      .then((response) => {
+        if (response.status === 200) {
+          ToastAndroid.show('Photo deleted!', ToastAndroid.SHORT);
+          this.props.navigation.navigate('UserReviews');
+          console.log('here');
+        } else if (response.status === 401) {
+          throw 'Unauthorised!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
+        } else {
+          throw 'Error, please try again!';
+        }
       })
       .catch((error) => {
         console.error(error);

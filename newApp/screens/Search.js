@@ -33,6 +33,12 @@ class Search extends Component {
           return response.json();
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
         } else {
           throw 'Error, please try again!';
         }
@@ -66,7 +72,6 @@ class Search extends Component {
               onPress={() => this.searchLocations()}>
               <Text style={styles.TouchText}>Search</Text>
             </TouchableOpacity>
-          <View style={styles.space} />
           <View style={styles.row} />
           <View style={styles.space} />
           <Text style={styles.Label}>Locations:</Text>
@@ -74,7 +79,6 @@ class Search extends Component {
             data={this.state.listLocations}
             renderItem={({item}) => (
               <View>
-                <View style={styles.row} />
                 <View style={styles.space} />
                 <Text style={styles.Label}>{item.location_name}</Text>
                 <Text style={styles.Label}>{item.location_town}</Text>
@@ -93,45 +97,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   loading: {
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   Label: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
   },
-  Boarder: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-  },
   row: {
     padding: 2,
-    borderBottomColor: 'white',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
   Touch: {
     paddingVertical: 10,
     paddingHorizontal: 50,
   },
   TouchText: {
-    fontSize: 14,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    fontSize: 17,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 7,
-    paddingHorizontal: 120,
+    paddingHorizontal: 115,
   },
   space: {
     width: 5,

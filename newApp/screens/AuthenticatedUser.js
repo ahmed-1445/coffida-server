@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 250,
     height: 250,
-    top: 30,
+    top: 50,
   },
   Touch: {
     // alignItems: 'center',
@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'black',
     alignSelf: 'center',
-    top: 5,
+    top: 25,
   },
   Logout: {
     paddingVertical: 5,
     paddingHorizontal: 37,
-    top: 200,
+    top: 215,
   },
   LogoutText: {
     fontSize: 16,

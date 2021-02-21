@@ -100,12 +100,12 @@ class FavouriteLocations extends Component {
             )}
             keyExtractor={(item, index) => item.location_id.toString()}
           />
-          {/* <View style={styles.space} />
+          <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
-            onPress={() => navigation.navigate('AddFavourite')}>
+            onPress={() => navigation.navigate('LocationMan')}>
             <Text style={styles.TouchText}>Back</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       );
     }
@@ -116,40 +116,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   loading: {
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   Label: {
-    fontSize: 15,
-    color: 'white',
-  },
-  Boarder: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
+    fontSize: 17,
+    color: 'black',
   },
   row: {
     padding: 2,
-    borderBottomColor: 'white',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
   Touch: {
     paddingVertical: 10,
     paddingHorizontal: 20,
+    // alignItems: s'center',
   },
   TouchText: {
-    fontSize: 14,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    fontSize: 17,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 7,
-    paddingHorizontal: 125,
+    paddingHorizontal: 155,
   },
   space: {
     width: 5,

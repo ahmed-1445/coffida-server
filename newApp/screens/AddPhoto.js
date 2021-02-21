@@ -9,8 +9,7 @@ class AddPhoto extends Component {
     const locationID = await AsyncStorage.getItem('@location_id');
     const reviewID = await AsyncStorage.getItem('@review_id');
     console.log(image.uri);
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID + '/photo',{
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID + '/photo',{
         method: 'post',
         headers: {
           'Content-Type': 'image/jpeg',
@@ -21,11 +20,18 @@ class AddPhoto extends Component {
     )
       .then((response) => {
         if (response.status === 200) {
-          // Alert.prompt(response.status);
           ToastAndroid.show('Photo added!', ToastAndroid.SHORT);
           this.props.navigation.navigate('UpdateReview');
         } else if (response.status === 400) {
           throw 'Invalid details, please try again!';
+        } else if (response.status === 401) {
+          throw 'Unauthorised!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
         } else {
           throw 'Error, please try again!';
         }

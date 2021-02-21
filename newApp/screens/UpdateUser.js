@@ -28,8 +28,8 @@ class UpdateUser extends Component {
 
   getInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const user_id = await AsyncStorage.getItem('@id');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + user_id, {
+    const userID = await AsyncStorage.getItem('@id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
@@ -42,8 +42,10 @@ class UpdateUser extends Component {
           throw 'Bad Request!';
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
-        } else if (response.status === 404) {
+        } else if (response.status === 403) {
           throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not Found!';
         } else if (response.status === 500) {
           throw 'Server Error!';
         } else {
@@ -65,14 +67,14 @@ class UpdateUser extends Component {
 
   updateInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const id = await AsyncStorage.getItem('@user_id');
+    const userID = await AsyncStorage.getItem('@id');
     let details = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
       password: this.state.password,
     };
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + id, {
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
       method: 'patch',
       headers: {
         'Content-Type': 'application/json',
@@ -86,6 +88,14 @@ class UpdateUser extends Component {
           this.props.navigation.navigate('UserMan');
         } else if (response.status === 400) {
           throw 'Invalid details, please try again!';
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not Found!';
+        } else if (response.status === 500) {
+          throw 'Server Error!';
         } else {
           throw 'Error, please try again!';
         }

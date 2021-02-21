@@ -61,10 +61,14 @@ class LocationDetails extends Component {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
         } else if (response.status === 404) {
-          throw 'Page not found, plese try again!';
+          throw 'Not found!';
         } else if (response.status === 500) {
-          throw 'Server';
+          throw 'Server error!';
         } else {
           throw 'Error, please try again!';
         }
@@ -105,9 +109,21 @@ class LocationDetails extends Component {
         },
       },
     )
-      .then(() => {
-        ToastAndroid.show('Favourited!', ToastAndroid.SHORT);
-        console.log('Added to fav!');
+      .then((response) => {
+        if (response.status === 200) {
+          ToastAndroid.show('Favourited!', ToastAndroid.SHORT);
+          console.log('Added to fav!');
+        } else if (response.status === 400) {
+          throw 'Bad request, please login again!';
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -128,9 +144,21 @@ class LocationDetails extends Component {
         },
       },
     )
-      .then(() => {
-        ToastAndroid.show('Unfavourited!', ToastAndroid.SHORT);
-        console.log('Removed from fav!');
+      .then((response) => {
+        if (response.status === 200) {
+          ToastAndroid.show('Unfavourited!', ToastAndroid.SHORT);
+          console.log('Removed from fav!');
+        } else if (response.status === 400) {
+          throw 'Bad request, please login again!';
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -168,9 +196,6 @@ class LocationDetails extends Component {
               activeOpacity={0.7}
             />
           </View>
-          {/*<View style={styles.rowSplit} />*/}
-          {/*<Text style={styles.Label}>Latitude: {this.state.latitude}</Text>*/}
-          {/*<Text style={styles.Label}>Longitude: {this.state.longitude}</Text>*/}
           {/*<Text style={styles.Label}>Photo Path: {this.state.photo_path}</Text>*/}
           {/*<Text style={styles.rating}>Location ID: {this.state.location_id}</Text>*/}
           <Text style={styles.rating}>
@@ -227,7 +252,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   fav: {
     alignSelf: 'flex-end',
@@ -238,37 +263,37 @@ const styles = StyleSheet.create({
     top: -35,
   },
   loading: {
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   Label: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
     // top: 0,
   },
   rating: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
     top: -25,
   },
   review: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
   },
   Title: {
     fontWeight: 'bold',
-    fontSize: 18,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
     // elevation: 8,
     // paddingHorizontal: 10,
   },
   revTitle: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: 'white',
+    color: 'black',
     top: -10,
   },
   Boarder: {
@@ -278,13 +303,13 @@ const styles = StyleSheet.create({
   },
   row: {
     padding: 2,
-    borderBottomColor: 'white',
+    borderBottomColor: 'black',
     borderBottomWidth: 2,
     // top: 0,
   },
   rowSplit: {
     padding: 2,
-    borderBottomColor: 'white',
+    borderBottomColor: 'black',
     borderBottomWidth: 5,
     top: -25,
   },
@@ -293,12 +318,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   TouchText: {
-    fontSize: 14,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    fontSize: 17,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 7,
-    paddingHorizontal: 130,
+    paddingHorizontal: 122,
   },
   space: {
     width: 7,

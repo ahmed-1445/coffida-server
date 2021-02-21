@@ -41,7 +41,7 @@ class GetLocation extends Component {
   allLocations = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
     // const loc_id = await AsyncStorage.getItem('@location_id');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/find?limit=20', {
+    return fetch('http://10.0.2.2:3333/api/1.0.0/find?limit=5', {
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
@@ -52,6 +52,12 @@ class GetLocation extends Component {
           return response.json();
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
         } else {
           throw 'Error, please try again!';
         }
@@ -116,17 +122,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   listContainer: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
-  },
-  listItem: {
-    flex: 1,
-    padding: 2,
-    backgroundColor: 'white',
+    backgroundColor: '#73D2DC',
   },
   avatar: {
     // padding: 2,
@@ -135,24 +136,24 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   loading: {
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   Title: {
-    fontSize: 17,
-    color: 'white',
+    fontSize: 16,
+    color: 'black',
   },
   subTitle: {
     fontSize: 15,
-    color: 'white',
+    color: 'black',
   },
   row: {
     padding: 2,
-    borderBottomColor: 'white',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
   space: {
     width: 10,

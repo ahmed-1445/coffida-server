@@ -112,6 +112,14 @@ class UpdateReview extends Component {
           this.props.navigation.navigate('UserReviews');
         } else if (response.status === 400) {
           throw 'Invalid details, please try again!';
+        } else if (response.status === 401) {
+          throw 'Unauthorised!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
         } else {
           throw 'Error, please try again!';
         }
