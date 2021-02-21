@@ -24,6 +24,7 @@ import UserReviews from './screens/UserReviews';
 import AddPhoto from './screens/AddPhoto';
 import GetPhoto from './screens/GetPhoto';
 import LocationMap from './screens/LocationMap';
+import Search from './screens/Search';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,11 @@ class App extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="CoffiDa" component={Home} />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{title: 'CoffiDa'}}
+          />
           <Stack.Screen
             name="Register"
             component={Register}
@@ -76,17 +81,17 @@ class App extends Component {
           <Stack.Screen
             name="UpdateReview"
             component={UpdateReview}
-            options={{title: 'Update a Review'}}
+            options={{title: 'Update Review'}}
           />
           <Stack.Screen
             name="DeleteReview"
             component={DeleteReview}
-            options={{title: 'Delete a Review'}}
+            options={{title: 'Delete Review'}}
           />
           <Stack.Screen
             name="DeletePhoto"
             component={DeletePhoto}
-            options={{title: 'Delete a Photo'}}
+            options={{title: 'Delete Photo'}}
           />
           <Stack.Screen
             name="GetLocation"
@@ -122,6 +127,11 @@ class App extends Component {
             name="LocationMap"
             component={LocationMap}
             options={{title: 'Location Map'}}
+          />
+          <Stack.Screen
+            name="Search"
+            component={Search}
+            options={{title: 'Location Search'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

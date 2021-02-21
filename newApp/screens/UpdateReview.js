@@ -217,11 +217,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   Label: {
-    fontSize: 13,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
@@ -229,14 +229,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
+    // backgroundColor: 'darkorchid',
     padding: 10,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   TouchText: {
-    fontSize: 20,
-    // fontWeight: 'bold',
-    color: 'white',
+    backgroundColor: '#f77c39',
+    fontSize: 17,
+    color: 'black',
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 145,
   },
   space: {
     width: 5,
@@ -245,6 +248,3 @@ const styles = StyleSheet.create({
 });
 
 export default UpdateReview;
-
-// onChangeText={(quality_rating) => this.setState({quality_rating})}
-// value={this.state.quality_rating}

@@ -16,7 +16,6 @@ class LocationDetails extends Component {
 
     this.state = {
       isLoading: true,
-      // locationData: [],
       location_id: '',
       location_name: '',
       location_town: '',
@@ -62,8 +61,10 @@ class LocationDetails extends Component {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
-        } else if (response.status === 401) {
-          throw 'Not logged in, please login again!';
+        } else if (response.status === 404) {
+          throw 'Page not found, plese try again!';
+        } else if (response.status === 500) {
+          throw 'Server';
         } else {
           throw 'Error, please try again!';
         }
@@ -71,7 +72,6 @@ class LocationDetails extends Component {
       .then((responseJson) => {
         this.setState({
           isLoading: false,
-          // locationData: responseJson,
           location_id: responseJson.location_id,
           location_name: responseJson.location_name,
           location_town: responseJson.location_town,

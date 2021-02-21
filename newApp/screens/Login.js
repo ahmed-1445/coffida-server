@@ -45,6 +45,8 @@ class Login extends Component {
           return response.json();
         } else if (response.status === 400) {
           throw 'Invalid email or password, please try again!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
         } else {
           throw 'Error, please try again!';
         }

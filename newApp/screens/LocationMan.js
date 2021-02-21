@@ -21,6 +21,12 @@ class LocationMan extends Component {
         <View style={styles.space} />
         <TouchableOpacity
           style={styles.Touch}
+          onPress={() => navigation.navigate('Search')}>
+          <Text style={styles.TouchText}>Search</Text>
+        </TouchableOpacity>
+        <View style={styles.space} />
+        <TouchableOpacity
+          style={styles.Touch}
           onPress={() => navigation.navigate('LocationMap')}>
           <Text style={styles.TouchText}>Coffee Shops Near Me</Text>
         </TouchableOpacity>
@@ -33,11 +39,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   Label: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
@@ -51,13 +57,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
   },
   TouchText: {
-    fontSize: 15,
-    color: 'white',
-    // elevation: 8,
-    backgroundColor: 'darkorchid',
+    fontSize: 16,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 80,
+    paddingHorizontal: 100,
   },
   space: {
     width: 5,

@@ -43,8 +43,16 @@ class Register extends Component {
           return response.json();
         } else if (response.status === 400) {
           throw 'Fill in the form in full, please try again!';
+        } else if (response.status === 401) {
+          throw 'Unauthorised, please log in!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
+        } else if (response.status === 404) {
+          throw 'Not found!';
+        } else if (response.status === 500) {
+          throw 'Server error!';
         } else {
-          throw 'Something went wrong...';
+          throw 'Something went wrong, please try again!';
         }
       })
       .then((responseJSON) => {

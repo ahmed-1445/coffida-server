@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { View, Text, PermissionsAndroid, Alert, StyleSheet, ToastAndroid } from "react-native";
+import {View, Text, PermissionsAndroid, Alert, StyleSheet, ToastAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import AsyncStorage from '@react-native-community/async-storage';
 
+//Permission request function
 async function requestLocationPermission() {
   try {
     const granted = await PermissionsAndroid.request(
@@ -48,6 +49,7 @@ class LocationMap extends Component {
     this.allLocations();
   }
 
+  //Get Lat and Lon function
   allLocations = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
     return fetch('http://10.0.2.2:3333/api/1.0.0/find', {
@@ -69,14 +71,9 @@ class LocationMap extends Component {
         this.setState({
           isLoading: false,
           listLocations: responseJson,
-          // location_name: responseJson.location_name,
-          // latitude: responseJson.latitude,
-          // longitude: responseJson.longitude,
         });
         this.state.listLocations.toString();
         console.log('Data:', this.state.listLocations);
-        // console.log(this.state.latitude);
-        // console.log(this.state.longitude);
       })
       .catch((error) => {
         console.log(error);
@@ -86,6 +83,7 @@ class LocationMap extends Component {
 
   findCoordinates() {
     // console.log('state', this.state);
+    // checks for permissions
     if (!this.state.locationPermission) {
       console.log('Requesting permission...');
       this.state.locationPermission = requestLocationPermission();
@@ -98,6 +96,7 @@ class LocationMap extends Component {
       },
       isLoading: false,
     });
+    //Get current device location
     Geolocation.getCurrentPosition(
       (position) => {
         //const location = JSON.stringify(position);

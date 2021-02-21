@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, ToastAndroid, FlatList, Image, TouchableHighlight, TouchableOpacity } from "react-native";
+import {View, Text, StyleSheet, ToastAndroid, FlatList, Image, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Button} from 'react-native-elements';
 
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   image: {
     width: 40,
@@ -290,31 +290,31 @@ const styles = StyleSheet.create({
     top: -45,
   },
   loading: {
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   Label: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 16,
+    color: 'black',
     // top: -90,
   },
   review: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
   },
   Title: {
     fontWeight: 'bold',
-    fontSize: 18,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
     // top: -90,
     // paddingHorizontal: 10,
   },
   row: {
     padding: 2,
-    borderBottomColor: 'white',
+    borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
   Touch: {
@@ -322,9 +322,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   TouchText: {
-    fontSize: 14,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    fontSize: 17,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 7,
     paddingHorizontal: 95,

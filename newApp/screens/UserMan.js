@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ToastAndroid,
-  FlatList,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -70,6 +70,7 @@ class UserMan extends Component {
     } else {
       return (
         <View style={styles.container}>
+          <View style={styles.row} />
           <Text style={styles.Label}>Account details:</Text>
           <View style={styles.space} />
           <Text style={styles.Label}>
@@ -89,6 +90,10 @@ class UserMan extends Component {
             onPress={() => navigation.navigate('UserReviews')}>
             <Text style={styles.customReviews}>My Reviews</Text>
           </TouchableOpacity>
+          <Image
+            style={styles.Image}
+            source={require('./../icons/settings.png')}
+          />
           <TouchableOpacity
             style={styles.Back}
             onPress={() => navigation.navigate('AuthenticatedUser')}>
@@ -104,26 +109,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   loading: {
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  Image: {
+    alignSelf: 'center',
+    width: 130,
+    height: 130,
+    top: 120,
+  },
   customReviews: {
     fontSize: 15,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 150,
   },
   Label: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: 17,
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
@@ -132,23 +143,23 @@ const styles = StyleSheet.create({
   },
   row: {
     padding: 2,
-    borderBottomColor: 'white',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
   Touch: {
     paddingVertical: 5,
   },
   Back: {
     paddingVertical: 10,
-    top: 400,
+    top: 270,
   },
   TouchText: {
-    fontSize: 15,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    fontSize: 16,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 5,
-    paddingHorizontal: 170,
+    paddingHorizontal: 165,
   },
   space: {
     width: 10,

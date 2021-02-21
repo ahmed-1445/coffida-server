@@ -16,7 +16,7 @@ class UpdateUser extends Component {
 
     this.state = {
       first_name: '',
-      last_ame: '',
+      last_name: '',
       email: '',
       password: '',
     };
@@ -100,10 +100,9 @@ class UpdateUser extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.Label}>Update your account details:</Text>
           <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change first name:</Text>
+            <Text style={styles.Label}>Change First Name:</Text>
             <TextInput
               placeholder="Enter your first name"
               style={styles.Input}
@@ -111,8 +110,9 @@ class UpdateUser extends Component {
               value={this.state.first_name}
             />
           </View>
+          <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change last name:</Text>
+            <Text style={styles.Label}>Change Last Name:</Text>
             <TextInput
               placeholder="Enter your last name"
               style={styles.Input}
@@ -120,8 +120,9 @@ class UpdateUser extends Component {
               value={this.state.last_name}
             />
           </View>
+          <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change email:</Text>
+            <Text style={styles.Label}>Change Email:</Text>
             <TextInput
               placeholder="Enter your Email Address"
               style={styles.Input}
@@ -129,8 +130,9 @@ class UpdateUser extends Component {
               value={this.state.email}
             />
           </View>
+          <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change password:</Text>
+            <Text style={styles.Label}>Change Password:</Text>
             <TextInput
               placeholder="Enter your password (required)"
               style={styles.Input}
@@ -139,7 +141,6 @@ class UpdateUser extends Component {
               secureTextEntry={true}
             />
           </View>
-          <View style={styles.space} />
           <View style={styles.space} />
           <View>
             <TouchableOpacity
@@ -159,11 +160,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   Label: {
-    fontSize: 13,
-    color: 'white',
+    fontSize: 16,
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
@@ -177,13 +178,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   TouchText: {
-    fontSize: 15,
-    color: 'white',
-    elevation: 8,
-    backgroundColor: 'darkorchid',
+    fontSize: 17,
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 5,
-    paddingHorizontal: 110,
+    paddingHorizontal: 142,
   },
   space: {
     width: 5,

@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ToastAndroid,
-} from 'react-native';
+// eslint-disable-next-line prettier/prettier
+import {View, Text, TouchableOpacity, StyleSheet, ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class AuthenticatedUser extends Component {
@@ -28,6 +22,7 @@ class AuthenticatedUser extends Component {
     this._unsubscribe();
   }
 
+  // Checking if the user the autheticated
   checkAuth = async () => {
     const value = await AsyncStorage.getItem('@session_token');
     if (value !== null) {
@@ -50,9 +45,13 @@ class AuthenticatedUser extends Component {
         if (response.status === 200) {
           ToastAndroid.show('Successfully logged out!', ToastAndroid.SHORT);
           await AsyncStorage.removeItem('@session_token');
-          this.props.navigation.navigate('Login');
+          this.props.navigation.navigate('Home');
+        } else if (response.status === 401) {
+          throw 'Not logged in, please login again!';
+        } else if (response.status === 500) {
+          throw 'Server Error!';
         } else {
-          throw 'Something went wrong';
+          throw 'Please try again!';
         }
       })
       .catch((error) => {
@@ -62,7 +61,6 @@ class AuthenticatedUser extends Component {
   };
 
   render() {
-    // const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
         <View style={styles.space} />
