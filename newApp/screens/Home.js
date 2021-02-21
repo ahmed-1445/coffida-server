@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'stretch',
     justifyContent: 'center',
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   image: {
     alignSelf: 'center',
@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
   },
   Label: {
     fontSize: 30,
-    color: 'white',
+    color: 'black',
     alignSelf: 'center',
     top: -90,
   },
   TouchText: {
     fontSize: 20,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 138,

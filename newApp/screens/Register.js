@@ -121,16 +121,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   title: {
     fontSize: 17,
-    color: 'white',
+    color: 'black',
     padding: 3,
   },
   Label: {
     fontSize: 16,
-    color: 'white',
+    color: 'black',
   },
   Input: {
     borderWidth: 1,
@@ -138,16 +138,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
+    // backgroundColor: '#f77c39',
     // padding: 10,
     alignItems: 'center',
-    borderRadius: 10,
+    // borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 20,
   },
   TouchText: {
+    backgroundColor: '#f77c39',
+    borderRadius: 10,
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     paddingVertical: 5,
     paddingHorizontal: 138,
   },

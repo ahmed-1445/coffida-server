@@ -32,7 +32,8 @@ class AuthenticatedUser extends Component {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.Title}>What would you like to do?</Text>
+        {/*<Text style={styles.Title}>What would you like to do?</Text>*/}
+        <View style={styles.space} />
         <View style={styles.space} />
         <TouchableOpacity
           style={styles.Touch}
@@ -64,11 +65,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   Title: {
     fontSize: 16,
-    color: 'white',
+    color: 'black',
   },
   Image: {
     alignSelf: 'center',
@@ -83,15 +84,15 @@ const styles = StyleSheet.create({
   },
   TouchText: {
     fontSize: 16,
-    color: 'white',
-    backgroundColor: 'darkorchid',
+    color: 'black',
+    backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 132,
   },
   Label: {
     fontSize: 24,
-    color: 'white',
+    color: 'black',
     alignSelf: 'center',
     top: 5,
   },
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   LogoutText: {
     fontSize: 16,
     color: 'white',
-    backgroundColor: 'darkorchid',
+    // backgroundColor: 'darkorchid',
     borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 132,

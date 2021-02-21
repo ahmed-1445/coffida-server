@@ -106,15 +106,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'lightseagreen',
+    backgroundColor: '#73D2DC',
   },
   Label: {
     fontSize: 16,
-    color: 'white',
+    color: 'black',
   },
   Register: {
     fontSize: 16,
-    color: 'white',
+    color: 'black',
     alignSelf: 'center',
   },
   Button: {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   Touch: {
-    backgroundColor: 'darkorchid',
+    // backgroundColor: '#f77c39',
     padding: 10,
     alignItems: 'center',
     paddingVertical: 5,
@@ -136,9 +136,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   TouchText: {
+    backgroundColor: '#f77c39',
+    borderRadius: 10,
     fontSize: 20,
-    // fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
     paddingVertical: 5,
     paddingHorizontal: 138,
   },
