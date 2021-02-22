@@ -1,8 +1,11 @@
 # CoffiDa API & React Native Android Application
 
 This repo contains the submission for the Mobile Applications Development coursework assignment. For this submission, the 'node_modules' directory has been deleted which is also ignored by the Git through the '.gitignore' file. All files for the Android application are found within the 'newApp' directory.
+<<<<<<< HEAD
 
 Link to GitHub repo for submission: <https://github.com/ahmed-1445/coffida_server.git>
+=======
+>>>>>>> d0d46f1a01bffb813387b78a013c6c28dc505cb4
 
 ## CoffiDa Endpoints
 
@@ -44,6 +47,11 @@ List of features that the app have implemented:
 - Ability to create individual reviews and persmissions to edit, view/add/delete a photo, like/unlike and delete the review.
 - Ability to search for a location.
 - Ability to easily view various ratings with the implementation of 'AirBnbRating' star rating method. i.e. Location & Review ratings.
+<<<<<<< HEAD
+=======
+
+Link to GitHub repo for submission: <https://github.com/ahmed-1445/coffida_server.git>
+>>>>>>> d0d46f1a01bffb813387b78a013c6c28dc505cb4
 
 ## How to run
 
