@@ -193,7 +193,7 @@ class LocationDetails extends Component {
           <View style={styles.noFav}>
             <Avatar
               size="small"
-              icon={{name: 'heart', type: 'font-awesome'}}
+              icon={{name: 'favorite-border', type: 'Ionicons'}}
               onPress={() => this.delFav()}
               activeOpacity={0.7}
             />
@@ -210,7 +210,7 @@ class LocationDetails extends Component {
             data={this.state.reviewData}
             renderItem={({item}) => (
               <View style={styles.review}>
-                <Text style={styles.Label}>{item.review_body}</Text>
+                <Text style={styles.Label}>Comment: {item.review_body}</Text>
                 <View style={styles.space} />
                 <Text style={styles.Label}>Overall Rating:</Text>
                 <AirbnbRating
@@ -252,7 +252,7 @@ class LocationDetails extends Component {
                 <Text style={styles.Label}>Likes: {item.likes}</Text>
                 <View style={styles.space} />
                 <View style={styles.row} />
-                <View style={styles.space} />
+                {/* <View style={styles.space} /> */}
               </View>
             )}
             keyExtractor={(item, index) => item.review_id.toString()}
@@ -303,14 +303,12 @@ const styles = StyleSheet.create({
   review: {
     fontSize: 17,
     color: 'black',
-    alignSelf: 'center',
   },
   Title: {
     fontWeight: 'bold',
     fontSize: 17,
     color: 'black',
     alignSelf: 'center',
-    // paddingHorizontal: 10,
   },
   revTitle: {
     fontWeight: 'bold',
@@ -325,7 +323,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   row: {
-    // padding: 2,
+    padding: 2,
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },

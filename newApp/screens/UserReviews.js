@@ -29,6 +29,7 @@ class UserReviews extends Component {
       this.checkAuth();
     });
     this.getReviews();
+    console.disableYellowBox = true;
   }
 
   componentWillUnmount() {
@@ -282,6 +283,16 @@ class UserReviews extends Component {
                     source={require('./../icons/like.png')}
                   />
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.image}
+                  onPress={() =>
+                    unlike(item.review.review_id, item.location.location_id)
+                  }>
+                  <Image
+                    style={styles.dislike}
+                    source={require('./../icons/dislike.png')}
+                  />
+                </TouchableOpacity>
                 <View style={styles.space} />
                 <TouchableOpacity
                   style={styles.image}
@@ -296,82 +307,74 @@ class UserReviews extends Component {
                     source={require('./../icons/delete.png')}
                   />
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.image}
+                  onPress={() =>
+                    getPhoto(item.review.review_id, item.location.location_id)
+                  }>
+                  <Image
+                    style={styles.pic}
+                    source={require('./../icons/picture.png')}
+                  />
+                </TouchableOpacity>
                 {/*<Text style={styles.Label}>Loc ID: {item.location.location_id}</Text>*/}
                 <Text style={styles.Title}>
                   {item.location.location_name} - {item.location.location_town}
                 </Text>
                 {/*<Text style={styles.Label}>Rev ID: {item.review.review_id}</Text>*/}
-                <Text style={styles.Label}>Overall Rating:</Text>
-                <AirbnbRating
-                  count={5}
-                  reviews={['1', '2', '3', '4', '5']}
-                  defaultRating={item.review.overall_rating}
-                  size={20}
-                  showRating={false}
-                  isDisabled={true}
-                />
-                <Text style={styles.Label}>Price Rating:</Text>
-                <AirbnbRating
-                  count={5}
-                  reviews={['1', '2', '3', '4', '5']}
-                  defaultRating={item.review.price_rating}
-                  size={20}
-                  showRating={false}
-                  isDisabled={true}
-                />
-                <Text style={styles.Label}>Quality Rating:</Text>
-                <AirbnbRating
-                  count={5}
-                  reviews={['1', '2', '3', '4', '5']}
-                  defaultRating={item.review.quality_rating}
-                  size={20}
-                  showRating={false}
-                  isDisabled={true}
-                />
-                <Text style={styles.Label}>Cleanliness Rating:</Text>
-                <AirbnbRating
-                  count={5}
-                  reviews={['1', '2', '3', '4', '5']}
-                  defaultRating={item.review.clenliness_rating}
-                  size={20}
-                  showRating={false}
-                  isDisabled={true}
-                />
-                <Text style={styles.Label}>Comments: {item.review.review_body}</Text>
-                <Text style={styles.Label}>Likes: {item.review.likes}</Text>
-                <Button
-                  // style={styles.Touch}
-                  small
-                  icon={{name: 'edit'}}
-                  title="Edit"
-                  onPress={() =>
-                    updateReview(
-                      item.review.review_id,
-                      item.location.location_id,
-                    )
-                  }
-                />
-                <View style={styles.space} />
-                <Button
-                  small
-                  title="See photo"
-                  onPress={() =>
-                    getPhoto(item.review.review_id, item.location.location_id)
-                  }
-                />
-                <View style={styles.space} />
-                <Button
-                  small
-                  title="Unlike"
-                  onPress={() =>
-                    unlike(item.review.review_id, item.location.location_id)
-                  }
-                />
+                <View style={styles.Ratings}>
+                  <Text style={styles.Label}>Overall Rating:</Text>
+                  <AirbnbRating
+                    count={5}
+                    reviews={['1', '2', '3', '4', '5']}
+                    defaultRating={item.review.overall_rating}
+                    size={20}
+                    showRating={false}
+                    isDisabled={true}
+                  />
+                  <Text style={styles.Label}>Price Rating:</Text>
+                  <AirbnbRating
+                    count={5}
+                    reviews={['1', '2', '3', '4', '5']}
+                    defaultRating={item.review.price_rating}
+                    size={20}
+                    showRating={false}
+                    isDisabled={true}
+                  />
+                  <Text style={styles.Label}>Quality Rating:</Text>
+                  <AirbnbRating
+                    count={5}
+                    reviews={['1', '2', '3', '4', '5']}
+                    defaultRating={item.review.quality_rating}
+                    size={20}
+                    showRating={false}
+                    isDisabled={true}
+                  />
+                  <Text style={styles.Label}>Cleanliness Rating:</Text>
+                  <AirbnbRating
+                    count={5}
+                    reviews={['1', '2', '3', '4', '5']}
+                    defaultRating={item.review.clenliness_rating}
+                    size={20}
+                    showRating={false}
+                    isDisabled={true}
+                  />
+                  <Text style={styles.Label}>
+                    Comments: {item.review.review_body}
+                  </Text>
+                  <Text style={styles.Label}>Likes: {item.review.likes}</Text>
+                  <View style={styles.space} />
+                  <TouchableOpacity
+                    style={styles.TouchText}
+                    onPress={() => updateReview(item.review.review_id, item.location.location_id)}>
+                    <Text style={styles.Label}>Edit</Text>
+                  </TouchableOpacity>
+                  <View style={styles.space} />
+                </View>
                 <View style={styles.row} />
               </View>
             )}
           />
-          <View style={styles.space} />
         </View>
       );
     }
@@ -390,6 +393,18 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     top: 10,
   },
+  dislike: {
+    width: 40,
+    height: 40,
+    alignSelf: 'flex-end',
+    top: 15,
+  },
+  pic: {
+    width: 40,
+    height: 40,
+    alignSelf: 'flex-end',
+    top: 15,
+  },
   delete: {
     width: 45,
     height: 45,
@@ -407,7 +422,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     alignSelf: 'center',
-    // top: -90,
+    // top: ,
+  },
+  Ratings: {
+    alignSelf: 'center',
+    top: -90,
   },
   review: {
     fontSize: 17,
@@ -418,7 +437,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'black',
     alignSelf: 'center',
-    // top: -90,
+    top: -90,
     // paddingHorizontal: 10,
   },
   row: {
@@ -435,8 +454,9 @@ const styles = StyleSheet.create({
     color: 'black',
     backgroundColor: '#f77c39',
     borderRadius: 10,
-    paddingVertical: 7,
-    paddingHorizontal: 95,
+    paddingVertical: 5,
+    paddingHorizontal: 25,
+    alignSelf: 'center',
   },
   space: {
     width: 7,

@@ -93,12 +93,12 @@ class FavouriteLocations extends Component {
           <Text style={styles.Label}>
             Choose one of the following locations:
           </Text>
+          <View style={styles.row} />
           <View style={styles.space} />
           <FlatList
             data={this.state.favLocations}
             renderItem={({item}) => (
               <View>
-                <View style={styles.row} />
                 <View style={styles.space} />
                 <Text style={styles.Label}>{item.location_name}</Text>
                 <Text style={styles.Label}>{item.location_town}</Text>
