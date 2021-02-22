@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Avatar} from 'react-native-elements';
+import {Avatar, AirbnbRating} from 'react-native-elements';
 
 class LocationDetails extends Component {
   constructor(props) {
@@ -200,39 +200,57 @@ class LocationDetails extends Component {
           </View>
           {/*<Text style={styles.Label}>Photo Path: {this.state.photo_path}</Text>*/}
           {/*<Text style={styles.rating}>Location ID: {this.state.location_id}</Text>*/}
-          <Text style={styles.rating}>
-            Average Overall Rating: {this.state.avg_overall_rating}/5
-          </Text>
-          <Text style={styles.rating}>
-            Average Price Rating: {this.state.avg_price_rating}/5
-          </Text>
-          <Text style={styles.rating}>
-            Average Quality Rating: {this.state.avg_quality_rating}/5
-          </Text>
-          <Text style={styles.rating}>
-            Average Cleanliness Rating: {this.state.avg_clenliness_rating}/5
-          </Text>
+          <Text style={styles.rating}>Avg Price Rating: {this.state.avg_price_rating} / 5</Text>
+          <Text style={styles.rating}>Avg Quality Rating: {this.state.avg_quality_rating} / 5</Text>
+          <Text style={styles.rating}>Avg Cleanliness Rating: {this.state.avg_clenliness_rating} / 5</Text>
           <View style={styles.rowSplit} />
-          <Text style={styles.revTitle}>Reviews:</Text>
+          <Text style={styles.revTitle}>Reviews</Text>
+          <View style={styles.row} />
           <FlatList
             data={this.state.reviewData}
             renderItem={({item}) => (
               <View style={styles.review}>
-                <View style={styles.row} />
-                <Text style={styles.Label}>
-                  Overall Rating: {item.overall_rating}
-                </Text>
-                <Text style={styles.Label}>
-                  Price Rating: {item.price_rating}
-                </Text>
-                <Text style={styles.Label}>
-                  Quality Rating: {item.quality_rating}
-                </Text>
-                <Text style={styles.Label}>
-                  Cleanliness Rating: {item.clenliness_rating}
-                </Text>
-                <Text style={styles.Label}>Comments: {item.review_body}</Text>
+                <Text style={styles.Label}>{item.review_body}</Text>
+                <View style={styles.space} />
+                <Text style={styles.Label}>Overall Rating:</Text>
+                <AirbnbRating
+                  // style={{alignItems: 'flex-start'}}
+                  count={5}
+                  reviews={['1', '2', '3', '4', '5']}
+                  defaultRating={item.overall_rating}
+                  size={20}
+                  isDisabled={true}
+                />
+                <View style={styles.space} />
+                <Text style={styles.Label}>Price Rating:</Text>
+                <AirbnbRating
+                  count={5}
+                  reviews={['1', '2', '3', '4', '5']}
+                  defaultRating={item.price_rating}
+                  size={20}
+                  isDisabled={true}
+                />
+                <View style={styles.space} />
+                <Text style={styles.Label}>Quality Rating:</Text>
+                <AirbnbRating
+                  count={5}
+                  reviews={['1', '2', '3', '4', '5']}
+                  defaultRating={item.quality_rating}
+                  size={20}
+                  isDisabled={true}
+                />
+                <View style={styles.space} />
+                <Text style={styles.Label}>Cleanliness Rating:</Text>
+                <AirbnbRating
+                  count={5}
+                  reviews={['1', '2', '3', '4', '5']}
+                  defaultRating={item.clenliness_rating}
+                  size={20}
+                  isDisabled={true}
+                />
+                <View style={styles.space} />
                 <Text style={styles.Label}>Likes: {item.likes}</Text>
+                <View style={styles.space} />
                 <View style={styles.row} />
                 <View style={styles.space} />
               </View>
@@ -274,20 +292,24 @@ const styles = StyleSheet.create({
   Label: {
     fontSize: 17,
     color: 'black',
+    alignSelf: 'center',
   },
   rating: {
     fontSize: 17,
     color: 'black',
     top: -25,
+    alignSelf: 'center',
   },
   review: {
     fontSize: 17,
     color: 'black',
+    alignSelf: 'center',
   },
   Title: {
     fontWeight: 'bold',
     fontSize: 17,
     color: 'black',
+    alignSelf: 'center',
     // paddingHorizontal: 10,
   },
   revTitle: {
@@ -295,6 +317,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     top: -10,
+    alignSelf: 'center',
   },
   Boarder: {
     borderWidth: 1,
@@ -302,7 +325,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   row: {
-    padding: 2,
+    // padding: 2,
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
@@ -329,8 +352,8 @@ const styles = StyleSheet.create({
     height: 7,
   },
   spaceList: {
-    width: 15,
-    height: 15,
+    width: 20,
+    height: 20,
   },
 });
 

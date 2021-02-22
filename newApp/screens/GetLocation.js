@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import {AirbnbRating} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class GetLocation extends Component {
@@ -95,9 +96,8 @@ class GetLocation extends Component {
     } else {
       return (
         <View style={styles.listContainer}>
-          <Text style={styles.Title}>
-            Select one of the following locations:
-          </Text>
+          <Text style={styles.Title}>Select one of the following locations:</Text>
+          <View style={styles.row} />
           <View style={styles.space} />
           <FlatList
             data={this.state.listData}
@@ -108,6 +108,16 @@ class GetLocation extends Component {
                 <View>
                   <Text style={styles.Title}>{item.location_name}</Text>
                   <Text style={styles.subTitle}>{item.location_town}</Text>
+                  <View style={styles.space} />
+                  <Text style={styles.Rating}>Avg Rating:</Text>
+                  <AirbnbRating
+                    count={5}
+                    reviews={['1', '2', '3', '4', '5']}
+                    defaultRating={item.avg_overall_rating}
+                    size={18}
+                    showRating={false}
+                    isDisabled={true}
+                  />
                 </View>
                 <View style={styles.row} />
               </TouchableOpacity>
@@ -147,10 +157,17 @@ const styles = StyleSheet.create({
   Title: {
     fontSize: 16,
     color: 'black',
+    alignSelf: 'center',
   },
   subTitle: {
     fontSize: 15,
     color: 'black',
+    alignSelf: 'center',
+  },
+  Rating: {
+    fontSize: 15,
+    color: 'black',
+    alignSelf: 'center',
   },
   row: {
     padding: 2,

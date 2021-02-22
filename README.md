@@ -1,6 +1,8 @@
-# CoffiDa API & React Native Application
+# CoffiDa API & React Native Android Application
 
-This repo contains the submission for my Mobile Applications Development coursework assignment. For this submission, the 'node_modules' directory has been deleted, it is also ignored by the repo through the '.gitignore' file. All files for the Android application are found within the 'newApp' directory.
+This repo contains the submission for the Mobile Applications Development coursework assignment. For this submission, the 'node_modules' directory has been deleted which is also ignored by the Git through the '.gitignore' file. All files for the Android application are found within the 'newApp' directory.
+
+Link to GitHub repo for submission: <https://github.com/ahmed-1445/coffida_server.git>
 
 ## CoffiDa Endpoints
 
@@ -16,7 +18,7 @@ User Management:
 Location Reviews:
 
 - POST /location/{loc_id}/review - Add Review
-- PATCH /location/{loc_id}/review/{rev_id} - Update Review (WIP)
+- PATCH /location/{loc_id}/review/{rev_id} - Update Review
 - DELETE ​/location​/{loc_id}​/review​/{rev_id} - Delete Review
 - GET /location/{loc_id}/review/{rev_id}/photo - Get Photo
 - POST /location/{loc_id}/review/{rev_id}/photo - Add Photo
@@ -31,7 +33,17 @@ Location Management:
 - DELETE /location/{loc_id}/favourite - Unfavourite a Location
 - GET /find - Find Locations
 
-Link to GitHub repo for submission: <https://github.com/ahmed-1445/coffida_server>
+## App Features
+
+List of features that the app have implemented:
+
+- Ability to create/register an account, login and logout.
+- Ability to view and edit their account details based of the saved values. i.e. Change Full Name & Password.
+- Ability to view all Location information and Review details of a selected location.
+- Ability to favourite and unfavourite a Location.
+- Ability to create individual reviews and persmissions to edit, view/add/delete a photo, like/unlike and delete the review.
+- Ability to search for a location.
+- Ability to easily view various ratings with the implementation of 'AirBnbRating' star rating method. i.e. Location & Review ratings.
 
 ## How to run
 
