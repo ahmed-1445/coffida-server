@@ -23,7 +23,7 @@ class AddPhoto extends Component {
           ToastAndroid.show('Photo added!', ToastAndroid.SHORT);
           this.props.navigation.navigate('UpdateReview');
         } else if (response.status === 400) {
-          throw 'Invalid details, please try again!';
+          throw 'Please try again!';
         } else if (response.status === 401) {
           throw 'Unauthorised!';
         } else if (response.status === 403) {

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ToastAndroid,
 } from 'react-native';
+import {AirbnbRating} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class UpdateReview extends Component {
@@ -59,6 +60,8 @@ class UpdateReview extends Component {
           throw 'Bad Request!';
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
+        } else if (response.status === 403) {
+          throw 'Forbidden!';
         } else if (response.status === 404) {
           throw 'Forbidden!';
         } else if (response.status === 500) {
@@ -70,7 +73,7 @@ class UpdateReview extends Component {
       .then((responseJson) => {
         this.setState({
           // origData: responseJson.reviews,
-          location_reviews: responseJson,
+          location_reviews: responseJson.reviews,
         });
         console.log(this.state.location_reviews);
       })
@@ -91,12 +94,7 @@ class UpdateReview extends Component {
       clenliness_rating: parseInt(this.state.clenliness_rating),
       review_body: this.state.review_body,
     };
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' +
-        locationID +
-        '/review/' +
-        reviewID,
-      {
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID, {
         method: 'patch',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +109,7 @@ class UpdateReview extends Component {
           ToastAndroid.show('Review Updated!', ToastAndroid.SHORT);
           this.props.navigation.navigate('UserReviews');
         } else if (response.status === 400) {
-          throw 'Invalid details, please try again!';
+          throw 'Invalid values, please try again!';
         } else if (response.status === 401) {
           throw 'Unauthorised!';
         } else if (response.status === 403) {
@@ -130,17 +128,6 @@ class UpdateReview extends Component {
       });
   };
 
-  handleInputChange = (text) => {
-    if (/^\d+$/.test(text)) {
-      this.setState({
-        overall_rating: text,
-        price_rating: text,
-        quality_rating: text,
-        clenliness_rating: text,
-      });
-    }
-  };
-
   render() {
     const navigation = this.props.navigation;
     return (
@@ -148,72 +135,59 @@ class UpdateReview extends Component {
         <ScrollView>
           <Text style={styles.Label}>Please fill in the below form...</Text>
           <View style={styles.space} />
-          <View>
-            <Text style={styles.Label}>Overall Rating:</Text>
-            <TextInput
-              placeholder="What's the overall rating?"
-              keyboardType={'numeric'}
-              style={styles.Input}
-              onChangeText={this.handleInputChange}
-              value={this.handleInputChange.overall_rating}
-              maxLength={5}
-            />
-          </View>
-          <View style={styles.space} />
-          <Text style={styles.Label}>Price Rating:</Text>
-          <TextInput
-            placeholder="What's the price rating?"
-            keyboardType={'numeric'}
-            style={styles.Input}
-            onChangeText={this.handleInputChange}
-            value={this.handleInputChange.price_rating}
-            maxLength={5}
+          <Text style={styles.Label}>Overall Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            // defaultRating={this.state.location_reviews.overall_rating}
+            size={20}
+            onFinishRating={(overall_rating) => this.setState({overall_rating})}
           />
           <View style={styles.space} />
-          <View>
-            <Text style={styles.Label}>Quality Rating:</Text>
-            <TextInput
-              placeholder="What's the quality rating?"
-              keyboardType={'numeric'}
-              style={styles.Input}
-              onChangeText={this.handleInputChange}
-              value={this.handleInputChange.quality_rating}
-              maxLength={5}
-            />
-          </View>
+          <Text style={styles.Label}>Price Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            // defaultRating={this.state.location_reviews.price_rating}
+            size={20}
+            onFinishRating={(price_rating) => this.setState({price_rating})}
+          />
           <View style={styles.space} />
-          <View>
-            <Text style={styles.Label}>Cleanliness Rating:</Text>
-            <TextInput
-              placeholder="What's the cleanliness rating?"
-              keyboardType={'numeric'}
-              style={styles.Input}
-              onChangeText={this.handleInputChange}
-              value={this.handleInputChange.clenliness_rating}
-              maxLength={5}
-            />
-          </View>
+          <Text style={styles.Label}>Quality Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            // defaultRating={this.state.location_reviews.quality_rating}
+            size={20}
+            onFinishRating={(quality_rating) => this.setState({quality_rating})}
+          />
           <View style={styles.space} />
-          <View>
-            <Text style={styles.Label}>Any Comments:</Text>
-            <TextInput
-              placeholder="Anything to add?"
-              style={styles.Input}
-              onChangeText={(review_body) => this.setState({review_body})}
-              value={this.state.review_body}
-            />
-          </View>
+          <Text style={styles.Label}>Cleanliness Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            // defaultRating={1}
+            size={20}
+            onFinishRating={(clenliness_rating) => this.setState({clenliness_rating})}
+          />
+          <View style={styles.space} />
+          <Text style={styles.Label}>Any Comments:</Text>
+          <TextInput
+            placeholder="Anything to add?"
+            style={styles.Input}
+            onChangeText={(review_body) => this.setState({review_body})}
+            value={this.state.review_body}
+          />
           <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
             onPress={() => navigation.navigate('AddPhoto')}>
             <Text style={styles.TouchText}>Add Photo</Text>
           </TouchableOpacity>
-          <View style={styles.space} />
           <TouchableOpacity
             style={styles.Touch}
             onPress={() => this.updateReview()}>
-            <Text style={styles.TouchText}>Submit</Text>
+            <Text style={styles.TouchText}>Update</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -230,6 +204,7 @@ const styles = StyleSheet.create({
   Label: {
     fontSize: 17,
     color: 'black',
+    alignSelf: 'center',
   },
   Input: {
     borderWidth: 1,
@@ -250,8 +225,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 145,
   },
   space: {
-    width: 5,
-    height: 5,
+    width: 10,
+    height: 10,
   },
 });
 

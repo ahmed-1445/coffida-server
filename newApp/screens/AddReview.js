@@ -9,17 +9,18 @@ import {
   ToastAndroid,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import {AirbnbRating} from 'react-native-elements';
 
 class AddReview extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      overallRating: '',
-      priceRating: '',
-      qualityRating: '',
-      cleanlinessRating: '',
-      reviewBody: '',
+      overall_rating: '',
+      price_rating: '',
+      quality_rating: '',
+      clenliness_rating: '',
+      review_body: '',
     };
   }
 
@@ -28,16 +29,15 @@ class AddReview extends Component {
     const userToken = await AsyncStorage.getItem('@session_token');
     const locationID = await AsyncStorage.getItem('@location_id');
     let details = {
-      overall_rating: parseInt(this.state.overallRating),
-      price_rating: parseInt(this.state.priceRating),
-      quality_rating: parseInt(this.state.qualityRating),
-      clenliness_rating: parseInt(this.state.cleanlinessRating),
-      review_body: this.state.reviewBody,
+      overall_rating: parseInt(this.state.overall_rating),
+      price_rating: parseInt(this.state.price_rating),
+      quality_rating: parseInt(this.state.quality_rating),
+      clenliness_rating: parseInt(this.state.clenliness_rating),
+      review_body: this.state.review_body,
     };
 
     return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review',
-      {
+      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -75,63 +75,57 @@ class AddReview extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.Title}>Please enter the following details:</Text>
+          {/* <Text style={styles.Title}>Give your rating:</Text> */}
           <View style={styles.space} />
-          <View>
-            <Text style={styles.Label}>Overall Rating:</Text>
-            <TextInput
-              placeholder="What's your overall rating?"
-              style={styles.Input}
-              onChangeText={(overallRating) => this.setState({overallRating})}
-              value={this.state.overallRating}
-            />
-          </View>
-          <View>
-            <Text style={styles.Label}>Price Rating:</Text>
-            <TextInput
-              placeholder="What's your price rating?"
-              style={styles.Input}
-              onChangeText={(priceRating) => this.setState({priceRating})}
-              value={this.state.priceRating}
-            />
-          </View>
-          <View>
-            <Text style={styles.Label}>Quality Rating:</Text>
-            <TextInput
-              placeholder="What's your quality rating?"
-              style={styles.Input}
-              onChangeText={(qualityRating) => this.setState({qualityRating})}
-              value={this.state.qualityRating}
-            />
-          </View>
-          <View>
-            <Text style={styles.Label}>Cleanliness Rating:</Text>
-            <TextInput
-              placeholder="What's your cleanliness rating?"
-              style={styles.Input}
-              onChangeText={(cleanlinessRating) =>
-                this.setState({cleanlinessRating})
-              }
-              value={this.state.cleanlinessRating}
-            />
-          </View>
-          <View>
-            <Text style={styles.Label}>Comment:</Text>
-            <TextInput
-              placeholder="Any comments?"
-              style={styles.Input}
-              onChangeText={(reviewBody) => this.setState({reviewBody})}
-              value={this.state.reviewBody}
-            />
-          </View>
+          <Text style={styles.Label}>Overall Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            defaultRating={0}
+            size={20}
+            onFinishRating={(overall_rating) => this.setState({overall_rating})}
+          />
           <View style={styles.space} />
-          <View>
-            <TouchableOpacity
-              style={styles.Touch}
-              onPress={() => this.addReview()}>
-              <Text style={styles.TouchText}>Submit</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.Label}>Price Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            defaultRating={0}
+            size={20}
+            onFinishRating={(price_rating) => this.setState({price_rating})}
+          />
+          <View style={styles.space} />
+          <Text style={styles.Label}>Quality Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            defaultRating={0}
+            size={20}
+            onFinishRating={(quality_rating) => this.setState({quality_rating})}
+          />
+          <View style={styles.space} />
+          <Text style={styles.Label}>Cleanliness Rating:</Text>
+          <AirbnbRating
+            count={5}
+            reviews={['1', '2', '3', '4', '5']}
+            defaultRating={0}
+            size={20}
+            onFinishRating={(clenliness_rating) => this.setState({clenliness_rating})}
+          />
+          <View style={styles.space} />
+          <Text style={styles.Label}>Any comments:</Text>
+          <TextInput
+            placeholder="Any comments?"
+            style={styles.Input}
+            onChangeText={(review_body) => this.setState({review_body})}
+            value={this.state.review_body}
+          />
+          <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.Touch}
+            onPress={() => this.addReview()}>
+            <Text style={styles.TouchText}>Submit</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -150,6 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   Label: {
+    alignSelf: 'center',
     fontSize: 16,
     color: 'black',
   },
@@ -168,7 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f77c39',
     borderRadius: 10,
     paddingVertical: 15,
-    paddingHorizontal: 145,
+    paddingHorizontal: 148,
   },
   space: {
     width: 10,
