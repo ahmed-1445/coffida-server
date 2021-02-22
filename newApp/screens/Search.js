@@ -31,6 +31,8 @@ class Search extends Component {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
+        } else if (response.status === 400) {
+          throw 'Bad Request!';
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
         } else if (response.status === 403) {

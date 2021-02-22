@@ -7,7 +7,6 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      // isLoading: true,
       email: '',
       password: '',
       token: '',
@@ -22,10 +21,6 @@ class Login extends Component {
   handlePasswordInput = (pass) => {
     this.setState({password: pass});
   };
-
-  // componentDidMount() {
-  //   this.login();
-  // }
 
   login = async () => {
     // Add some validation i.e. password strength
@@ -70,14 +65,6 @@ class Login extends Component {
   };
 
   render() {
-    // const navigation = this.props.navigation;
-    // if (this.state.isLoading) {
-    //   return (
-    //     <View>
-    //       <ActivityIndicator />
-    //     </View>
-    //   );
-    // }
     return (
       <View style={styles.container}>
         <Text style={styles.Label}>Email:</Text>

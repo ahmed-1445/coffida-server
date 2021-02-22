@@ -61,6 +61,8 @@ class LocationDetails extends Component {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
+        } else if (response.status === 400) {
+          throw 'Bad request!';
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
         } else if (response.status === 403) {
@@ -272,7 +274,6 @@ const styles = StyleSheet.create({
   Label: {
     fontSize: 17,
     color: 'black',
-    // top: 0,
   },
   rating: {
     fontSize: 17,
@@ -287,7 +288,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     color: 'black',
-    // elevation: 8,
     // paddingHorizontal: 10,
   },
   revTitle: {
@@ -305,7 +305,6 @@ const styles = StyleSheet.create({
     padding: 2,
     borderBottomColor: 'black',
     borderBottomWidth: 2,
-    // top: 0,
   },
   rowSplit: {
     padding: 2,

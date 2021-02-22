@@ -75,6 +75,8 @@ class GetPhoto extends Component {
           ToastAndroid.show('Photo deleted!', ToastAndroid.SHORT);
           this.props.navigation.navigate('UserReviews');
           console.log('here');
+        } else if (response.status === 400) {
+          throw 'Bad request!';
         } else if (response.status === 401) {
           throw 'Unauthorised!';
         } else if (response.status === 403) {

@@ -46,6 +46,8 @@ class AuthenticatedUser extends Component {
           ToastAndroid.show('Successfully logged out!', ToastAndroid.SHORT);
           await AsyncStorage.removeItem('@session_token');
           this.props.navigation.navigate('Home');
+        } else if (response.status === 400) {
+          throw 'Bad request!';
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
         } else if (response.status === 403) {
