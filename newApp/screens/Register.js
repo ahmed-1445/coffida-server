@@ -1,22 +1,12 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ToastAndroid,
-} from 'react-native';
-// import AsyncStorage from '@react-native-community/async-storage';
-
+import {View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, ToastAndroid} from 'react-native';
 class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
     };
@@ -24,9 +14,9 @@ class Register extends Component {
 
   register = () => {
     // Needs validation
-    let to_send = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
+    let userDetails = {
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
     };
@@ -36,7 +26,7 @@ class Register extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(to_send),
+      body: JSON.stringify(userDetails),
     })
       .then((response) => {
         if (response.status === 201) {
@@ -44,7 +34,7 @@ class Register extends Component {
         } else if (response.status === 400) {
           throw 'Fill in the form in full, please try again!';
         } else if (response.status === 401) {
-          throw 'Unauthorised, please log in!';
+          throw 'Unauthorised!';
         } else if (response.status === 403) {
           throw 'Forbidden!';
         } else if (response.status === 404) {
@@ -52,7 +42,7 @@ class Register extends Component {
         } else if (response.status === 500) {
           throw 'Server error!';
         } else {
-          throw 'Something went wrong, please try again!';
+          throw 'Error, please try again!';
         }
       })
       .then((responseJSON) => {
@@ -67,58 +57,47 @@ class Register extends Component {
   };
 
   render() {
-    // const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
         <ScrollView>
           <Text style={styles.title}>Please fill in the form:</Text>
           <View style={styles.space} />
-          <View>
-            <Text style={styles.Label}>First Name:</Text>
-            <TextInput
-              placeholder="Enter your first name"
-              style={styles.Input}
-              onChangeText={(first_name) => this.setState({first_name})}
-              value={this.state.first_name}
-            />
-          </View>
-          <View>
-            <Text style={styles.Label}>Last Name:</Text>
-            <TextInput
-              placeholder="Enter your last name"
-              style={styles.Input}
-              onChangeText={(last_name) => this.setState({last_name})}
-              value={this.state.last_name}
-            />
-          </View>
-          <View>
-            <Text style={styles.Label}>Email:</Text>
-            <TextInput
-              placeholder="Enter your Email Address"
-              style={styles.Input}
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.email}
-            />
-          </View>
-          <View>
-            <Text style={styles.Label}>Password:</Text>
-            <TextInput
-              placeholder="Enter your password"
-              style={styles.Input}
-              onChangeText={(password) => this.setState({password})}
-              value={this.state.password}
-              secureTextEntry={true}
-            />
-          </View>
+          <Text style={styles.label}>First Name:</Text>
+          <TextInput
+            placeholder="Enter your first name"
+            style={styles.input}
+            onChangeText={(firstName) => this.setState({firstName})}
+            value={this.state.first_name}
+          />
+          <Text style={styles.label}>Last Name:</Text>
+          <TextInput
+            placeholder="Enter your last name"
+            style={styles.input}
+            onChangeText={(lastName) => this.setState({lastName})}
+            value={this.state.last_name}
+          />
+          <Text style={styles.label}>Email:</Text>
+          <TextInput
+            placeholder="Enter your Email Address"
+            style={styles.input}
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+          />
+          <Text style={styles.label}>Password:</Text>
+          <TextInput
+            placeholder="Enter your password"
+            style={styles.input}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+            secureTextEntry={true}
+          />
           <View style={styles.space} />
           <View style={styles.space} />
-          <View>
-            <TouchableOpacity
-              style={styles.Touch}
-              onPress={() => this.register()}>
-              <Text style={styles.TouchText}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.touch}
+            onPress={() => this.register()}>
+            <Text style={styles.touchText}>Sign Up</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -132,28 +111,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#73D2DC',
   },
   title: {
-    fontSize: 17,
+    fontSize: 16,
     color: 'black',
     padding: 3,
   },
-  Label: {
+  label: {
     fontSize: 16,
     color: 'black',
   },
-  Input: {
+  input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
   },
-  Touch: {
-    // backgroundColor: '#f77c39',
-    // padding: 10,
+  touch: {
     alignItems: 'center',
-    // borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 20,
   },
-  TouchText: {
+  touchText: {
     backgroundColor: '#f77c39',
     borderRadius: 10,
     fontSize: 20,

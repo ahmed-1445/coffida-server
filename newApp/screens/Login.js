@@ -10,10 +10,10 @@ class Login extends Component {
       email: '',
       password: '',
       token: '',
-      id: '',
     };
   }
 
+  // Email & Password input handling
   handleEmailInput = (email) => {
     this.setState({email: email});
   };
@@ -24,7 +24,7 @@ class Login extends Component {
 
   login = async () => {
     // Add some validation i.e. password strength
-    let to_send = {
+    let creds = {
       email: this.state.email,
       password: this.state.password,
     };
@@ -33,7 +33,7 @@ class Login extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(to_send),
+      body: JSON.stringify(creds),
     })
       .then((response) => {
         if (response.status === 200) {
@@ -52,10 +52,10 @@ class Login extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then(async (responseJson) => {
-        console.log(responseJson);
-        await AsyncStorage.setItem('@session_token', responseJson.token);
-        await AsyncStorage.setItem('@id', JSON.stringify(responseJson.id));
+      .then(async (responseJSON) => {
+        console.log(responseJSON);
+        await AsyncStorage.setItem('@session_token', responseJSON.token);
+        await AsyncStorage.setItem('@id', JSON.stringify(responseJSON.id));
         this.props.navigation.navigate('AuthenticatedUser');
       })
       .catch((error) => {
@@ -67,30 +67,30 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.Label}>Email:</Text>
+        <Text style={styles.label}>Email:</Text>
         <TextInput
           placeholder="Enter Email"
-          style={styles.Input}
+          style={styles.input}
           onChangeText={this.handleEmailInput}
           value={this.state.email}
         />
-        <Text style={styles.Label}>Password:</Text>
+        <Text style={styles.label}>Password:</Text>
         <TextInput
           placeholder="Enter Password"
-          style={styles.Input}
+          style={styles.input}
           onChangeText={this.handlePasswordInput}
           value={this.state.password}
           secureTextEntry={true}
         />
         <View style={styles.space} />
-        <TouchableOpacity style={styles.Touch} onPress={() => this.login()}>
-          <Text style={styles.TouchText}>Sign In</Text>
+        <TouchableOpacity style={styles.touch} onPress={() => this.login()}>
+          <Text style={styles.touchText}>Sign In</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.Button}
+          style={styles.button}
           onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={styles.Register}>Need to register?</Text>
+          <Text style={styles.register}>Need to register?</Text>
         </TouchableOpacity>
       </View>
     );
@@ -103,34 +103,33 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  Label: {
+  label: {
     fontSize: 16,
     color: 'black',
   },
-  Register: {
+  register: {
     fontSize: 16,
     color: 'black',
     alignSelf: 'center',
   },
-  Button: {
+  button: {
     width: 100,
     height: 50,
     alignSelf: 'center',
   },
-  Input: {
+  input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
   },
-  Touch: {
-    // backgroundColor: '#f77c39',
+  touch: {
     padding: 10,
     alignItems: 'center',
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
-  TouchText: {
+  touchText: {
     backgroundColor: '#f77c39',
     borderRadius: 10,
     fontSize: 20,

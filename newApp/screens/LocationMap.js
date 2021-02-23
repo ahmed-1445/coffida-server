@@ -34,10 +34,9 @@ class LocationMap extends Component {
     super(props);
 
     this.state = {
-      isLoading: true,
+      loading: true,
       location: null,
       locationPermission: false,
-      // location_name: '',
       latitude: '',
       longitude: '',
       listLocations: [],
@@ -49,7 +48,7 @@ class LocationMap extends Component {
     this.allLocations();
   }
 
-  //Get Lat and Lon function
+  //Get Latitude and Longitude function
   allLocations = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
     return fetch('http://10.0.2.2:3333/api/1.0.0/find', {
@@ -62,7 +61,7 @@ class LocationMap extends Component {
         if (response.status === 200) {
           return response.json();
         } else if (response.status === 400) {
-          throw 'Bad request!';
+          throw 'Bad request, please try again!';
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
         } else if (response.status === 403) {
@@ -77,7 +76,7 @@ class LocationMap extends Component {
       })
       .then((responseJson) => {
         this.setState({
-          isLoading: false,
+          loading: false,
           listLocations: responseJson,
         });
         this.state.listLocations.toString();
@@ -90,8 +89,7 @@ class LocationMap extends Component {
   };
 
   findCoordinates() {
-    // console.log('state', this.state);
-    // checks for permissions
+    // Check if permission are granted
     if (!this.state.locationPermission) {
       console.log('Requesting permission...');
       this.state.locationPermission = requestLocationPermission();
@@ -102,9 +100,9 @@ class LocationMap extends Component {
         longitude: -2.242631,
         latitude: 53.480759,
       },
-      isLoading: false,
+      loading: false,
     });
-    //Get current device location
+    // Get current device location
     Geolocation.getCurrentPosition(
       (position) => {
         //const location = JSON.stringify(position);
@@ -116,7 +114,7 @@ class LocationMap extends Component {
             latitude: location.coords.latitude,
           },
         });
-        this.setState({isLoading: false});
+        this.setState({loading: false});
       },
       (error) => {
         Alert.alert(error.message);
@@ -130,19 +128,18 @@ class LocationMap extends Component {
   }
 
   render() {
-    if (this.state.isLoading) {
+    if (this.state.loading) {
       return (
-        <View>
-          <Text>Loading...</Text>
+        <View style={styles.loadingScreen}>
+          <Text style={styles.label}>Loading...</Text>
         </View>
       );
     } else {
-      // console.log('LOCATION 2: ', this.state.location);
       return (
-        <View style={{flex: 1}}>
+        <View style={styles.mapContainer}>
           <MapView
             provider={PROVIDER_GOOGLE}
-            style={{flex: 1}}
+            style={styles.mapView}
             region={{
               latitude: this.state.location.latitude,
               longitude: this.state.location.longitude,
@@ -151,8 +148,8 @@ class LocationMap extends Component {
             }}>
             <Marker
               coordinate={this.state.location}
-              title="Current location"
-              description="Here I am"
+              title="Current Location"
+              description="You here are!"
             />
           </MapView>
         </View>
@@ -161,4 +158,24 @@ class LocationMap extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  loadingScreen: {
+    backgroundColor: '#73D2DC',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapContainer: {
+    flex: 1,
+  },
+  mapView: {
+    flex: 1,
+  },
+  label: {
+    alignSelf: 'center',
+    fontSize: 16,
+    color: 'black',
+  },
+});
 export default LocationMap;

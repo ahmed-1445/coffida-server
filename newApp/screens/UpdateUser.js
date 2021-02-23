@@ -15,8 +15,8 @@ class UpdateUser extends Component {
     super(props);
 
     this.state = {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
     };
@@ -54,8 +54,8 @@ class UpdateUser extends Component {
       })
       .then((responseJson) => {
         this.setState({
-          first_name: responseJson.first_name,
-          last_name: responseJson.last_name,
+          firstName: responseJson.first_name,
+          lastName: responseJson.last_name,
           email: responseJson.email,
         });
       })
@@ -68,9 +68,9 @@ class UpdateUser extends Component {
   updateInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
     const userID = await AsyncStorage.getItem('@id');
-    let details = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
+    let userDetails = {
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
     };
@@ -80,7 +80,7 @@ class UpdateUser extends Component {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
       },
-      body: JSON.stringify(details),
+      body: JSON.stringify(userDetails),
     })
       .then((response) => {
         if (response.status === 200) {
@@ -112,40 +112,40 @@ class UpdateUser extends Component {
         <ScrollView>
           <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change First Name:</Text>
+            <Text style={styles.label}>Change First Name:</Text>
             <TextInput
               placeholder="Enter your first name"
-              style={styles.Input}
-              onChangeText={(first_name) => this.setState({first_name})}
-              value={this.state.first_name}
+              style={styles.input}
+              onChangeText={(firstName) => this.setState({firstName})}
+              value={this.state.firstName}
             />
           </View>
           <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change Last Name:</Text>
+            <Text style={styles.label}>Change Last Name:</Text>
             <TextInput
               placeholder="Enter your last name"
-              style={styles.Input}
-              onChangeText={(last_name) => this.setState({last_name})}
-              value={this.state.last_name}
+              style={styles.input}
+              onChangeText={(lastName) => this.setState({lastName})}
+              value={this.state.lastName}
             />
           </View>
           <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change Email:</Text>
+            <Text style={styles.label}>Change Email:</Text>
             <TextInput
               placeholder="Enter your Email Address"
-              style={styles.Input}
+              style={styles.input}
               onChangeText={(email) => this.setState({email})}
               value={this.state.email}
             />
           </View>
           <View style={styles.space} />
           <View>
-            <Text style={styles.Label}>Change Password:</Text>
+            <Text style={styles.label}>Change Password:</Text>
             <TextInput
               placeholder="Enter your password (required)"
-              style={styles.Input}
+              style={styles.input}
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
               secureTextEntry={true}
@@ -154,9 +154,9 @@ class UpdateUser extends Component {
           <View style={styles.space} />
           <View>
             <TouchableOpacity
-              style={styles.Touch}
+              style={styles.touch}
               onPress={() => this.updateInfo()}>
-              <Text style={styles.TouchText}>Update</Text>
+              <Text style={styles.touchText}>Update</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -172,22 +172,20 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  Label: {
+  label: {
     fontSize: 16,
     color: 'black',
   },
-  Input: {
+  input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
   },
-  Touch: {
-    // alignItems: 'center',
-    // borderRadius: 10,
+  touch: {
     paddingVertical: 20,
     paddingHorizontal: 25,
   },
-  TouchText: {
+  touchText: {
     fontSize: 17,
     color: 'black',
     backgroundColor: '#f77c39',

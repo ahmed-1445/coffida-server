@@ -22,18 +22,18 @@ class AuthenticatedUser extends Component {
     this._unsubscribe();
   }
 
-  // Checking if the user the autheticated
+  // Checking if the user the authenticated
   checkAuth = async () => {
-    const value = await AsyncStorage.getItem('@session_token');
-    if (value !== null) {
-      this.setState({token: value});
+    const userToken = await AsyncStorage.getItem('@session_token');
+    if (userToken !== null) {
+      this.setState({token: userToken});
     } else {
       this.props.navigation.navigate('Login');
     }
   };
 
   logout = async () => {
-    let token = await AsyncStorage.getItem('@session_token');
+    const token = await AsyncStorage.getItem('@session_token');
     await AsyncStorage.removeItem('@session_token');
     return fetch('http://10.0.2.2:3333/api/1.0.0/user/logout', {
       method: 'post',
@@ -69,19 +69,20 @@ class AuthenticatedUser extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.space} />
-        <Text style={styles.Label}>Are you sure you want to logout?</Text>
-        <View style={styles.space} />
-        <TouchableOpacity style={styles.Touch} onPress={() => this.logout()}>
-          <Text style={styles.TouchText}>Yes</Text>
-        </TouchableOpacity>
-        <View style={styles.space} />
-        <View style={styles.space} />
-        <TouchableOpacity
-          style={styles.Touch}
-          onPress={() => this.props.navigation.navigate('AuthenticatedUser')}>
-          <Text style={styles.TouchText}>No</Text>
-        </TouchableOpacity>
+        <View style={styles.logoutContainer}>
+          <View style={styles.space} />
+          <Text style={styles.label}>Are you sure you want to logout?</Text>
+          <View style={styles.space} />
+          <TouchableOpacity style={styles.touch} onPress={() => this.logout()}>
+            <Text style={styles.touchText}>Yes</Text>
+          </TouchableOpacity>
+          <View style={styles.space} />
+          <TouchableOpacity
+            style={styles.touch}
+            onPress={() => this.props.navigation.navigate('AuthenticatedUser')}>
+            <Text style={styles.touchText}>No</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -93,20 +94,19 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  Label: {
+  logoutContainer: {
+    top: 247,
+  },
+  label: {
     fontSize: 16,
     color: 'black',
     alignSelf: 'center',
   },
-  Touch: {
-    // backgroundColor: 'darkorchid',
-    // padding: 10,
-    // alignItems: 'center',
-    // borderRadius: 10,
+  touch: {
     paddingVertical: 5,
     paddingHorizontal: 20,
   },
-  TouchText: {
+  touchText: {
     fontSize: 16,
     color: 'black',
     backgroundColor: '#f77c39',
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 160,
   },
   space: {
-    width: 5,
-    height: 5,
+    width: 10,
+    height: 10,
   },
 });
 

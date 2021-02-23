@@ -8,17 +8,12 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      isLoading: true,
       listLocations: [],
-      location_name: '',
-      location_town: '',
+      // location_name: '',
+      // location_town: '',
       searchQuery: '',
     };
   }
-
-//   componentDidMount() {
-//     this.searchLocations();
-//   }
 
   searchLocations = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
@@ -45,10 +40,9 @@ class Search extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then((responseJson) => {
+      .then((responseJSON) => {
         this.setState({
-          isLoading: false,
-          listLocations: responseJson,
+          listLocations: responseJSON,
         });
       })
       .catch((error) => {
@@ -64,26 +58,27 @@ class Search extends Component {
           <View>
             <TextInput
               placeholder="Search for a location"
-              style={styles.Input}
+              style={styles.input}
               onChangeText={(searchQuery) => this.setState({searchQuery})}
               value={this.state.searchQuery}
             />
           </View>
           <TouchableOpacity
-              style={styles.Touch}
+              style={styles.touch}
               onPress={() => this.searchLocations()}>
-              <Text style={styles.TouchText}>Search</Text>
+              <Text style={styles.touchText}>Search</Text>
             </TouchableOpacity>
+          <View style={styles.space} />
+          <Text style={styles.label}>Locations</Text>
           <View style={styles.row} />
           <View style={styles.space} />
-          <Text style={styles.Label}>Locations:</Text>
           <FlatList
             data={this.state.listLocations}
             renderItem={({item}) => (
               <View>
                 <View style={styles.space} />
-                <Text style={styles.Label}>{item.location_name}</Text>
-                <Text style={styles.Label}>{item.location_town}</Text>
+                <Text style={styles.label}>{item.location_name}</Text>
+                <Text style={styles.label}>{item.location_town}</Text>
                 <View style={styles.space} />
                 <View style={styles.row} />
               </View>
@@ -101,18 +96,12 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  loading: {
-    backgroundColor: '#73D2DC',
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Label: {
+  label: {
+    alignSelf: 'center',
     fontSize: 17,
     color: 'black',
   },
-  Input: {
+  input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
@@ -122,11 +111,11 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
-  Touch: {
+  touch: {
     paddingVertical: 10,
     paddingHorizontal: 50,
   },
-  TouchText: {
+  touchText: {
     fontSize: 17,
     color: 'black',
     backgroundColor: '#f77c39',

@@ -22,8 +22,8 @@ class AuthenticatedUser extends Component {
   }
 
   checkAuth = async () => {
-    const value = await AsyncStorage.getItem('@session_token');
-    if (value == null) {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    if (userToken == null) {
       this.props.navigation.navigate('Login');
     }
   };
@@ -32,29 +32,28 @@ class AuthenticatedUser extends Component {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        {/*<Text style={styles.Title}>What would you like to do?</Text>*/}
         <View style={styles.space} />
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('UserMan')}>
-          <Text style={styles.TouchText}>My Account</Text>
+          <Text style={styles.touchText}>My Account</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('LocationMan')}>
-          <Text style={styles.TouchText}>Locations</Text>
+          <Text style={styles.touchText}>Locations</Text>
         </TouchableOpacity>
         <Image
-          style={styles.Image}
+          style={styles.image}
           source={require('./../icons/coffeeDessert.png')}
         />
-        <Text style={styles.Label}>Feeling a coffee?</Text>
+        <Text style={styles.label}>Feeling a coffee?</Text>
         <TouchableOpacity
-          style={styles.Logout}
+          style={styles.logout}
           onPress={() => navigation.navigate('Logout')}>
-          <Text style={styles.TouchText}>Logout</Text>
+          <Text style={styles.touchText}>Logout</Text>
         </TouchableOpacity>
       </View>
     );
@@ -67,22 +66,17 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  Title: {
-    fontSize: 16,
-    color: 'black',
-  },
-  Image: {
+  image: {
     alignSelf: 'center',
     width: 250,
     height: 250,
     top: 50,
   },
-  Touch: {
-    // alignItems: 'center',
+  touch: {
     paddingVertical: 5,
     paddingHorizontal: 20,
   },
-  TouchText: {
+  touchText: {
     fontSize: 16,
     color: 'black',
     backgroundColor: '#f77c39',
@@ -90,24 +84,16 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 132,
   },
-  Label: {
+  label: {
     fontSize: 24,
     color: 'black',
     alignSelf: 'center',
     top: 25,
   },
-  Logout: {
+  logout: {
     paddingVertical: 5,
     paddingHorizontal: 37,
     top: 215,
-  },
-  LogoutText: {
-    fontSize: 16,
-    color: 'white',
-    // backgroundColor: 'darkorchid',
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 132,
   },
   space: {
     width: 10,

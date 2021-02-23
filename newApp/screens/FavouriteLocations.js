@@ -8,37 +8,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-// import FlatList from 'react-native-gesture-handler';
 
 class FavouriteLocations extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: true,
+      loading: true,
       favLocations: [],
-      location_name: '',
-      location_town: '',
     };
   }
 
   componentDidMount() {
-    // this.unsubscribe = this.props.navigation.addListener('focus', () => {
-    //   this.checkAuth();
-    // });
     this.favLocations();
   }
-
-  // componentWillUnmount() {
-  //   this.unsubscribe();
-  // }
-
-  // checkAuth = async () => {
-  //   const value = await AsyncStorage.getItem('@session_token');
-  //   if (value == null) {
-  //     this.props.navigation.navigate('Login');
-  //   }
-  // };
 
   favLocations = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
@@ -52,7 +35,7 @@ class FavouriteLocations extends Component {
         if (response.status === 200) {
           return response.json();
         } else if (response.status === 400) {
-          throw 'Please try again!';
+          throw 'Bad request, please try again!';
         } else if (response.status === 401) {
           throw 'Not logged in, please login again!';
         } else if (response.status === 403) {
@@ -67,10 +50,8 @@ class FavouriteLocations extends Component {
       })
       .then((responseJson) => {
         this.setState({
-          isLoading: false,
+          loading: false,
           favLocations: responseJson,
-          // location_name: responseJson.location_name,
-          // location_town: responseJson.location_town,
         });
       })
       .catch((error) => {
@@ -80,19 +61,17 @@ class FavouriteLocations extends Component {
   };
 
   render() {
-    if (this.state.isLoading) {
+    if (this.state.loadingScreen) {
       return (
         <View style={styles.loading}>
-          <Text style={styles.Label}>Loading...</Text>
+          <Text style={styles.label}>Loading...</Text>
         </View>
       );
     } else {
       const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
-          <Text style={styles.Label}>
-            Choose one of the following locations:
-          </Text>
+          <Text style={styles.label}>Choose one of the following locations:</Text>
           <View style={styles.row} />
           <View style={styles.space} />
           <FlatList
@@ -100,19 +79,19 @@ class FavouriteLocations extends Component {
             renderItem={({item}) => (
               <View>
                 <View style={styles.space} />
-                <Text style={styles.Label}>{item.location_name}</Text>
-                <Text style={styles.Label}>{item.location_town}</Text>
+                <Text style={styles.label}>{item.location_name}</Text>
+                <Text style={styles.label}>{item.location_town}</Text>
                 <View style={styles.space} />
                 <View style={styles.row} />
               </View>
             )}
-            keyExtractor={(item, index) => item.location_id.toString()}
+            keyExtractor={(item) => item.location_id.toString()}
           />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => navigation.navigate('LocationMan')}>
-            <Text style={styles.TouchText}>Back</Text>
+            <Text style={styles.touchText}>Back</Text>
           </TouchableOpacity>
         </View>
       );
@@ -126,14 +105,15 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  loading: {
+  loadingScreen: {
     backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Label: {
+  label: {
+    alignSelf: 'center',
     fontSize: 17,
     color: 'black',
   },
@@ -142,12 +122,11 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
-  Touch: {
+  touch: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    // alignItems: s'center',
   },
-  TouchText: {
+  touchText: {
     fontSize: 17,
     color: 'black',
     backgroundColor: '#f77c39',

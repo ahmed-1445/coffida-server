@@ -16,28 +16,26 @@ class AddReview extends Component {
     super(props);
 
     this.state = {
-      overall_rating: '',
-      price_rating: '',
-      quality_rating: '',
-      clenliness_rating: '',
-      review_body: '',
+      overallRating: '',
+      priceRating: '',
+      qualityRating: '',
+      clenlinessRating: '',
+      reviewBody: '',
     };
   }
 
   addReview = async () => {
-    // Needs validation
     const userToken = await AsyncStorage.getItem('@session_token');
     const locationID = await AsyncStorage.getItem('@location_id');
     let details = {
-      overall_rating: parseInt(this.state.overall_rating),
-      price_rating: parseInt(this.state.price_rating),
-      quality_rating: parseInt(this.state.quality_rating),
-      clenliness_rating: parseInt(this.state.clenliness_rating),
-      review_body: this.state.review_body,
+      overall_rating: parseInt(this.state.overallRating),
+      price_rating: parseInt(this.state.priceRating),
+      quality_rating: parseInt(this.state.qualityRating),
+      clenliness_rating: parseInt(this.state.clenlinessRating),
+      review_body: this.state.reviewBody,
     };
 
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review', {
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -46,20 +44,20 @@ class AddReview extends Component {
         body: JSON.stringify(details),
       },
     )
-      .then((responseJSON) => {
-        if (responseJSON.status === 201) {
-          console.log('Review added!', responseJSON);
+      .then((response) => {
+        if (response.status === 201) {
+          console.log('Review added!', response);
           ToastAndroid.show('Review added!', ToastAndroid.SHORT);
           this.props.navigation.navigate('GetLocation');
-        } else if (responseJSON.status === 400) {
+        } else if (response.status === 400) {
           throw 'Fill in the form in full, please try again!';
-        } else if (responseJSON.status === 401) {
+        } else if (response.status === 401) {
           throw 'Unauthorised, please log in!';
-        } else if (responseJSON.status === 403) {
+        } else if (response.status === 403) {
           throw 'Forbidden!';
-        } else if (responseJSON.status === 404) {
+        } else if (response.status === 404) {
           throw 'Not found!';
-        } else if (responseJSON.status === 500) {
+        } else if (response.status === 500) {
           throw 'Server error!';
         } else {
           throw 'Something went wrong, please try again!';
@@ -75,56 +73,55 @@ class AddReview extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          {/* <Text style={styles.Title}>Give your rating:</Text> */}
           <View style={styles.space} />
-          <Text style={styles.Label}>Overall Rating:</Text>
+          <Text style={styles.label}>Overall Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
             defaultRating={0}
             size={20}
-            onFinishRating={(overall_rating) => this.setState({overall_rating})}
+            onFinishRating={(overallRating) => this.setState({overallRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Price Rating:</Text>
+          <Text style={styles.label}>Price Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
             defaultRating={0}
             size={20}
-            onFinishRating={(price_rating) => this.setState({price_rating})}
+            onFinishRating={(priceRating) => this.setState({priceRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Quality Rating:</Text>
+          <Text style={styles.label}>Quality Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
             defaultRating={0}
             size={20}
-            onFinishRating={(quality_rating) => this.setState({quality_rating})}
+            onFinishRating={(qualityRating) => this.setState({qualityRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Cleanliness Rating:</Text>
+          <Text style={styles.label}>Cleanliness Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
             defaultRating={0}
             size={20}
-            onFinishRating={(clenliness_rating) => this.setState({clenliness_rating})}
+            onFinishRating={(clenlinessRating) => this.setState({clenlinessRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Any comments:</Text>
+          <Text style={styles.label}>Comments:</Text>
           <TextInput
-            placeholder="Any comments?"
-            style={styles.Input}
-            onChangeText={(review_body) => this.setState({review_body})}
-            value={this.state.review_body}
+            placeholder="Anything to add?"
+            style={styles.input}
+            onChangeText={(reviewBody) => this.setState({reviewBody})}
+            value={this.state.reviewBody}
           />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => this.addReview()}>
-            <Text style={styles.TouchText}>Submit</Text>
+            <Text style={styles.touchText}>Submit</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -138,26 +135,21 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  Title: {
-    color: 'black',
-    padding: 3,
-    fontSize: 16,
-  },
-  Label: {
+  label: {
     alignSelf: 'center',
     fontSize: 16,
     color: 'black',
   },
-  Input: {
+  input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
   },
-  Touch: {
+  touch: {
     paddingVertical: 1,
     paddingHorizontal: 20,
   },
-  TouchText: {
+  touchText: {
     fontSize: 16,
     color: 'black',
     backgroundColor: '#f77c39',

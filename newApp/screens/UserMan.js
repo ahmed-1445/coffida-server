@@ -14,10 +14,9 @@ class UserMan extends Component {
     super(props);
 
     this.state = {
-      // id: '',
-      isLoading: true,
-      first_name: '',
-      last_name: '',
+      loading: true,
+      firstName: '',
+      lastName: '',
       email: '',
       token: '',
     };
@@ -29,8 +28,8 @@ class UserMan extends Component {
 
   getInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const user_id = await AsyncStorage.getItem('@id');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + user_id, {
+    const userID = await AsyncStorage.getItem('@id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
@@ -53,12 +52,12 @@ class UserMan extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then((responseJson) => {
+      .then((responseJSON) => {
         this.setState({
-          isLoading: false,
-          first_name: responseJson.first_name,
-          last_name: responseJson.last_name,
-          email: responseJson.email,
+          loading: false,
+          firstName: responseJSON.first_name,
+          lastName: responseJSON.last_name,
+          email: responseJSON.email,
         });
       })
       .catch((error) => {
@@ -69,43 +68,43 @@ class UserMan extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    if (this.state.isLoading) {
+    if (this.state.loading) {
       return (
         <View style={styles.loading}>
-          <Text style={styles.Label}>Loading...</Text>
+          <Text style={styles.label}>Loading...</Text>
         </View>
       );
     } else {
       return (
         <View style={styles.container}>
           <View style={styles.row} />
-          <Text style={styles.Label}>Account details:</Text>
+          <Text style={styles.label}>Account details:</Text>
           <View style={styles.space} />
-          <Text style={styles.Label}>
-            Full Name: {this.state.first_name} {this.state.last_name}
+          <Text style={styles.label}>
+            Full Name: {this.state.firstName} {this.state.lastName}
           </Text>
-          <Text style={styles.Label}>Email: {this.state.email}</Text>
+          <Text style={styles.label}>Email: {this.state.email}</Text>
           <View style={styles.row} />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => navigation.navigate('UpdateUser')}>
-            <Text style={styles.TouchText}>Update Details</Text>
+            <Text style={styles.touchText}>Update Details</Text>
           </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => navigation.navigate('UserReviews')}>
             <Text style={styles.customReviews}>My Reviews</Text>
           </TouchableOpacity>
           <Image
-            style={styles.Image}
+            style={styles.image}
             source={require('./../icons/settings.png')}
           />
           <TouchableOpacity
-            style={styles.Back}
+            style={styles.backButton}
             onPress={() => navigation.navigate('AuthenticatedUser')}>
-            <Text style={styles.TouchText}>Back</Text>
+            <Text style={styles.touchText}>Back</Text>
           </TouchableOpacity>
         </View>
       );
@@ -126,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Image: {
+  image: {
     alignSelf: 'center',
     width: 130,
     height: 130,
@@ -140,28 +139,23 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 150,
   },
-  Label: {
+  label: {
     fontSize: 17,
     color: 'black',
-  },
-  Input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
   },
   row: {
     padding: 2,
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
-  Touch: {
+  touch: {
     paddingVertical: 5,
   },
-  Back: {
+  backButton: {
     paddingVertical: 10,
     top: 270,
   },
-  TouchText: {
+  touchText: {
     fontSize: 16,
     color: 'black',
     backgroundColor: '#f77c39',

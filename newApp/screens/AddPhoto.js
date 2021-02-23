@@ -23,7 +23,7 @@ class AddPhoto extends Component {
           ToastAndroid.show('Photo added!', ToastAndroid.SHORT);
           this.props.navigation.navigate('UserReviews');
         } else if (response.status === 400) {
-          throw 'Please try again!';
+          throw 'Bad request, please try again!';
         } else if (response.status === 401) {
           throw 'Unauthorised!';
         } else if (response.status === 403) {
@@ -38,6 +38,7 @@ class AddPhoto extends Component {
       })
       .catch((error) => {
         console.error(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
       });
   };
 
@@ -60,13 +61,13 @@ class AddPhoto extends Component {
 }
 
 const styles = StyleSheet.create({
+  cameraContainer: {
+    flex: 1,
+  },
   camera: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-  cameraContainer: {
-    flex: 1,
   },
 });
 

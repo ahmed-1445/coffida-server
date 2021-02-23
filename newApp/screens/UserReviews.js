@@ -9,18 +9,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Button, AirbnbRating} from 'react-native-elements';
+import {AirbnbRating} from 'react-native-elements';
 
 class UserReviews extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: true,
+      loading: true,
       reviewData: [],
       locationData: [],
-      loc_id: '',
-      rev_id: '',
+      locationID: '',
+      reviewID: '',
     };
   }
 
@@ -37,16 +37,16 @@ class UserReviews extends Component {
   }
 
   checkAuth = async () => {
-    const value = await AsyncStorage.getItem('@session_token');
-    if (value == null) {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    if (userToken == null) {
       this.props.navigation.navigate('Login');
     }
   };
 
   getReviews = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const user_id = await AsyncStorage.getItem('@id');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + user_id, {
+    const userID = await AsyncStorage.getItem('@id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + userID, {
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
@@ -69,11 +69,11 @@ class UserReviews extends Component {
           throw 'Please try again!';
         }
       })
-      .then((responseJson) => {
+      .then((responseJSON) => {
         this.setState({
-          isLoading: false,
-          reviewData: responseJson,
-          locationData: responseJson,
+          loading: false,
+          reviewData: responseJSON,
+          locationData: responseJSON,
         });
         console.log('Review: ', this.state.reviewData);
         console.log('Location: ', this.state.locationData);
@@ -86,13 +86,11 @@ class UserReviews extends Component {
 
   deleteReview = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const loc_id = await AsyncStorage.getItem('@location_id');
-    const rev_id = await AsyncStorage.getItem('@review_id');
-    console.log(loc_id);
-    console.log(rev_id);
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + loc_id + '/review/' + rev_id,
-      {
+    const locID = await AsyncStorage.getItem('@location_id');
+    const revID = await AsyncStorage.getItem('@review_id');
+    console.log(locID);
+    console.log(revID);
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locID + '/review/' + revID, {
         method: 'delete',
         headers: {
           'Content-Type': 'application/json',
@@ -127,15 +125,9 @@ class UserReviews extends Component {
 
   addLike = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const location_id = await AsyncStorage.getItem('@location_id');
-    const review_id = await AsyncStorage.getItem('@review_id');
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' +
-        location_id +
-        '/review/' +
-        review_id +
-        '/like',
-      {
+    const locID = await AsyncStorage.getItem('@location_id');
+    const revID = await AsyncStorage.getItem('@review_id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locID + '/review/' + revID + '/like', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -170,15 +162,9 @@ class UserReviews extends Component {
 
   deleteLike = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const location_id = await AsyncStorage.getItem('@location_id');
-    const review_id = await AsyncStorage.getItem('@review_id');
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' +
-        location_id +
-        '/review/' +
-        review_id +
-        '/like',
-      {
+    const locID = await AsyncStorage.getItem('@location_id');
+    const revID = await AsyncStorage.getItem('@review_id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locID + '/review/' + revID + '/like', {
         method: 'delete',
         headers: {
           'Content-Type': 'application/json',
@@ -212,61 +198,59 @@ class UserReviews extends Component {
   };
 
   render() {
-    const removeReview = async (review_id, location_id) => {
-      await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
-      await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
-      console.log('Review ID: ', review_id);
-      console.log('Location ID: ', location_id);
+    const removeReview = async (revID, locID) => {
+      await AsyncStorage.setItem('@review_id', JSON.stringify(revID));
+      await AsyncStorage.setItem('@location_id', JSON.stringify(locID));
+      console.log('Review ID: ', revID);
+      console.log('Location ID: ', locID);
       this.deleteReview();
     };
-    const updateReview = async (review_id, location_id) => {
-      await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
-      await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
+    const updateReview = async (revID, locID) => {
+      await AsyncStorage.setItem('@review_id', JSON.stringify(revID));
+      await AsyncStorage.setItem('@location_id', JSON.stringify(locID));
       this.setState({
-        location_id: this.state.loc_id,
-        review_id: this.state.rev_id,
+        revID: this.state.reviewID,
+        locID: this.state.locationID,
       });
-      console.log('Review ID:', review_id);
-      console.log('Location ID:', location_id);
+      console.log('Review ID:', revID);
+      console.log('Location ID:', locID);
       this.props.navigation.navigate('UpdateReview');
     };
-    const like = async (review_id, location_id) => {
-      await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
-      await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
-      console.log('Review ID:', review_id);
-      console.log('Location ID:', location_id);
+    const like = async (revID, locID) => {
+      await AsyncStorage.setItem('@review_id', JSON.stringify(revID));
+      await AsyncStorage.setItem('@location_id', JSON.stringify(locID));
+      console.log('Review ID:', revID);
+      console.log('Location ID:', locID);
       this.addLike();
     };
-    const unlike = async (review_id, location_id) => {
-      await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
-      await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
-      console.log('Location ID:', location_id);
-      console.log('Review ID:', review_id);
+    const unlike = async (revID, locID) => {
+      await AsyncStorage.setItem('@review_id', JSON.stringify(revID));
+      await AsyncStorage.setItem('@location_id', JSON.stringify(locID));
+      console.log('Review ID:', revID);
+      console.log('Location ID:', locID);
       this.deleteLike();
     };
-    const getPhoto = async (review_id, location_id) => {
-      await AsyncStorage.setItem('@review_id', JSON.stringify(review_id));
-      await AsyncStorage.setItem('@location_id', JSON.stringify(location_id));
+    const getPhoto = async (revID, locID) => {
+      await AsyncStorage.setItem('@review_id', JSON.stringify(revID));
+      await AsyncStorage.setItem('@location_id', JSON.stringify(locID));
       this.setState({
-        location_id: this.state.loc_id,
-        review_id: this.state.rev_id,
+        revID: this.state.reviewID,
+        locID: this.state.locationID,
       });
-      console.log('Review ID:', review_id);
-      console.log('Location ID:', location_id);
+      console.log('Review ID:', revID);
+      console.log('Location ID:', locID);
       this.props.navigation.navigate('GetPhoto');
     };
-    // const navigation = this.props.navigation;
-    if (this.state.isLoading) {
+    if (this.state.loading) {
       return (
         <View style={styles.loading}>
-          <Text style={styles.Label}>Loading...</Text>
+          <Text style={styles.label}>Loading...</Text>
         </View>
       );
     } else {
       return (
         <View style={styles.container}>
-          <Text style={styles.Label}>Reviews created by me:</Text>
-          {/*Not in order*/}
+          <Text style={styles.label}>Reviews created by me:</Text>
           <View style={styles.row} />
           <FlatList
             data={this.state.locationData.reviews}
@@ -313,17 +297,15 @@ class UserReviews extends Component {
                     getPhoto(item.review.review_id, item.location.location_id)
                   }>
                   <Image
-                    style={styles.pic}
+                    style={styles.picture}
                     source={require('./../icons/picture.png')}
                   />
                 </TouchableOpacity>
-                {/*<Text style={styles.Label}>Loc ID: {item.location.location_id}</Text>*/}
-                <Text style={styles.Title}>
-                  {item.location.location_name} - {item.location.location_town}
-                </Text>
-                {/*<Text style={styles.Label}>Rev ID: {item.review.review_id}</Text>*/}
-                <View style={styles.Ratings}>
-                  <Text style={styles.Label}>Overall Rating:</Text>
+                {/*<Text style={styles.label}>Loc ID: {item.location.location_id}</Text>*/}
+                <Text style={styles.title}>{item.location.location_name} - {item.location.location_town}</Text>
+                {/*<Text style={styles.label}>Rev ID: {item.review.review_id}</Text>*/}
+                <View style={styles.ratings}>
+                  <Text style={styles.label}>Overall Rating:</Text>
                   <AirbnbRating
                     count={5}
                     reviews={['1', '2', '3', '4', '5']}
@@ -332,7 +314,7 @@ class UserReviews extends Component {
                     showRating={false}
                     isDisabled={true}
                   />
-                  <Text style={styles.Label}>Price Rating:</Text>
+                  <Text style={styles.label}>Price Rating:</Text>
                   <AirbnbRating
                     count={5}
                     reviews={['1', '2', '3', '4', '5']}
@@ -341,7 +323,7 @@ class UserReviews extends Component {
                     showRating={false}
                     isDisabled={true}
                   />
-                  <Text style={styles.Label}>Quality Rating:</Text>
+                  <Text style={styles.label}>Quality Rating:</Text>
                   <AirbnbRating
                     count={5}
                     reviews={['1', '2', '3', '4', '5']}
@@ -350,7 +332,7 @@ class UserReviews extends Component {
                     showRating={false}
                     isDisabled={true}
                   />
-                  <Text style={styles.Label}>Cleanliness Rating:</Text>
+                  <Text style={styles.label}>Cleanliness Rating:</Text>
                   <AirbnbRating
                     count={5}
                     reviews={['1', '2', '3', '4', '5']}
@@ -359,15 +341,15 @@ class UserReviews extends Component {
                     showRating={false}
                     isDisabled={true}
                   />
-                  <Text style={styles.Label}>
+                  <Text style={styles.label}>
                     Comments: {item.review.review_body}
                   </Text>
-                  <Text style={styles.Label}>Likes: {item.review.likes}</Text>
+                  <Text style={styles.label}>Likes: {item.review.likes}</Text>
                   <View style={styles.space} />
                   <TouchableOpacity
-                    style={styles.TouchText}
+                    style={styles.touch}
                     onPress={() => updateReview(item.review.review_id, item.location.location_id)}>
-                    <Text style={styles.Label}>Edit</Text>
+                    <Text style={styles.label}>Edit</Text>
                   </TouchableOpacity>
                   <View style={styles.space} />
                 </View>
@@ -399,7 +381,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     top: 15,
   },
-  pic: {
+  picture: {
     width: 40,
     height: 40,
     alignSelf: 'flex-end',
@@ -418,13 +400,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Label: {
+  label: {
     fontSize: 16,
     color: 'black',
     alignSelf: 'center',
-    // top: ,
   },
-  Ratings: {
+  ratings: {
     alignSelf: 'center',
     top: -90,
   },
@@ -432,24 +413,19 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'black',
   },
-  Title: {
+  title: {
     fontWeight: 'bold',
     fontSize: 17,
     color: 'black',
     alignSelf: 'center',
     top: -90,
-    // paddingHorizontal: 10,
   },
   row: {
     padding: 2,
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
-  Touch: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  TouchText: {
+  touch: {
     fontSize: 17,
     color: 'black',
     backgroundColor: '#f77c39',

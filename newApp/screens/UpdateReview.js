@@ -16,11 +16,11 @@ class UpdateReview extends Component {
     super(props);
 
     this.state = {
-      overall_rating: '',
-      price_rating: '',
-      quality_rating: '',
-      clenliness_rating: '',
-      review_body: '',
+      overallRating: '',
+      priceRating: '',
+      qualityRating: '',
+      cleanlinessRating: '',
+      reviewBody: '',
       reviewData: [],
       location_reviews: [],
     };
@@ -38,8 +38,8 @@ class UpdateReview extends Component {
   }
 
   checkAuth = async () => {
-    const value = await AsyncStorage.getItem('@session_token');
-    if (value == null) {
+    const userToken = await AsyncStorage.getItem('@session_token');
+    if (userToken == null) {
       this.props.navigation.navigate('Login');
     }
   };
@@ -72,7 +72,6 @@ class UpdateReview extends Component {
       })
       .then((responseJson) => {
         this.setState({
-          // origData: responseJson.reviews,
           location_reviews: responseJson.reviews,
         });
         console.log(this.state.location_reviews);
@@ -88,11 +87,11 @@ class UpdateReview extends Component {
     const locationID = await AsyncStorage.getItem('@location_id');
     const reviewID = await AsyncStorage.getItem('@review_id');
     let details = {
-      overall_rating: parseInt(this.state.overall_rating),
-      price_rating: parseInt(this.state.price_rating),
-      quality_rating: parseInt(this.state.quality_rating),
-      clenliness_rating: parseInt(this.state.clenliness_rating),
-      review_body: this.state.review_body,
+      overall_rating: parseInt(this.state.overallRating),
+      price_rating: parseInt(this.state.priceRating),
+      quality_rating: parseInt(this.state.qualityRating),
+      clenliness_rating: parseInt(this.state.cleanlinessRating),
+      review_body: this.state.reviewBody,
     };
     return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID, {
         method: 'patch',
@@ -109,7 +108,7 @@ class UpdateReview extends Component {
           ToastAndroid.show('Review Updated!', ToastAndroid.SHORT);
           this.props.navigation.navigate('UserReviews');
         } else if (response.status === 400) {
-          throw 'Invalid values, please try again!';
+          throw 'Invalid ratings/comment, please try again!';
         } else if (response.status === 401) {
           throw 'Unauthorised!';
         } else if (response.status === 403) {
@@ -133,61 +132,62 @@ class UpdateReview extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.Label}>Please fill in the below form...</Text>
+          <Text style={styles.label}>Ratings</Text>
+          <View style={styles.row} />
           <View style={styles.space} />
-          <Text style={styles.Label}>Overall Rating:</Text>
+          <Text style={styles.label}>Overall Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={this.state.location_reviews.overall_rating}
+            // defaultRating={this.state.location_reviews.overallRating}
             size={20}
-            onFinishRating={(overall_rating) => this.setState({overall_rating})}
+            onFinishRating={(overallRating) => this.setState({overallRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Price Rating:</Text>
+          <Text style={styles.label}>Price Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={this.state.location_reviews.price_rating}
+            // defaultRating={this.state.location_reviews.priceRating}
             size={20}
-            onFinishRating={(price_rating) => this.setState({price_rating})}
+            onFinishRating={(priceRating) => this.setState({priceRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Quality Rating:</Text>
+          <Text style={styles.label}>Quality Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={this.state.location_reviews.quality_rating}
+            // defaultRating={this.state.location_reviews.qualityRating}
             size={20}
-            onFinishRating={(quality_rating) => this.setState({quality_rating})}
+            onFinishRating={(qualityRating) => this.setState({qualityRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Cleanliness Rating:</Text>
+          <Text style={styles.label}>Cleanliness Rating:</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={1}
+            // defaultRating={this.state.location_reviews.cleanlinessRating}
             size={20}
-            onFinishRating={(clenliness_rating) => this.setState({clenliness_rating})}
+            onFinishRating={(cleanlinessRating) => this.setState({cleanlinessRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.Label}>Any Comments:</Text>
+          <Text style={styles.label}>Any Comments:</Text>
           <TextInput
             placeholder="Anything to add?"
-            style={styles.Input}
-            onChangeText={(review_body) => this.setState({review_body})}
-            value={this.state.review_body}
+            style={styles.input}
+            onChangeText={(reviewBody) => this.setState({reviewBody})}
+            value={this.state.reviewBody}
           />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => navigation.navigate('AddPhoto')}>
-            <Text style={styles.TouchText}>Add Photo</Text>
+            <Text style={styles.touchText}>Add Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => this.updateReview()}>
-            <Text style={styles.TouchText}>Update</Text>
+            <Text style={styles.touchText}>Update</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -201,22 +201,25 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  Label: {
+  label: {
     fontSize: 17,
     color: 'black',
     alignSelf: 'center',
   },
-  Input: {
+  input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
   },
-  Touch: {
-    // backgroundColor: 'darkorchid',
-    padding: 10,
-    // alignItems: 'center',
+  row: {
+    padding: 2,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
-  TouchText: {
+  touch: {
+    padding: 10,
+  },
+  touchText: {
     backgroundColor: '#f77c39',
     fontSize: 17,
     color: 'black',

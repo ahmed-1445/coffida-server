@@ -7,32 +7,31 @@ class LocationMan extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.space} />
-        {/* <Text style={styles.Label}>Here you can see all location and your favourites:</Text> */}
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('GetLocation')}>
-          <Text style={styles.TouchText}>View all Locations</Text>
+          <Text style={styles.touchText}>View all Locations</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('FavouriteLocations')}>
-          <Text style={styles.TouchText}>Favourite Locations</Text>
+          <Text style={styles.touchText}>Favourite Locations</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('Search')}>
-          <Text style={styles.TouchText}>Search</Text>
+          <Text style={styles.touchText}>Search</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('LocationMap')}>
-          <Text style={styles.TouchText}>Coffee Shops Near Me</Text>
+          <Text style={styles.touchText}>Coffee Shops Near Me</Text>
         </TouchableOpacity>
         <Image
-          style={styles.Image}
+          style={styles.image}
           source={require('./../icons/locationSketch.png')}
         />
       </View>
@@ -46,28 +45,17 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  Label: {
-    fontSize: 17,
-    color: 'black',
-  },
-  Image: {
+  image: {
     alignSelf: 'center',
     width: 150,
     height: 150,
     top: 55,
   },
-  Input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-  },
-  Touch: {
-    // alignItems: 'center',
-    // borderRadius: 10,
+  touch: {
     paddingVertical: 15,
     paddingHorizontal: 45,
   },
-  TouchText: {
+  touchText: {
     fontSize: 16,
     color: 'black',
     backgroundColor: '#f77c39',

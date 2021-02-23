@@ -15,7 +15,7 @@ class GetPhoto extends Component {
   componentDidMount() {
     this.getPhoto();
     console.disableYellowBox = true;
-    //Disabled YellowBox for source.uri is empty, getPhoto function solves this
+    // Disabled YellowBox for source.uri is empty, getPhoto function solves this
   }
 
   getPhoto = async () => {
@@ -50,6 +50,7 @@ class GetPhoto extends Component {
       })
       .catch((error) => {
         console.error(error);
+        ToastAndroid.show(error, ToastAndroid.SHORT);
       });
   };
 
@@ -93,14 +94,14 @@ class GetPhoto extends Component {
       return (
         <View style={styles.noPhotoScreen}>
           <Image
-            style={styles.Image}
+            style={styles.noPhoto}
             source={require('./../icons/noImage.png')}
           />
-          <Text style={styles.Label}>No photo for this review</Text>
+          <Text style={styles.label}>No photo for this review</Text>
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => this.props.navigation.navigate('AddPhoto')}>
-            <Text style={styles.TouchText}>Add Photo</Text>
+            <Text style={styles.touchText}>Add Photo</Text>
           </TouchableOpacity>
         </View>
       );
@@ -108,12 +109,12 @@ class GetPhoto extends Component {
       console.log('Render URL:', this.state.imageURL);
       return (
         <View style={styles.container}>
-          <Image style={styles.image} source={{uri: this.state.imageURL}} />
+          <Image style={styles.photo} source={{uri: this.state.imageURL}} />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => this.deletePhoto()}>
-            <Text style={styles.TouchText}>Delete Photo</Text>
+            <Text style={styles.touchText}>Delete Photo</Text>
           </TouchableOpacity>
         </View>
       );
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: '#73D2DC',
   },
-  image: {
+  photo: {
     width: 390,
     height: 600,
   },
@@ -138,20 +139,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Image: {
+  noPhoto: {
     alignSelf: 'center',
     width: 150,
     height: 150,
   },
-  Label: {
+  label: {
     fontSize: 17,
     color: 'black',
     top: -15,
   },
-  Touch: {
+  touch: {
     alignItems: 'center',
   },
-  TouchText: {
+  touchText: {
     fontSize: 17,
     color: 'black',
     backgroundColor: '#f77c39',

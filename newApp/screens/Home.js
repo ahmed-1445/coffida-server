@@ -4,24 +4,23 @@ import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 class Home extends Component {
   render() {
     const navigation = this.props.navigation;
-
     return (
       <View style={styles.container}>
         <Image
           style={styles.image}
           source={require('./../icons/coffeeCup.png')}
         />
-        <Text style={styles.Label}>Welcome to CoffiDa!</Text>
+        <Text style={styles.label}>Welcome to CoffiDa!</Text>
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.TouchText}>Register</Text>
+          <Text style={styles.touchText}>Register</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.Touch}
+          style={styles.touch}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.TouchText}>Login</Text>
+          <Text style={styles.touchText}>Login</Text>
         </TouchableOpacity>
       </View>
     );
@@ -42,13 +41,13 @@ const styles = StyleSheet.create({
     height: 240,
     top: -110,
   },
-  Label: {
+  label: {
     fontSize: 30,
     color: 'black',
     alignSelf: 'center',
     top: -90,
   },
-  TouchText: {
+  touchText: {
     fontSize: 20,
     color: 'black',
     backgroundColor: '#f77c39',
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 138,
   },
-  Touch: {
+  touch: {
     paddingVertical: 5,
     paddingHorizontal: 20,
   },

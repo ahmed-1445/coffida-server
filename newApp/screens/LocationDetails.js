@@ -15,19 +15,17 @@ class LocationDetails extends Component {
     super(props);
 
     this.state = {
-      isLoading: true,
-      location_id: '',
-      location_name: '',
-      location_town: '',
-      latitude: '',
-      longitude: '',
-      photo_path: '',
-      avg_overall_rating: '',
-      avg_price_rating: '',
-      avg_quality_rating: '',
-      avg_clenliness_rating: '',
+      loading: true,
+      locationID: '',
+      locationName: '',
+      locationTown: '',
+      photoPath: '',
+      avgOverallRating: '',
+      avgPriceRating: '',
+      avgQualityRating: '',
+      avgCleanlinessRating: '',
       reviewData: [],
-      location_reviews: [],
+      locationReviews: [],
     };
   }
 
@@ -51,8 +49,8 @@ class LocationDetails extends Component {
 
   locationInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const loc_id = await AsyncStorage.getItem('@location_id');
-    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + loc_id, {
+    const locID = await AsyncStorage.getItem('@location_id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locID, {
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': userToken,
@@ -77,17 +75,15 @@ class LocationDetails extends Component {
       })
       .then((responseJson) => {
         this.setState({
-          isLoading: false,
-          location_id: responseJson.location_id,
-          location_name: responseJson.location_name,
-          location_town: responseJson.location_town,
-          latitude: responseJson.latitude,
-          longitude: responseJson.longitude,
-          photo_path: responseJson.photo_path,
-          avg_overall_rating: responseJson.avg_overall_rating,
-          avg_price_rating: responseJson.avg_price_rating,
-          avg_quality_rating: responseJson.avg_quality_rating,
-          avg_clenliness_rating: responseJson.avg_clenliness_rating,
+          loading: false,
+          locationID: responseJson.location_id,
+          locationName: responseJson.location_name,
+          locationTown: responseJson.location_town,
+          photoPath: responseJson.photo_path,
+          avgOverallRating: responseJson.avg_overall_rating,
+          avgPriceRating: responseJson.avg_price_rating,
+          avgQualityRating: responseJson.avg_quality_rating,
+          avgCleanlinessRating: responseJson.avg_clenliness_rating,
           reviewData: responseJson.location_reviews,
         });
         console.log(this.state.reviewData);
@@ -100,10 +96,8 @@ class LocationDetails extends Component {
 
   addFav = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const location_id = await AsyncStorage.getItem('@location_id');
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + location_id + '/favourite',
-      {
+    const locID = await AsyncStorage.getItem('@location_id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locID + '/favourite', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -135,10 +129,8 @@ class LocationDetails extends Component {
 
   delFav = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
-    const location_id = await AsyncStorage.getItem('@location_id');
-    return fetch(
-      'http://10.0.2.2:3333/api/1.0.0/location/' + location_id + '/favourite',
-      {
+    const locID = await AsyncStorage.getItem('@location_id');
+    return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locID + '/favourite', {
         method: 'delete',
         headers: {
           'Content-Type': 'application/json',
@@ -169,18 +161,18 @@ class LocationDetails extends Component {
   };
 
   render() {
-    if (this.state.isLoading) {
+    if (this.state.loading) {
       return (
-        <View style={styles.loading}>
-          <Text style={styles.Label}>Loading...</Text>
+        <View style={styles.loadingScreen}>
+          <Text style={styles.label}>Loading...</Text>
         </View>
       );
     } else {
       const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
-          <Text style={styles.Title}>
-            {this.state.location_name} - {this.state.location_town}
+          <Text style={styles.title}>
+            {this.state.locationName} - {this.state.locationTown}
           </Text>
           <View style={styles.fav}>
             <Avatar
@@ -198,23 +190,22 @@ class LocationDetails extends Component {
               activeOpacity={0.7}
             />
           </View>
-          {/*<Text style={styles.Label}>Photo Path: {this.state.photo_path}</Text>*/}
-          {/*<Text style={styles.rating}>Location ID: {this.state.location_id}</Text>*/}
-          <Text style={styles.rating}>Avg Price Rating: {this.state.avg_price_rating} / 5</Text>
-          <Text style={styles.rating}>Avg Quality Rating: {this.state.avg_quality_rating} / 5</Text>
-          <Text style={styles.rating}>Avg Cleanliness Rating: {this.state.avg_clenliness_rating} / 5</Text>
+          {/*<Text style={styles.label}>Photo Path: {this.state.photoPath}</Text>*/}
+          <Text style={styles.rating}>Avg Price Rating: {this.state.avgPriceRating} / 5</Text>
+          <Text style={styles.rating}>Avg Quality Rating: {this.state.avgqualityRating} / 5</Text>
+          <Text style={styles.rating}>Avg Cleanliness Rating: {this.state.avgCleanlinessRating} / 5</Text>
           <View style={styles.rowSplit} />
           <Text style={styles.revTitle}>Reviews</Text>
           <View style={styles.row} />
           <FlatList
             data={this.state.reviewData}
+            keyExtractor={(item) => item.review_id.toString()}
             renderItem={({item}) => (
               <View style={styles.review}>
-                <Text style={styles.Label}>Comment: {item.review_body}</Text>
+                <Text style={styles.label}>Comment: {item.review_body}</Text>
                 <View style={styles.space} />
-                <Text style={styles.Label}>Overall Rating:</Text>
+                <Text style={styles.label}>Overall Rating:</Text>
                 <AirbnbRating
-                  // style={{alignItems: 'flex-start'}}
                   count={5}
                   reviews={['1', '2', '3', '4', '5']}
                   defaultRating={item.overall_rating}
@@ -222,7 +213,7 @@ class LocationDetails extends Component {
                   isDisabled={true}
                 />
                 <View style={styles.space} />
-                <Text style={styles.Label}>Price Rating:</Text>
+                <Text style={styles.label}>Price Rating:</Text>
                 <AirbnbRating
                   count={5}
                   reviews={['1', '2', '3', '4', '5']}
@@ -231,7 +222,7 @@ class LocationDetails extends Component {
                   isDisabled={true}
                 />
                 <View style={styles.space} />
-                <Text style={styles.Label}>Quality Rating:</Text>
+                <Text style={styles.label}>Quality Rating:</Text>
                 <AirbnbRating
                   count={5}
                   reviews={['1', '2', '3', '4', '5']}
@@ -240,7 +231,7 @@ class LocationDetails extends Component {
                   isDisabled={true}
                 />
                 <View style={styles.space} />
-                <Text style={styles.Label}>Cleanliness Rating:</Text>
+                <Text style={styles.label}>Cleanliness Rating:</Text>
                 <AirbnbRating
                   count={5}
                   reviews={['1', '2', '3', '4', '5']}
@@ -249,18 +240,16 @@ class LocationDetails extends Component {
                   isDisabled={true}
                 />
                 <View style={styles.space} />
-                <Text style={styles.Label}>Likes: {item.likes}</Text>
+                <Text style={styles.label}>Likes: {item.likes}</Text>
                 <View style={styles.space} />
                 <View style={styles.row} />
-                {/* <View style={styles.space} /> */}
               </View>
             )}
-            keyExtractor={(item, index) => item.review_id.toString()}
           />
           <TouchableOpacity
-            style={styles.Touch}
+            style={styles.touch}
             onPress={() => navigation.navigate('AddReview')}>
-            <Text style={styles.TouchText}>Add a Review</Text>
+            <Text style={styles.touchText}>Add a Review</Text>
           </TouchableOpacity>
         </View>
       );
@@ -282,14 +271,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     top: -35,
   },
-  loading: {
+  loadingScreen: {
     backgroundColor: '#73D2DC',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Label: {
+  label: {
     fontSize: 17,
     color: 'black',
     alignSelf: 'center',
@@ -304,7 +293,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'black',
   },
-  Title: {
+  title: {
     fontWeight: 'bold',
     fontSize: 17,
     color: 'black',
@@ -317,11 +306,6 @@ const styles = StyleSheet.create({
     top: -10,
     alignSelf: 'center',
   },
-  Boarder: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-  },
   row: {
     padding: 2,
     borderBottomColor: 'black',
@@ -333,11 +317,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 5,
     top: -25,
   },
-  Touch: {
+  touch: {
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
-  TouchText: {
+  touchText: {
     fontSize: 17,
     color: 'black',
     backgroundColor: '#f77c39',
@@ -348,10 +332,6 @@ const styles = StyleSheet.create({
   space: {
     width: 7,
     height: 7,
-  },
-  spaceList: {
-    width: 20,
-    height: 20,
   },
 });
 
