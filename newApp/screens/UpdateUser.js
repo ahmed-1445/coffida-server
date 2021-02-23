@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  TextInput,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ToastAndroid,
-} from 'react-native';
+import {View, TextInput, ScrollView, Text, TouchableOpacity, StyleSheet, ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class UpdateUser extends Component {
@@ -52,11 +44,11 @@ class UpdateUser extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then((responseJson) => {
+      .then((responseJSON) => {
         this.setState({
-          firstName: responseJson.first_name,
-          lastName: responseJson.last_name,
-          email: responseJson.email,
+          firstName: responseJSON.first_name,
+          lastName: responseJSON.last_name,
+          email: responseJSON.email,
         });
       })
       .catch((error) => {
@@ -85,7 +77,7 @@ class UpdateUser extends Component {
       .then((response) => {
         if (response.status === 200) {
           ToastAndroid.show('Account Details Updated!', ToastAndroid.SHORT);
-          this.props.navigation.navigate('UserMan');
+          this.props.navigation.navigate('MyAccount');
         } else if (response.status === 400) {
           throw 'Invalid details, please try again!';
         } else if (response.status === 401) {
@@ -110,57 +102,49 @@ class UpdateUser extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
+          <Text style={styles.title}>Details</Text>
+          <View style={styles.row} />
           <View style={styles.space} />
-          <View>
-            <Text style={styles.label}>Change First Name:</Text>
-            <TextInput
-              placeholder="Enter your first name"
-              style={styles.input}
-              onChangeText={(firstName) => this.setState({firstName})}
-              value={this.state.firstName}
-            />
-          </View>
+          <Text style={styles.label}>Change First Name:</Text>
+          <TextInput
+            placeholder="Enter your first name"
+            style={styles.input}
+            onChangeText={(firstName) => this.setState({firstName})}
+            value={this.state.firstName}
+          />
           <View style={styles.space} />
-          <View>
-            <Text style={styles.label}>Change Last Name:</Text>
-            <TextInput
-              placeholder="Enter your last name"
-              style={styles.input}
-              onChangeText={(lastName) => this.setState({lastName})}
-              value={this.state.lastName}
-            />
-          </View>
+          <Text style={styles.label}>Change Last Name:</Text>
+          <TextInput
+            placeholder="Enter your last name"
+            style={styles.input}
+            onChangeText={(lastName) => this.setState({lastName})}
+            value={this.state.lastName}
+          />
           <View style={styles.space} />
-          <View>
-            <Text style={styles.label}>Change Email:</Text>
-            <TextInput
-              placeholder="Enter your Email Address"
-              style={styles.input}
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.email}
-            />
-          </View>
+          <Text style={styles.label}>Change Email:</Text>
+          <TextInput
+            placeholder="Enter your Email Address"
+            style={styles.input}
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+          />
           <View style={styles.space} />
-          <View>
-            <Text style={styles.label}>Change Password:</Text>
-            <TextInput
-              placeholder="Enter your password (required)"
-              style={styles.input}
-              onChangeText={(password) => this.setState({password})}
-              value={this.state.password}
-              secureTextEntry={true}
-            />
-          </View>
+          <Text style={styles.label}>Change Password:</Text>
+          <TextInput
+            placeholder="Enter your password (required)"
+            style={styles.input}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+            secureTextEntry={true}
+          />
+          <View style={styles.row} />
           <View style={styles.space} />
-          <View>
-            <TouchableOpacity
-              style={styles.touch}
-              onPress={() => this.updateInfo()}>
-              <Text style={styles.touchText}>Update</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.updateInfo()}>
+            <Text style={styles.buttonText}>Update</Text>
+          </TouchableOpacity>
         </ScrollView>
-        <View style={styles.space} />
       </View>
     );
   }
@@ -169,33 +153,44 @@ class UpdateUser extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
+  title: {
+    fontSize: 17,
+    color: 'black',
+    alignSelf: 'center',
+  },
   label: {
-    fontSize: 16,
+    fontSize: 17,
     color: 'black',
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'black',
     borderRadius: 5,
   },
-  touch: {
-    paddingVertical: 20,
-    paddingHorizontal: 25,
+  row: {
+    padding: 2,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
-  touchText: {
-    fontSize: 17,
-    color: 'black',
+  button: {
     backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 142,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'black',
   },
   space: {
-    width: 5,
-    height: 5,
+    width: 10,
+    height: 10,
   },
 });
 

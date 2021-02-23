@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// eslint-disable-next-line prettier/prettier
 import {View, Text, TouchableOpacity, StyleSheet, ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -71,16 +70,16 @@ class AuthenticatedUser extends Component {
       <View style={styles.container}>
         <View style={styles.logoutContainer}>
           <View style={styles.space} />
-          <Text style={styles.label}>Are you sure you want to logout?</Text>
+          <Text style={styles.title}>Are you sure you want to logout?</Text>
           <View style={styles.space} />
-          <TouchableOpacity style={styles.touch} onPress={() => this.logout()}>
-            <Text style={styles.touchText}>Yes</Text>
+          <TouchableOpacity style={styles.button} onPress={() => this.logout()}>
+            <Text style={styles.buttonText}>Yes</Text>
           </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => this.props.navigation.navigate('AuthenticatedUser')}>
-            <Text style={styles.touchText}>No</Text>
+            <Text style={styles.buttonText}>No</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -97,22 +96,25 @@ const styles = StyleSheet.create({
   logoutContainer: {
     top: 247,
   },
-  label: {
-    fontSize: 16,
+  title: {
+    fontSize: 17,
     color: 'black',
     alignSelf: 'center',
+    top: -10,
   },
-  touch: {
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-  },
-  touchText: {
-    fontSize: 16,
-    color: 'black',
+  button: {
     backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: -10,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 160,
+  },
+  buttonText: {
+    fontSize: 17,
+    color: 'black',
   },
   space: {
     width: 10,

@@ -6,34 +6,39 @@ class LocationMan extends Component {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <View style={styles.space} />
         <TouchableOpacity
-          style={styles.touch}
-          onPress={() => navigation.navigate('GetLocation')}>
-          <Text style={styles.touchText}>View all Locations</Text>
+          style={styles.button}
+          onPress={() => navigation.navigate('AllLocations')}>
+          <Text style={styles.buttonText}>View all Locations</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.touch}
+          style={styles.button}
           onPress={() => navigation.navigate('FavouriteLocations')}>
-          <Text style={styles.touchText}>Favourite Locations</Text>
+          <Text style={styles.buttonText}>Favourite Locations</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.touch}
-          onPress={() => navigation.navigate('Search')}>
-          <Text style={styles.touchText}>Search</Text>
+          style={styles.button}
+          onPress={() => navigation.navigate('LocationSearch')}>
+          <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.touch}
+          style={styles.button}
           onPress={() => navigation.navigate('LocationMap')}>
-          <Text style={styles.touchText}>Coffee Shops Near Me</Text>
+          <Text style={styles.buttonText}>Coffee Shops Near Me</Text>
         </TouchableOpacity>
         <Image
           style={styles.image}
           source={require('./../icons/locationSketch.png')}
         />
+        <Text style={styles.label}>Looking for the best coffee?</Text>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate('AuthenticatedUser')}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -47,25 +52,43 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
-    width: 150,
-    height: 150,
-    top: 55,
+    width: 140,
+    height: 140,
+    top: 70,
   },
-  touch: {
-    paddingVertical: 15,
-    paddingHorizontal: 45,
+  label: {
+    fontSize: 17,
+    color: 'black',
+    alignSelf: 'center',
+    top: 75,
   },
-  touchText: {
+  backButton: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: 208,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  button: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  buttonText: {
     fontSize: 16,
     color: 'black',
-    backgroundColor: '#f77c39',
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 100,
   },
   space: {
-    width: 15,
-    height: 15,
+    width: 20,
+    height: 20,
   },
 });
 

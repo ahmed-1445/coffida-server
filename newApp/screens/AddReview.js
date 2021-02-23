@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ToastAndroid,
-} from 'react-native';
+import {View ,ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {AirbnbRating} from 'react-native-elements';
 
@@ -73,8 +65,9 @@ class AddReview extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <View style={styles.space} />
-          <Text style={styles.label}>Overall Rating:</Text>
+        <Text style={styles.title}>Enter your Ratings</Text>
+          <View style={styles.row} />
+          <Text style={styles.label}>Overall Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
@@ -83,7 +76,7 @@ class AddReview extends Component {
             onFinishRating={(overallRating) => this.setState({overallRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.label}>Price Rating:</Text>
+          <Text style={styles.label}>Price Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
@@ -92,7 +85,7 @@ class AddReview extends Component {
             onFinishRating={(priceRating) => this.setState({priceRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.label}>Quality Rating:</Text>
+          <Text style={styles.label}>Quality Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
@@ -101,7 +94,7 @@ class AddReview extends Component {
             onFinishRating={(qualityRating) => this.setState({qualityRating})}
           />
           <View style={styles.space} />
-          <Text style={styles.label}>Cleanliness Rating:</Text>
+          <Text style={styles.label}>Cleanliness Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
@@ -109,6 +102,7 @@ class AddReview extends Component {
             size={20}
             onFinishRating={(clenlinessRating) => this.setState({clenlinessRating})}
           />
+          <View style={styles.row} />
           <View style={styles.space} />
           <Text style={styles.label}>Comments:</Text>
           <TextInput
@@ -119,10 +113,11 @@ class AddReview extends Component {
           />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => this.addReview()}>
-            <Text style={styles.touchText}>Submit</Text>
+            <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
+          <View style={styles.space} />
         </ScrollView>
       </View>
     );
@@ -132,7 +127,7 @@ class AddReview extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
   label: {
@@ -140,22 +135,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
   },
+  row: {
+    padding: 2,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+  },
+  title: {
+    fontSize: 17,
+    color: 'black',
+    alignSelf: 'center',
+  },
   input: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'black',
     borderRadius: 5,
   },
-  touch: {
-    paddingVertical: 1,
-    paddingHorizontal: 20,
+  button: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
   },
-  touchText: {
+  buttonText: {
     fontSize: 16,
     color: 'black',
-    backgroundColor: '#f77c39',
-    borderRadius: 10,
-    paddingVertical: 15,
-    paddingHorizontal: 148,
   },
   space: {
     width: 10,

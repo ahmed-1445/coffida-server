@@ -13,7 +13,6 @@ class Register extends Component {
   }
 
   register = () => {
-    // Needs validation
     let userDetails = {
       first_name: this.state.firstName,
       last_name: this.state.lastName,
@@ -60,8 +59,8 @@ class Register extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.title}>Please fill in the form:</Text>
-          <View style={styles.space} />
+          <Text style={styles.title}>Please fill in the form to sign up</Text>
+          <View style={styles.row} />
           <Text style={styles.label}>First Name:</Text>
           <TextInput
             placeholder="Enter your first name"
@@ -69,6 +68,7 @@ class Register extends Component {
             onChangeText={(firstName) => this.setState({firstName})}
             value={this.state.first_name}
           />
+          <View style={styles.space} />
           <Text style={styles.label}>Last Name:</Text>
           <TextInput
             placeholder="Enter your last name"
@@ -76,6 +76,7 @@ class Register extends Component {
             onChangeText={(lastName) => this.setState({lastName})}
             value={this.state.last_name}
           />
+          <View style={styles.space} />
           <Text style={styles.label}>Email:</Text>
           <TextInput
             placeholder="Enter your Email Address"
@@ -83,6 +84,7 @@ class Register extends Component {
             onChangeText={(email) => this.setState({email})}
             value={this.state.email}
           />
+          <View style={styles.space} />
           <Text style={styles.label}>Password:</Text>
           <TextInput
             placeholder="Enter your password"
@@ -91,12 +93,12 @@ class Register extends Component {
             value={this.state.password}
             secureTextEntry={true}
           />
-          <View style={styles.space} />
+          <View style={styles.row} />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => this.register()}>
-            <Text style={styles.touchText}>Sign Up</Text>
+            <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -107,39 +109,45 @@ class Register extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
   title: {
     fontSize: 16,
     color: 'black',
     padding: 3,
+    alignSelf: 'center',
   },
   label: {
-    fontSize: 16,
+    fontSize: 17,
     color: 'black',
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'black',
     borderRadius: 5,
   },
-  touch: {
-    alignItems: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: 20,
+  row: {
+    padding: 2,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
   },
-  touchText: {
+  button: {
     backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
-    fontSize: 20,
+  },
+  buttonText: {
+    fontSize: 17,
     color: 'black',
-    paddingVertical: 5,
-    paddingHorizontal: 138,
   },
   space: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
   },
 });
 

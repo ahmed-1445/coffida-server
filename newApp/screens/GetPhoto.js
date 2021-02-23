@@ -33,7 +33,7 @@ class GetPhoto extends Component {
         if (response.status === 200) {
           this.setState({imageURL: response.url + '?timestamp=' + Date.now()});
           this.state.imageURL.stringify;
-          // console.log('URL:', this.state.imageURL);
+          console.log('URL:', this.state.imageURL);
         } else if (response.status === 400) {
           throw 'Invalid details, please try again!';
         } else if (response.status === 401) {
@@ -99,9 +99,9 @@ class GetPhoto extends Component {
           />
           <Text style={styles.label}>No photo for this review</Text>
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.noPhotoButton}
             onPress={() => this.props.navigation.navigate('AddPhoto')}>
-            <Text style={styles.touchText}>Add Photo</Text>
+            <Text style={styles.buttonText}>Add Photo</Text>
           </TouchableOpacity>
         </View>
       );
@@ -112,9 +112,9 @@ class GetPhoto extends Component {
           <Image style={styles.photo} source={{uri: this.state.imageURL}} />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => this.deletePhoto()}>
-            <Text style={styles.touchText}>Delete Photo</Text>
+            <Text style={styles.buttonText}>Delete Photo</Text>
           </TouchableOpacity>
         </View>
       );
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   photo: {
     width: 390,
-    height: 600,
+    height: 610,
   },
   noPhotoScreen: {
     backgroundColor: '#73D2DC',
@@ -149,16 +149,28 @@ const styles = StyleSheet.create({
     color: 'black',
     top: -15,
   },
-  touch: {
-    alignItems: 'center',
-  },
-  touchText: {
-    fontSize: 17,
-    color: 'black',
+  noPhotoButton: {
     backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    top: -7,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 142,
+  },
+  button: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: -7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'black',
   },
   space: {
     width: 10,

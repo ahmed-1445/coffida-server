@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ToastAndroid,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet,ToastAndroid, FlatList, Image, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {AirbnbRating} from 'react-native-elements';
-
 class UserReviews extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +21,7 @@ class UserReviews extends Component {
     });
     this.getReviews();
     console.disableYellowBox = true;
+    // Disabled YellowBox for source.uri is empty, getPhoto function solves this
   }
 
   componentWillUnmount() {
@@ -341,13 +333,11 @@ class UserReviews extends Component {
                     showRating={false}
                     isDisabled={true}
                   />
-                  <Text style={styles.label}>
-                    Comments: {item.review.review_body}
-                  </Text>
+                  <Text style={styles.label}>Comments: {item.review.review_body}</Text>
                   <Text style={styles.label}>Likes: {item.review.likes}</Text>
                   <View style={styles.space} />
                   <TouchableOpacity
-                    style={styles.touch}
+                    style={styles.button}
                     onPress={() => updateReview(item.review.review_id, item.location.location_id)}>
                     <Text style={styles.label}>Edit</Text>
                   </TouchableOpacity>
@@ -366,7 +356,7 @@ class UserReviews extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
   image: {
@@ -425,7 +415,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
-  touch: {
+  button: {
     fontSize: 17,
     color: 'black',
     backgroundColor: '#f77c39',

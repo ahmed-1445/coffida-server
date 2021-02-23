@@ -32,28 +32,26 @@ class AuthenticatedUser extends Component {
     const navigation = this.props.navigation;
     return (
       <View style={styles.container}>
-        <View style={styles.space} />
-        <View style={styles.space} />
         <TouchableOpacity
-          style={styles.touch}
-          onPress={() => navigation.navigate('UserMan')}>
-          <Text style={styles.touchText}>My Account</Text>
+          style={styles.button}
+          onPress={() => navigation.navigate('MyAccount')}>
+          <Text style={styles.buttonText}>My Account</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.touch}
+          style={styles.button}
           onPress={() => navigation.navigate('LocationMan')}>
-          <Text style={styles.touchText}>Locations</Text>
+          <Text style={styles.buttonText}>Locations</Text>
         </TouchableOpacity>
         <Image
           style={styles.image}
           source={require('./../icons/coffeeDessert.png')}
         />
-        <Text style={styles.label}>Feeling a coffee?</Text>
+        <Text style={styles.imageTitle}>Feeling a coffee?</Text>
         <TouchableOpacity
-          style={styles.logout}
+          style={styles.logoutButton}
           onPress={() => navigation.navigate('Logout')}>
-          <Text style={styles.touchText}>Logout</Text>
+          <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
     );
@@ -68,36 +66,43 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
-    width: 250,
-    height: 250,
-    top: 50,
+    width: 240,
+    height: 240,
+    top: 90,
   },
-  touch: {
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-  },
-  touchText: {
-    fontSize: 16,
-    color: 'black',
-    backgroundColor: '#f77c39',
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 132,
-  },
-  label: {
-    fontSize: 24,
+  imageTitle: {
+    fontSize: 20,
     color: 'black',
     alignSelf: 'center',
-    top: 25,
+    top: 60,
   },
-  logout: {
-    paddingVertical: 5,
-    paddingHorizontal: 37,
-    top: 215,
+  logoutButton: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: 223,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  button: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'black',
   },
   space: {
-    width: 10,
-    height: 10,
+    width: 25,
+    height: 25,
   },
 });
 

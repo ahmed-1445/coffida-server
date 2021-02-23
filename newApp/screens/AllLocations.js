@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ToastAndroid,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, ToastAndroid, FlatList, TouchableOpacity} from 'react-native';
 import {AirbnbRating} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -88,13 +81,14 @@ class GetLocation extends Component {
     if (this.state.loading) {
       return (
         <View style={styles.loadingScreen}>
-          <Text style={styles.title}>Loading...</Text>
+          <Text style={styles.label}>Loading...</Text>
         </View>
       );
     } else {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>Select one of the following locations:</Text>
+          <Text style={styles.title}>Tap a Location</Text>
+          <View style={styles.space} />
           <View style={styles.row} />
           <View style={styles.space} />
           <FlatList
@@ -131,7 +125,7 @@ class GetLocation extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
   loadingScreen: {
@@ -140,6 +134,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  label: {
+    fontSize: 17,
+    color: 'black',
+    alignSelf: 'center',
   },
   title: {
     fontSize: 16,

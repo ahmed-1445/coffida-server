@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ToastAndroid,
-  Image,
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, ToastAndroid,Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class UserMan extends Component {
@@ -77,34 +70,32 @@ class UserMan extends Component {
     } else {
       return (
         <View style={styles.container}>
+          <Text style={styles.title}>Account Details</Text>
           <View style={styles.row} />
-          <Text style={styles.label}>Account details:</Text>
-          <View style={styles.space} />
-          <Text style={styles.label}>
-            Full Name: {this.state.firstName} {this.state.lastName}
-          </Text>
+          {/* <View style={styles.space} /> */}
+          <Text style={styles.label}>Full Name: {this.state.firstName} {this.state.lastName}</Text>
           <Text style={styles.label}>Email: {this.state.email}</Text>
           <View style={styles.row} />
-          <View style={styles.space} />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => navigation.navigate('UpdateUser')}>
-            <Text style={styles.touchText}>Update Details</Text>
+            <Text style={styles.buttonText}>Update Details</Text>
           </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => navigation.navigate('UserReviews')}>
-            <Text style={styles.customReviews}>My Reviews</Text>
+            <Text style={styles.buttonText}>My Reviews</Text>
           </TouchableOpacity>
           <Image
             style={styles.image}
             source={require('./../icons/settings.png')}
           />
+          <Text style={styles.imageTitle}>Fancy a change?</Text>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.navigate('AuthenticatedUser')}>
-            <Text style={styles.touchText}>Back</Text>
+            <Text style={styles.buttonText}>Back</Text>
           </TouchableOpacity>
         </View>
       );
@@ -115,7 +106,7 @@ class UserMan extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
   loading: {
@@ -129,43 +120,56 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 130,
     height: 130,
-    top: 120,
+    top: 115,
   },
-  customReviews: {
-    fontSize: 15,
+  imageTitle: {
+    fontSize: 20,
     color: 'black',
-    backgroundColor: '#f77c39',
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 150,
+    alignSelf: 'center',
+    top: 100,
   },
-  label: {
+  title: {
     fontSize: 17,
     color: 'black',
+    alignSelf: 'center',
+  },
+  label: {
+    fontSize: 16,
+    color: 'black',
+    alignSelf: 'center',
   },
   row: {
     padding: 2,
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
-  touch: {
-    paddingVertical: 5,
-  },
   backButton: {
-    paddingVertical: 10,
-    top: 270,
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: 260,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
   },
-  touchText: {
+  button: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  buttonText: {
     fontSize: 16,
     color: 'black',
-    backgroundColor: '#f77c39',
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 165,
   },
   space: {
-    width: 10,
-    height: 10,
+    width: 20,
+    height: 20,
   },
 });
 

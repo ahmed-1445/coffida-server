@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, Text, ToastAndroid, FlatList, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Avatar, AirbnbRating} from 'react-native-elements';
 
@@ -19,7 +12,6 @@ class LocationDetails extends Component {
       locationID: '',
       locationName: '',
       locationTown: '',
-      photoPath: '',
       avgOverallRating: '',
       avgPriceRating: '',
       avgQualityRating: '',
@@ -73,18 +65,17 @@ class LocationDetails extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then((responseJson) => {
+      .then((responseJSON) => {
         this.setState({
           loading: false,
-          locationID: responseJson.location_id,
-          locationName: responseJson.location_name,
-          locationTown: responseJson.location_town,
-          photoPath: responseJson.photo_path,
-          avgOverallRating: responseJson.avg_overall_rating,
-          avgPriceRating: responseJson.avg_price_rating,
-          avgQualityRating: responseJson.avg_quality_rating,
-          avgCleanlinessRating: responseJson.avg_clenliness_rating,
-          reviewData: responseJson.location_reviews,
+          locationID: responseJSON.location_id,
+          locationName: responseJSON.location_name,
+          locationTown: responseJSON.location_town,
+          avgOverallRating: responseJSON.avg_overall_rating,
+          avgPriceRating: responseJSON.avg_price_rating,
+          avgQualityRating: responseJSON.avg_quality_rating,
+          avgCleanlinessRating: responseJSON.avg_clenliness_rating,
+          reviewData: responseJSON.location_reviews,
         });
         console.log(this.state.reviewData);
       })
@@ -171,9 +162,8 @@ class LocationDetails extends Component {
       const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>
-            {this.state.locationName} - {this.state.locationTown}
-          </Text>
+          <Text style={styles.title}>{this.state.locationName} - {this.state.locationTown}</Text>
+          <View style={styles.row} />
           <View style={styles.fav}>
             <Avatar
               size="small"
@@ -190,9 +180,8 @@ class LocationDetails extends Component {
               activeOpacity={0.7}
             />
           </View>
-          {/*<Text style={styles.label}>Photo Path: {this.state.photoPath}</Text>*/}
           <Text style={styles.rating}>Avg Price Rating: {this.state.avgPriceRating} / 5</Text>
-          <Text style={styles.rating}>Avg Quality Rating: {this.state.avgqualityRating} / 5</Text>
+          <Text style={styles.rating}>Avg Quality Rating: {this.state.avgQualityRating} / 5</Text>
           <Text style={styles.rating}>Avg Cleanliness Rating: {this.state.avgCleanlinessRating} / 5</Text>
           <View style={styles.rowSplit} />
           <Text style={styles.revTitle}>Reviews</Text>
@@ -247,9 +236,9 @@ class LocationDetails extends Component {
             )}
           />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => navigation.navigate('AddReview')}>
-            <Text style={styles.touchText}>Add a Review</Text>
+            <Text style={styles.buttonText}>Add a Review</Text>
           </TouchableOpacity>
         </View>
       );
@@ -260,12 +249,12 @@ class LocationDetails extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
   fav: {
     alignSelf: 'flex-end',
-    top: -25,
+    top: -35,
   },
   noFav: {
     alignSelf: 'flex-end',
@@ -317,17 +306,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 5,
     top: -25,
   },
-  touch: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  touchText: {
-    fontSize: 17,
-    color: 'black',
+  button: {
     backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    // top: -5,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
-    paddingVertical: 7,
-    paddingHorizontal: 122,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'black',
   },
   space: {
     width: 7,

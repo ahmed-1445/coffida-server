@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Button, ToastAndroid, StyleSheet} from 'react-native';
+import {View, Text, ToastAndroid, StyleSheet, TouchableOpacity} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -54,7 +54,9 @@ class AddPhoto extends Component {
     return (
       <View style={styles.cameraContainer}>
         <RNCamera style={styles.camera} ref={(ref) => {this.camera = ref;}} />
-        <Button title="Capture" onPress={() => this.capture()} />
+        <TouchableOpacity style={styles.button} onPress={() => this.capture()}>
+          <Text style={styles.buttonText}>Capture</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -63,11 +65,23 @@ class AddPhoto extends Component {
 const styles = StyleSheet.create({
   cameraContainer: {
     flex: 1,
+    backgroundColor: '#73D2DC',
   },
   camera: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'black',
   },
 });
 

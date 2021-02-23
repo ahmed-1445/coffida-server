@@ -11,18 +11,18 @@ import Login from './screens/Login';
 import AuthenticatedUser from './screens/AuthenticatedUser';
 import Logout from './screens/Logout';
 import UpdateUser from './screens/UpdateUser';
-import UserMan from './screens/UserMan';
+import MyAccount from './screens/MyAccount';
 import AddReview from './screens/AddReview';
 import LocationMan from './screens/LocationMan';
 import UpdateReview from './screens/UpdateReview';
-import GetLocation from './screens/GetLocation';
+import AllLocations from './screens/AllLocations';
 import LocationDetails from './screens/LocationDetails';
 import FavouriteLocations from './screens/FavouriteLocations';
 import UserReviews from './screens/UserReviews';
 import AddPhoto from './screens/AddPhoto';
 import GetPhoto from './screens/GetPhoto';
 import LocationMap from './screens/LocationMap';
-import Search from './screens/Search';
+import LocationSearch from './screens/LocationSearch';
 
 const Stack = createStackNavigator();
 
@@ -62,8 +62,8 @@ class App extends Component {
             options={{title: 'Update your Information'}}
           />
           <Stack.Screen
-            name="UserMan"
-            component={UserMan}
+            name="MyAccount"
+            component={MyAccount}
             options={{title: 'My Account'}}
           />
           <Stack.Screen
@@ -82,8 +82,8 @@ class App extends Component {
             options={{title: 'Update Review'}}
           />
           <Stack.Screen
-            name="GetLocation"
-            component={GetLocation}
+            name="AllLocations"
+            component={AllLocations}
             options={{title: 'View all Locations'}}
           />
           <Stack.Screen
@@ -117,8 +117,8 @@ class App extends Component {
             options={{title: 'Location Map'}}
           />
           <Stack.Screen
-            name="Search"
-            component={Search}
+            name="LocationSearch"
+            component={LocationSearch}
             options={{title: 'Location Search'}}
           />
         </Stack.Navigator>

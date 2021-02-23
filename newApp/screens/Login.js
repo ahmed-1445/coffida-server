@@ -67,6 +67,9 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>CoffiDa Sign In</Text>
+        <View style={styles.row} />
+        <View style={styles.space} />
         <Text style={styles.label}>Email:</Text>
         <TextInput
           placeholder="Enter Email"
@@ -74,6 +77,7 @@ class Login extends Component {
           onChangeText={this.handleEmailInput}
           value={this.state.email}
         />
+        <View style={styles.space} />
         <Text style={styles.label}>Password:</Text>
         <TextInput
           placeholder="Enter Password"
@@ -82,15 +86,16 @@ class Login extends Component {
           value={this.state.password}
           secureTextEntry={true}
         />
+        <View style={styles.row} />
         <View style={styles.space} />
-        <TouchableOpacity style={styles.touch} onPress={() => this.login()}>
-          <Text style={styles.touchText}>Sign In</Text>
+        <TouchableOpacity style={styles.button} onPress={() => this.login()}>
+          <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
-          style={styles.button}
+          style={styles.registerButton}
           onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={styles.register}>Need to register?</Text>
+          <Text style={styles.textRegister}>Need to register?</Text>
         </TouchableOpacity>
       </View>
     );
@@ -100,46 +105,59 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 8,
     backgroundColor: '#73D2DC',
   },
+  title: {
+    fontSize: 17,
+    color: 'black',
+    padding: 3,
+    alignSelf: 'center',
+  },
   label: {
-    fontSize: 16,
+    fontSize: 17,
     color: 'black',
   },
-  register: {
+  registerButton: {
+    height: 42,
+    width: '60%',
+    left: 80,
+    top: -20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  textRegister: {
     fontSize: 16,
     color: 'black',
-    alignSelf: 'center',
-  },
-  button: {
-    width: 100,
-    height: 50,
-    alignSelf: 'center',
+    top: 10,
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'black',
     borderRadius: 5,
   },
-  touch: {
-    padding: 10,
+  row: {
+    padding: 2,
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+  },
+  button: {
+    backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: 20,
     borderRadius: 10,
   },
-  touchText: {
-    backgroundColor: '#f77c39',
-    borderRadius: 10,
-    fontSize: 20,
+  buttonText: {
+    fontSize: 18,
     color: 'black',
-    paddingVertical: 5,
-    paddingHorizontal: 138,
   },
   space: {
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
   },
 });
 

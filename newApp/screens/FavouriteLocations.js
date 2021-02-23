@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ToastAndroid,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, ToastAndroid, FlatList, TouchableOpacity} from 'react-native';
+import {AirbnbRating} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class FavouriteLocations extends Component {
@@ -48,11 +42,12 @@ class FavouriteLocations extends Component {
           throw 'Error, please try again!';
         }
       })
-      .then((responseJson) => {
+      .then((responseJSON) => {
         this.setState({
           loading: false,
-          favLocations: responseJson,
+          favLocations: responseJSON,
         });
+        console.log(this.state.favLocations);
       })
       .catch((error) => {
         console.log(error);
@@ -61,37 +56,56 @@ class FavouriteLocations extends Component {
   };
 
   render() {
-    if (this.state.loadingScreen) {
+    const navigation = this.props.navigation;
+    const singleLocation = async (locID) => {
+      await AsyncStorage.setItem('@location_id', JSON.stringify(locID));
+      console.log('Location ID: ', locID);
+      this.setState({
+        locID: this.state.locationID,
+      });
+      this.props.navigation.navigate('LocationDetails');
+    };
+    if (this.state.loading) {
       return (
-        <View style={styles.loading}>
+        <View style={styles.loadingScreen}>
           <Text style={styles.label}>Loading...</Text>
         </View>
       );
     } else {
-      const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
-          <Text style={styles.label}>Choose one of the following locations:</Text>
+          <Text style={styles.label}>Tap a Location</Text>
           <View style={styles.row} />
           <View style={styles.space} />
           <FlatList
             data={this.state.favLocations}
+            keyExtractor={(item) => item.location_id.toString()}
             renderItem={({item}) => (
-              <View>
+              <TouchableOpacity
+                onPress={() => singleLocation(item.location_id)}>
                 <View style={styles.space} />
-                <Text style={styles.label}>{item.location_name}</Text>
-                <Text style={styles.label}>{item.location_town}</Text>
+                <Text style={styles.title}>{item.location_name}</Text>
+                <Text style={styles.subTitle}>{item.location_town}</Text>
+                <View style={styles.space} />
+                <Text style={styles.rating}>Avg Rating:</Text>
+                <AirbnbRating
+                  count={5}
+                  reviews={['1', '2', '3', '4', '5']}
+                  defaultRating={item.avg_overall_rating}
+                  size={18}
+                  showRating={false}
+                  isDisabled={true}
+                />
                 <View style={styles.space} />
                 <View style={styles.row} />
-              </View>
+              </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.location_id.toString()}
           />
           <View style={styles.space} />
           <TouchableOpacity
-            style={styles.touch}
+            style={styles.button}
             onPress={() => navigation.navigate('LocationMan')}>
-            <Text style={styles.touchText}>Back</Text>
+            <Text style={styles.buttonText}>Back</Text>
           </TouchableOpacity>
         </View>
       );
@@ -117,22 +131,40 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'black',
   },
+  title: {
+    fontSize: 16,
+    color: 'black',
+    alignSelf: 'center',
+    fontWeight: 'bold',
+  },
+  subTitle: {
+    fontSize: 15,
+    color: 'black',
+    alignSelf: 'center',
+  },
+  rating: {
+    fontSize: 15,
+    color: 'black',
+    alignSelf: 'center',
+  },
   row: {
     padding: 2,
     borderBottomColor: 'black',
     borderBottomWidth: 2,
   },
-  touch: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  touchText: {
-    fontSize: 17,
-    color: 'black',
+  button: {
     backgroundColor: '#f77c39',
+    height: 42,
+    width: '70%',
+    left: 60,
+    top: -16,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
-    paddingVertical: 7,
-    paddingHorizontal: 155,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'black',
   },
   space: {
     width: 5,
