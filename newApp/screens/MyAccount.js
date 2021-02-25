@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, ToastAndroid,Image} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, ToastAndroid, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class UserMan extends Component {
@@ -72,8 +72,7 @@ class UserMan extends Component {
         <View style={styles.container}>
           <Text style={styles.title}>Account Details</Text>
           <View style={styles.row} />
-          {/* <View style={styles.space} /> */}
-          <Text style={styles.label}>Full Name: {this.state.firstName} {this.state.lastName}</Text>
+          <Text style={styles.label}>Name: {this.state.firstName} {this.state.lastName}</Text>
           <Text style={styles.label}>Email: {this.state.email}</Text>
           <View style={styles.row} />
           <TouchableOpacity

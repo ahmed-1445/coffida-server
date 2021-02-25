@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler';
-
 import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+// Importing Stack navigation components above
 
-// Importing all screens
+// Importing all screens below
 import Home from './screens/Home';
 import Register from './screens/Register';
 import Login from './screens/Login';
@@ -25,7 +25,6 @@ import LocationMap from './screens/LocationMap';
 import LocationSearch from './screens/LocationSearch';
 
 const Stack = createStackNavigator();
-
 class App extends Component {
   render() {
     return (

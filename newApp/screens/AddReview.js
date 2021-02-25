@@ -65,7 +65,7 @@ class AddReview extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-        <Text style={styles.title}>Enter your Ratings</Text>
+          <Text style={styles.title}>Enter your Ratings</Text>
           <View style={styles.row} />
           <Text style={styles.label}>Overall Rating</Text>
           <AirbnbRating

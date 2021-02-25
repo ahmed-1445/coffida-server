@@ -23,7 +23,6 @@ class Login extends Component {
   };
 
   login = async () => {
-    // Add some validation i.e. password strength
     let creds = {
       email: this.state.email,
       password: this.state.password,

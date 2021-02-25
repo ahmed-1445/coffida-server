@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  TextInput,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ToastAndroid,
-} from 'react-native';
+import {View, TextInput, ScrollView, Text, TouchableOpacity, StyleSheet, ToastAndroid} from 'react-native';
 import {AirbnbRating} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -22,7 +14,7 @@ class UpdateReview extends Component {
       cleanlinessRating: '',
       reviewBody: '',
       reviewData: [],
-      location_reviews: [],
+      locationReviews: [],
     };
   }
 
@@ -72,9 +64,9 @@ class UpdateReview extends Component {
       })
       .then((responseJSON) => {
         this.setState({
-          location_reviews: responseJSON.reviews,
+          locationReviews: responseJSON.reviews,
         });
-        console.log(this.state.location_reviews);
+        console.log(this.state.locationReviews);
       })
       .catch((error) => {
         console.log(error);
@@ -134,44 +126,44 @@ class UpdateReview extends Component {
         <ScrollView>
           <Text style={styles.title}>Ratings</Text>
           <View style={styles.row} />
-          <Text style={styles.label}>Overall Rating:</Text>
+          <Text style={styles.label}>Overall Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={this.state.location_reviews.overallRating}
+            defaultRating={this.state.locationReviews.overall_rating}
             size={20}
             onFinishRating={(overallRating) => this.setState({overallRating})}
           />
           <View style={styles.row} />
-          <Text style={styles.label}>Price Rating:</Text>
+          <Text style={styles.label}>Price Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={this.state.location_reviews.priceRating}
+            defaultRating={this.state.locationReviews.price_rating}
             size={20}
             onFinishRating={(priceRating) => this.setState({priceRating})}
           />
           <View style={styles.row} />
-          <Text style={styles.label}>Quality Rating:</Text>
+          <Text style={styles.label}>Quality Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={this.state.location_reviews.qualityRating}
+            defaultRating={this.state.locationReviews.quality_rating}
             size={20}
             onFinishRating={(qualityRating) => this.setState({qualityRating})}
           />
           <View style={styles.row} />
-          <Text style={styles.label}>Cleanliness Rating:</Text>
+          <Text style={styles.label}>Cleanliness Rating</Text>
           <AirbnbRating
             count={5}
             reviews={['1', '2', '3', '4', '5']}
-            // defaultRating={this.state.location_reviews.cleanlinessRating}
+            defaultRating={this.state.locationReviews.cleanlinessRating}
             size={20}
             onFinishRating={(cleanlinessRating) => this.setState({cleanlinessRating})}
           />
           <View style={styles.row} />
           <View style={styles.space} />
-          <Text style={styles.label}>Any Comments:</Text>
+          <Text style={styles.label}>Comments:</Text>
           <TextInput
             placeholder="Anything to add?"
             style={styles.input}

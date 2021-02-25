@@ -75,6 +75,7 @@ class FavouriteLocations extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.label}>Tap a Location</Text>
+          <View style={styles.space} />
           <View style={styles.row} />
           <View style={styles.space} />
           <FlatList

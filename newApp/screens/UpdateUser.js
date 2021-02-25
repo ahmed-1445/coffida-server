@@ -7,6 +7,7 @@ class UpdateUser extends Component {
     super(props);
 
     this.state = {
+      loading: true,
       firstName: '',
       lastName: '',
       email: '',
@@ -18,6 +19,7 @@ class UpdateUser extends Component {
     this.getInfo();
   }
 
+  // This function is used to pre-populate the User Details input fields.
   getInfo = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
     const userID = await AsyncStorage.getItem('@id');
@@ -46,6 +48,7 @@ class UpdateUser extends Component {
       })
       .then((responseJSON) => {
         this.setState({
+          loading: false,
           firstName: responseJSON.first_name,
           lastName: responseJSON.last_name,
           email: responseJSON.email,
@@ -99,54 +102,62 @@ class UpdateUser extends Component {
   };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <Text style={styles.title}>Details</Text>
-          <View style={styles.row} />
-          <View style={styles.space} />
-          <Text style={styles.label}>Change First Name:</Text>
-          <TextInput
-            placeholder="Enter your first name"
-            style={styles.input}
-            onChangeText={(firstName) => this.setState({firstName})}
-            value={this.state.firstName}
-          />
-          <View style={styles.space} />
-          <Text style={styles.label}>Change Last Name:</Text>
-          <TextInput
-            placeholder="Enter your last name"
-            style={styles.input}
-            onChangeText={(lastName) => this.setState({lastName})}
-            value={this.state.lastName}
-          />
-          <View style={styles.space} />
-          <Text style={styles.label}>Change Email:</Text>
-          <TextInput
-            placeholder="Enter your Email Address"
-            style={styles.input}
-            onChangeText={(email) => this.setState({email})}
-            value={this.state.email}
-          />
-          <View style={styles.space} />
-          <Text style={styles.label}>Change Password:</Text>
-          <TextInput
-            placeholder="Enter your password (required)"
-            style={styles.input}
-            onChangeText={(password) => this.setState({password})}
-            value={this.state.password}
-            secureTextEntry={true}
-          />
-          <View style={styles.row} />
-          <View style={styles.space} />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.updateInfo()}>
-            <Text style={styles.buttonText}>Update</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
-    );
+    if (this.state.loading) {
+      return (
+        <View style={styles.loading}>
+          <Text style={styles.label}>Loading...</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <ScrollView>
+            <Text style={styles.title}>Details</Text>
+            <View style={styles.row} />
+            <View style={styles.space} />
+            <Text style={styles.label}>Change First Name:</Text>
+            <TextInput
+              placeholder="Enter your first name"
+              style={styles.input}
+              onChangeText={(firstName) => this.setState({firstName})}
+              value={this.state.firstName}
+            />
+            <View style={styles.space} />
+            <Text style={styles.label}>Change Last Name:</Text>
+            <TextInput
+              placeholder="Enter your last name"
+              style={styles.input}
+              onChangeText={(lastName) => this.setState({lastName})}
+              value={this.state.lastName}
+            />
+            <View style={styles.space} />
+            <Text style={styles.label}>Change Email:</Text>
+            <TextInput
+              placeholder="Enter your Email Address"
+              style={styles.input}
+              onChangeText={(email) => this.setState({email})}
+              value={this.state.email}
+            />
+            <View style={styles.space} />
+            <Text style={styles.label}>Change Password:</Text>
+            <TextInput
+              placeholder="Enter your password (required)"
+              style={styles.input}
+              onChangeText={(password) => this.setState({password})}
+              value={this.state.password}
+              secureTextEntry={true}
+            />
+            <View style={styles.row} />
+            <View style={styles.space} />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.updateInfo()}>
+              <Text style={styles.buttonText}>Update</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      );
+    }
   }
 }
 
@@ -155,6 +166,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
     backgroundColor: '#73D2DC',
+  },
+  loading: {
+    backgroundColor: '#73D2DC',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 17,

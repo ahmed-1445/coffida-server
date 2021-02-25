@@ -12,7 +12,6 @@ class LocationDetails extends Component {
       locationID: '',
       locationName: '',
       locationTown: '',
-      avgOverallRating: '',
       avgPriceRating: '',
       avgQualityRating: '',
       avgCleanlinessRating: '',
@@ -71,7 +70,6 @@ class LocationDetails extends Component {
           locationID: responseJSON.location_id,
           locationName: responseJSON.location_name,
           locationTown: responseJSON.location_town,
-          avgOverallRating: responseJSON.avg_overall_rating,
           avgPriceRating: responseJSON.avg_price_rating,
           avgQualityRating: responseJSON.avg_quality_rating,
           avgCleanlinessRating: responseJSON.avg_clenliness_rating,
@@ -152,6 +150,7 @@ class LocationDetails extends Component {
   };
 
   render() {
+    const navigation = this.props.navigation;
     if (this.state.loading) {
       return (
         <View style={styles.loadingScreen}>
@@ -159,7 +158,6 @@ class LocationDetails extends Component {
         </View>
       );
     } else {
-      const navigation = this.props.navigation;
       return (
         <View style={styles.container}>
           <Text style={styles.title}>{this.state.locationName} - {this.state.locationTown}</Text>
@@ -311,7 +309,6 @@ const styles = StyleSheet.create({
     height: 42,
     width: '70%',
     left: 60,
-    // top: -5,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

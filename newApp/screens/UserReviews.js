@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet,ToastAndroid, FlatList, Image, TouchableOpacity} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import {AirbnbRating} from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 class UserReviews extends Component {
   constructor(props) {
     super(props);
@@ -21,8 +21,9 @@ class UserReviews extends Component {
     });
     this.getReviews();
     console.disableYellowBox = true;
-    // Disabled YellowBox for source.uri is empty, getPhoto function solves this
   }
+  // Disabled YellowBox due to warning about potential duplicate items for the FlatList
+  // on Line 252, after testing extensively no such issues have been produced.
 
   componentWillUnmount() {
     this.unsubscribe();
@@ -35,6 +36,9 @@ class UserReviews extends Component {
     }
   };
 
+  // This function is an attempt to get the review details from the selected review
+  // to pre-populate the Ratings & Review comment however, this was not accomplished.
+  // The JSON object was retrived but not passed correctly into the rating defaultValue.
   getReviews = async () => {
     const userToken = await AsyncStorage.getItem('@session_token');
     const userID = await AsyncStorage.getItem('@id');
@@ -190,6 +194,8 @@ class UserReviews extends Component {
   };
 
   render() {
+    // These functions pass the Review & Location IDs to the specified endpoint
+    // to ensure the correct IDs are used on the next following screen.
     const removeReview = async (revID, locID) => {
       await AsyncStorage.setItem('@review_id', JSON.stringify(revID));
       await AsyncStorage.setItem('@location_id', JSON.stringify(locID));
@@ -293,9 +299,7 @@ class UserReviews extends Component {
                     source={require('./../icons/picture.png')}
                   />
                 </TouchableOpacity>
-                {/*<Text style={styles.label}>Loc ID: {item.location.location_id}</Text>*/}
                 <Text style={styles.title}>{item.location.location_name} - {item.location.location_town}</Text>
-                {/*<Text style={styles.label}>Rev ID: {item.review.review_id}</Text>*/}
                 <View style={styles.ratings}>
                   <Text style={styles.label}>Overall Rating:</Text>
                   <AirbnbRating
