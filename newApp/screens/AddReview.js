@@ -40,7 +40,7 @@ class AddReview extends Component {
         if (response.status === 201) {
           console.log('Review added!', response);
           ToastAndroid.show('Review added!', ToastAndroid.SHORT);
-          this.props.navigation.navigate('GetLocation');
+          this.props.navigation.navigate('AllLocations');
         } else if (response.status === 400) {
           throw 'Fill in the form in full, please try again!';
         } else if (response.status === 401) {
